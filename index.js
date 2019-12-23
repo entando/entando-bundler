@@ -1,9 +1,8 @@
 const program = require('commander');
 const registry = require('./modules/registry');
-const fs = require('fs');
+const {Bundle, Tag, Details} = require('./modules/models')
 const _ = require('lodash');
 const version = require('./package.json').version;
-const k8s = require('./modules/k8s');
 const yaml = require('js-yaml');
 
 function validateOrExit(validation) {
@@ -29,53 +28,24 @@ function cleanModuleName(module) {
     return name;
 }
 
-function Bundle(metadata = {}, details = {}, tags = []) {
-    return {
-        'apiVersion': 'entando.org/v1alpha1',
-        'kind': 'EntandoDeBundle',
-        'metadata': metadata,
-        'specs': {
-            'details': details,
-            'tags': tags
-        }
-    }
+function generate(obj) {
+    console.log(yaml.safeDump(obj));
 }
 
-function Details(meta = {}) {
-    let metadata = {};
-    if (!_.isEmpty(meta)) {
-        metadata = {
-            "name": meta.name,
-            "description": meta.description,
-            "dist-tags": meta['dist-tags'] || '',
-            "time": meta.time,
-            "versions": meta.versions,
-            "keywords": meta.keywords,
-            "repository": meta.repository,
-            "author": meta.author || '',
-            "maintainers": meta.maintainers,
-        };
+function buildCustomResources(mods, options) {
+    if (!_.isArray(mods)) {
+        mods = [mods];
     }
-    return _.pickBy(metadata);
-}
-
-function Tag(meta = {}) { 
-    let tag = {}
-    if (!_.isEmpty(meta)) {
-        tag = {
-            'version': meta.version,
-            ...meta.dist
-        }
-    }
-    return _.pickBy(tag);
-}
-
-function generate(obj, opts = { "dryRun": true}) {
-    if (opts.dryRun) {
-        console.log(yaml.safeDump(obj));
-    } else {
-        fs.writeFileSync('Temp.yaml', yaml.safeDump(obj))
-    }
+    const name = generateModuleName(options.bundleName, mods[0]);
+    const metadata = {
+        'name': name,
+        ...(options.bundleNamespace && { 'namespace': options.bundleNamespace })
+    };
+    const details = Details(mods[0]);
+    const tags = mods.map(m => Tag(m))
+        .filter(t => !_.isEmpty(t));
+    generate(Bundle(metadata, details, tags), { 'dryRun': options.dryRun || false });
+    return mods;
 }
 
 program.version(version).name('@entando/de-cli');
@@ -83,29 +53,27 @@ program.version(version).name('@entando/de-cli');
 program
     .command('generate <module>')
     .description('Generates an EntandoDigitalExchangeBundle custom resource')
-    .option('--dry-run', 'Output the results without generating a file', null, false)
     .option('--name <bundleName>', 'The name to give to the EntandoDigitalExchangeBundle')
     .option('--namespace <bundleNamespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
+    .options('--registry <registry>', 'The registry to use for searching the module', null, '')
     .action((module, cmdObj) => {
-        registry.getBundleInfo(module)
+        registry.getBundleInfo({'name': module, 'registry':cmdObj.registry})
             .then(mods => {
-                if (! _.isArray(mods)) {
-                    mods = [mods]
-                }
-                const name = generateModuleName(cmdObj.bundleName, mods[0]);
-                const metadata = {
-                    'name': name,
-                    ...(cmdObj.bundleNamespace && {'namespace': cmdObj.bundleNamespace})
-
-                }
-                const details = Details(mods[0]);
-                const tags = mods.map(m => Tag(m))
-                    .filter(t => !_.isEmpty(t));
-                generate(Bundle(metadata, details, tags), {'dryRun': cmdObj.dryRun || false});
+                mods = buildCustomResources(mods, cmdObj);
             })
             .catch(err => console.error(`An error occurred while retrieving package ${m}`, err));
-    })
+    });
 
+program
+    .command('convert')
+    .description('Convert a JSON string retrieved from an npm view command into EntandoDigitalExchangeBundle custom resource')
+    .option('--json <json>', 'The input is a json string')
+    .option('--file <file>', 'The input is a file')
+    .option('--name <bundleName>', 'The name of the output EntandoDigitalExchangeBundle')
+    .option('--namespace <bundleNamespace>', 'The namespace of the generated EntandoDigitalExchangeBundle')
+    .action((cmdObj) => {
+        buildCustomResources(JSON.parse(cmdObj.json), cmdObj)
+    });
 
 program.parse(process.argv);
-validateOrExit(program.args.length > 0)
+validateOrExit(program.args.length > 0);

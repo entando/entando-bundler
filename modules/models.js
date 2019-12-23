@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports.Bundle = function(metadata = {}, details = {}, tags = []) {
     return {
         'apiVersion': 'entando.org/v1alpha1',

@@ -55,13 +55,13 @@ program
     .description('Generates an EntandoDigitalExchangeBundle custom resource')
     .option('--name <bundleName>', 'The name to give to the EntandoDigitalExchangeBundle')
     .option('--namespace <bundleNamespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
-    .options('--registry <registry>', 'The registry to use for searching the module', null, '')
+    .option('--registry <registry>', 'The registry to use for searching the module', null, '')
     .action((module, cmdObj) => {
         registry.getBundleInfo({'name': module, 'registry':cmdObj.registry})
             .then(mods => {
                 mods = buildCustomResources(mods, cmdObj);
             })
-            .catch(err => console.error(`An error occurred while retrieving package ${m}`, err));
+            .catch(err => console.error(`An error occurred while retrieving package ${module}`, err));
     });
 
 program

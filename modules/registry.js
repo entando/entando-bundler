@@ -5,9 +5,9 @@ function registryCmd(npmCommand, registry) {
     return registry ? `${npmCommand} --registry ${registry}` : npmCommand;
 }
 
-function getBundleInfo({name = '', registry = undefined}) {
+function getBundleInfo(obj = {'name': '', 'registry': undefined}) {
     return new Promise((resolve, reject) => {
-        let cmd = registryCmd(`npm view ${bundle_name} --json`, registry);
+        let cmd = registryCmd(`npm view ${obj.name} --json`, obj.registry);
         exec(cmd, {windowsHide: true}, (err, stdout, stderr) => {
             if (err) {
                 reject(err);

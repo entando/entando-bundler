@@ -1,6 +1,6 @@
 const program = require('commander');
 const registry = require('./modules/registry');
-const {Bundle, Tag, Details} = require('./modules/models')
+const {Bundle, Tag, Details} = require('./modules/models');
 const _ = require('lodash');
 const version = require('./package.json').version;
 const yaml = require('js-yaml');

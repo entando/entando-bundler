@@ -28,7 +28,7 @@ module.exports.Details = function(meta = {}) {
     return _.pickBy(metadata);
 }
 
-module.export.Tag = function(meta = {}) { 
+module.exports.Tag = function(meta = {}) { 
     let tag = {}
     if (!_.isEmpty(meta)) {
         tag = {

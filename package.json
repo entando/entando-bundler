@@ -17,7 +17,9 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js",
+    "generate": "node index.js generate",
+    "convert-file": "node index.js convert --file"
   },
   "keywords": [],
   "author": "",

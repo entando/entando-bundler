@@ -55,7 +55,7 @@ program
     .description('Generates an EntandoDigitalExchangeBundle custom resource')
     .option('--name <bundleName>', 'The name to give to the EntandoDigitalExchangeBundle')
     .option('--namespace <bundleNamespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
-    .option('--registry <registry>', 'The registry to use for searching the module', null, '')
+    .option('--registry <registry>', 'The registry to use for searching the module, by default uses the registry configured in your .npmrc')
     .action((module, cmdObj) => {
         registry.getBundleInfo({'name': module, 'registry':cmdObj.registry})
             .then(mods => {

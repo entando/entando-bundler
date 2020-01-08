@@ -9,18 +9,22 @@ function validateOrExit(validation) {
     }
 }
 
-
+program.storeOptionsAsProperties(false);
+program.passCommandToAction(false);
 
 program.version(version).name('@entando/de-cli');
+
 
 program
     .command('generate <module>')
     .description('Generates an EntandoDigitalExchangeBundle custom resource')
-    .option('--name <bundleName>', 'The name to give to the EntandoDigitalExchangeBundle')
-    .option('--namespace <bundleNamespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
+    .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
+    .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
     .option('--registry <registry>', 'The registry to use for searching the module, by default uses the registry configured in your .npmrc')
     .option('--dry-run', 'Print the output instead of create the custom resource automatically')
     .action(generateBundle);
+
+
 
 // Is this actually required?
 // program

@@ -14,9 +14,11 @@
   "bin": {
     "entando-bundle": "./index.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js",
     "generate": "node index.js generate",
     "convert-file": "node index.js convert --file"

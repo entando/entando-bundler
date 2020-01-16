@@ -76,6 +76,6 @@ describe('Bundle convertion', () => {
 
     it("Should use the provided namespace", () => {
         let b = bundle.convertToEntandoDeBundle(mockedNpmResponses.allVersions, {"namespace": "test-namespace"});
-        expect(b.metadata.namespace).tooBe("test-namespace");
+        expect(b.metadata.namespace).toBe("test-namespace");
     })
 })

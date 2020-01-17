@@ -69,7 +69,20 @@ In order to be able to login and publish into a repository you need to
 
 You can also decide to start using the provided `base-nexus-data` folder available in the `docker` folder. That contains a private npm registry (npm-internal), has role and a user already defined.
 
-> **Note**: Copy the base-nexus-data folder to another folder and 
+> **Note**: Make a copy of the `base-nexus-data` folder and name it `nexus-data` in the docker folder. That folder is already ignored in git and this way you can continue to work on nexus without updating the current repository. Or copy the entire docker folder somewhere
+
+#### Docker command to include the volume
+
+```
+docker run -d -p 8081:8081 --name nexus -v "$(pwd)/nexus-data":/nexus-data sonatype/nexus3
+``` 
+
+or if you prefer using docker-compose 
+
+```
+cd docker
+docker-compose up
+```
 
 #### Nexus dashboard
 - **Username**: admin
@@ -117,3 +130,7 @@ make the private repository the default for publishing. Add this to your package
     "registry": "http://localhost:8081/repository/<repo-name>/"
   }
 ```
+
+
+## To review
+(Automate nexus)[https://blog.mimacom.com/automate-nexus/]

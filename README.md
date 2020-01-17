@@ -5,7 +5,7 @@ This CLI application has the purpose of generate Entando Bundles for the Digital
 
 ## Getting started
 
-### Setup a local registry with Nexus
+### Setup a local registry with Nexus from scratch
 
 As a registry you can use whatever technology you prefer. Some examples are the [NPM official registry](https://npmjs.org), [Verdaccio](https://github.com/verdaccio/verdaccio) or [Nexus](https://github.com/sonatype/nexus-public)
 
@@ -64,13 +64,37 @@ In order to be able to login and publish into a repository you need to
 - Go to `Security > Realms`
 - Add `the npm Bearer Token Realm` to the active column
 
+
+### Setup a local registry with Nexus using provided volume
+
+You can also decide to start using the provided `base-nexus-data` folder available in the `docker` folder. That contains a private npm registry (npm-internal), has role and a user already defined.
+
+> **Note**: Copy the base-nexus-data folder to another folder and 
+
+#### Nexus dashboard
+- **Username**: admin
+- **Password**: qwe123
+
+#### Npm user to publish
+- **Username**: entando-dev
+- **Password**: entando
+- **Email**: entando-dev@entando.com
+
+#### Local repository
+
+- **Repo name**: http://localhost:8081/repository/npm-internal
+
+### Configure NPM
+
 #### Config npm to use the local repository
 In order to use the private repository as default repository you need to configure npm accordingly (or use the `--registry=` option with all your commands)
 
 ```
 npm config set registry http://localhost:8081/repository/<repo-name>/
 ```
-> **Note**: The trailing slash at the end of the repository is required for the repository to work
+> **Note A**: The trailing slash at the end of the repository is required for the repository to work
+
+> **Note B**: This repository will be used for all the npm methods, so bare in mind that changing the global repository will potentially break other projects. If you want to avoid this continue to use the `--registry` option.
 
 ##### Login to the registry
 You should be able now to login into the registry using the login command
@@ -84,8 +108,10 @@ You should now be able to publish your own npm modules to the private registry
 using the `npm publish --registry=http://localhost:8081/repository/<repo-name>` command.
 
 ##### Set the publish repository at package.json level
+
 In your npm module you can also add to the `package.json` an entry to 
 make the private repository the default for publishing. Add this to your package.json file
+
 ```
   "publishConfig": {
     "registry": "http://localhost:8081/repository/<repo-name>/"

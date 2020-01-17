@@ -4,3 +4,6 @@ node_modules
 
 # Tmp file
 *.tmp
+
+# Ignore nexus-data folder for development purposes
+docker/nexus-data

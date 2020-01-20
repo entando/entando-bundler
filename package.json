@@ -2,7 +2,7 @@
   "name": "digital-exchange-node",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/actions.js",
   "dependencies": {
     "@kubernetes/client-node": "^0.11.0",
     "commander": "^4.1.0",
@@ -12,16 +12,15 @@
     "prettyjson": "^1.2.1"
   },
   "bin": {
-    "entando-bundle": "./index.js"
+    "entando-de-bundle": "./bin/index.js"
   },
   "devDependencies": {
     "jest": "^24.9.0"
   },
   "scripts": {
     "test": "jest",
-    "start": "node index.js",
-    "generate": "node index.js generate",
-    "convert-file": "node index.js convert --file"
+    "start": "node ./bin/index.js",
+    "generate": "node ./bin/index.js generate"
   },
   "keywords": [],
   "author": "",

@@ -5,6 +5,24 @@ This CLI application has the purpose of generate Entando Bundles for the Digital
 
 ## Getting started
 
+To install the tool globally for development 
+```
+npm install -g ./
+```
+
+This CLI tool is able to convert npm module(s) into EntandoDeBundle custom resources. You can see the help for the tool by invoking the `--help` command
+
+```
+entando-de-bundle --help
+```
+
+To generate a bundle you can use the `generate` command. Check the details for the generate command
+```
+entando-de-bundle generate --help
+```
+
+## Local development of npm modules
+
 ### Setup a local registry with Nexus from scratch
 
 As a registry you can use whatever technology you prefer. Some examples are the [NPM official registry](https://npmjs.org), [Verdaccio](https://github.com/verdaccio/verdaccio) or [Nexus](https://github.com/sonatype/nexus-public)
@@ -69,7 +87,7 @@ In order to be able to login and publish into a repository you need to
 
 You can also decide to start using the provided `base-nexus-data` folder available in the `docker` folder. That contains a private npm registry (npm-internal), has role and a user already defined.
 
-> **Note**: Make a copy of the `base-nexus-data` folder and name it `nexus-data` in the docker folder. That folder is already ignored in git and this way you can continue to work on nexus without updating the current repository. Or copy the entire docker folder somewhere
+> **Note**: Make a copy of the `base-nexus-data` folder and name it `nexus-data` in the docker folder. That folder is already ignored in git and this way you can continue to work on nexus without updating the current repository. Or copy the entire docker folder somewhere. Make also sure the folder is open to UID 200, so a `chmod -R 777 nexus-data` command should do the trick
 
 #### Docker command to include the volume
 

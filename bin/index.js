@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 const program = require('commander');
-const { generateBundle } = require('./lib/actions');
-const version = require('./package.json').version;
+const { generateBundle } = require('../lib/actions');
+const version = require('../package.json').version;
 
 function validateOrExit(validation) {
     if (!validation) {
@@ -13,15 +15,16 @@ program.storeOptionsAsProperties(false);
 program.passCommandToAction(false);
 
 program.version(version).name('@entando/de-cli');
+program.description("A tool to interact with Entando's Digital-Exchange bundles")
 
 
 program
-    .command('generate <module>')
-    .description('Generates an EntandoDigitalExchangeBundle custom resource')
-    .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
-    .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
-    .option('--registry <registry>', 'The registry to use for searching the module, by default uses the registry configured in your .npmrc')
-    .option('--dry-run', 'Print the output instead of create the custom resource automatically')
+    .command(`generate <module>`)
+    .description(`Generates an Entando's Digital-Exchange bundle k8s custom resource`)
+    .option(`--name <name>`, `The name to give to the EntandoDigitalExchangeBundle`)
+    .option(`--namespace <namespace>`, `The namespace where the EntandoDigitalExchangeBundle will be created`)
+    .option(`--registry <registry>`, `The registry to use for searching the module, by default uses the registry configured in your .npmrc`)
+    .option(`--dry-run`, `Print the output instead of create the custom resource automatically`)
     .action(generateBundle);
 
 

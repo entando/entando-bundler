@@ -105,6 +105,7 @@ In order to be able to login and publish into a repository you need to
 - Go to `Security > Realms`
 - Add `the npm Bearer Token Realm` to the active column
 
+---
 
 #### Setup a local registry with Nexus using provided volume
 
@@ -139,6 +140,8 @@ Npm user to publish
 Local repository
 - **Repo name**: http://localhost:8081/repository/npm-internal/
 
+---
+
 #### Configure NPM
 
 ##### Config npm to use the local repository
@@ -157,6 +160,7 @@ You should be able now to login into the registry using the login command
 ```
 npm login --registry=http://localhost:8081/repository/<repo-name>/
 ```
+--- 
 
 #### Good to go
 You should now be able to publish your own npm modules to the private registry

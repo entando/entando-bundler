@@ -1,4 +1,4 @@
-# DigitalExchange CLI
+# Entando Bundle CLI
 
 ## Purpose
 This CLI application has the purpose of generate Entando Bundles for the Digital-Exchange using NPM as supporting technology for modules and registry

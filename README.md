@@ -42,7 +42,7 @@ npm publish --registry=http://localhost:8081/registry/npm-internal/
 
 4. Use the `entando-de-bundle` tool to generate the k8s custom resource
 ```
-entando-de-bundle generate <module-name>
+entando-bundle generate <module-name>
 ```
 
 Check the relevant sections below to get more informations about the steps.

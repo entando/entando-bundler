@@ -1,7 +1,7 @@
 # Entando Bundle CLI
 
 ## Purpose
-This CLI application has the purpose of generate Entando Bundles for the Digital-Exchange using NPM as supporting technology for modules and registry
+This CLI application has the purpose of generating Entando Bundles for the Entando6 digital-exchange using NPM as supporting technology for modules and registry
 
 ## Install the CLI globally
 
@@ -28,7 +28,7 @@ Here a simple step-by-step guide on how to create, publish and generate a custom
 The workflow will be
 1. Create bundle
 2. Create package.json 
-3. Publish bundle Generate 
+3. Publish the bundle
 4. Generate the K8S custom resource 
 
 ### Workflow 

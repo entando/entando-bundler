@@ -17,7 +17,7 @@
     "prettyjson": "^1.2.1"
   },
   "bin": {
-    "entando-bundle-cli": "./bin/index.js"
+    "entando-bundle": "./bin/index.js"
   },
   "devDependencies": {
     "jest": "^24.9.0"

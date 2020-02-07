@@ -5,7 +5,7 @@ This CLI application has the purpose of generate Entando Bundles for the Digital
 
 ## Getting started
 
-To install the tool globally for development 
+To install the tool globally for development
 ```
 npm install -g ./
 ```
@@ -13,24 +13,24 @@ npm install -g ./
 This CLI tool is able to convert npm module(s) into EntandoDeBundle custom resources. You can see the help for the tool by invoking the `--help` command
 
 ```
-entando-de-bundle --help
+entando-bundle --help
 ```
 
 To generate a bundle you can use the `generate` command. Check the details for the generate command
 ```
-entando-de-bundle generate --help
+entando-bundle generate --help
 ```
 
 ## Workflow to generate and publish an Entando Digital-Exchange Bundle
 
-Here a simple step-by-step guide on how to create, publish and generate a custom resource file for an Entando Digital-Exchange Bundle. 
+Here a simple step-by-step guide on how to create, publish and generate a custom resource file for an Entando Digital-Exchange Bundle.
 
 **Create bundle -> Create package.json -> Publish bundle -> Generate custom resource**
 
 
 1. Start composing your boundle following the instructions you can find in the [bundle's documentation](./COMPONENTS.md)
 2. Create a `package.json` and add the relevant information. Remember that more details you provide, easier it will be for users to search for your bundle
-3. Publish your bundle on a registry 
+3. Publish your bundle on a registry
 ```
 npm publish --registry=http://localhost:8081/registry/npm-internal/
 ```
@@ -71,8 +71,8 @@ Now you can use the password to access your private nexus instance as an admin a
 
 ##### Setup a private npm registry
 
-> **NOTE**: Nexus allows you to setup both a private registry and a proxy to an external registry. 
-For development purposes, having only a private registry could make sense in order to retrieve only local modules and not modules available on remote registries, though feel free to setup also a proxy if you want to get access to npm modules outside of the private registry. 
+> **NOTE**: Nexus allows you to setup both a private registry and a proxy to an external registry.
+For development purposes, having only a private registry could make sense in order to retrieve only local modules and not modules available on remote registries, though feel free to setup also a proxy if you want to get access to npm modules outside of the private registry.
 Check out the [documentation](https://help.sonatype.com/repomanager3/formats/npm-registry##NpmRegistry-ProxyingnpmRegistries) on nexus website for further details.
 
 To setup a  local repository:
@@ -91,7 +91,7 @@ In order to be able to login and publish into a repository you need to
 2. Create a user and assign such roles to him
 3. Enable the NPM realm to support `npm adduser` or `npm login` commands
 
-##### Create the role 
+##### Create the role
 - Go to `Security > Roles > Create role > Nexus Role`
 - Choose a role ID and name
 - In the privileges, add the one required for publishing, e.g. `nx-repository-view-npm-<your-repo>-*`
@@ -117,9 +117,9 @@ You can also decide to start using the provided `base-nexus-data` folder availab
 
 ```
 docker run -d -p 8081:8081 --name nexus -v "$(pwd)/nexus-data":/nexus-data sonatype/nexus3
-``` 
+```
 
-or if you prefer using docker-compose 
+or if you prefer using docker-compose
 
 ```
 cd docker
@@ -160,7 +160,7 @@ You should be able now to login into the registry using the login command
 ```
 npm login --registry=http://localhost:8081/repository/<repo-name>/
 ```
---- 
+---
 
 #### Good to go
 You should now be able to publish your own npm modules to the private registry
@@ -168,7 +168,7 @@ using the `npm publish --registry=http://localhost:8081/repository/<repo-name>` 
 
 #### Set the publish repository at package.json level
 
-In your npm module you can also add to the `package.json` an entry to 
+In your npm module you can also add to the `package.json` an entry to
 make the private repository the default for publishing. Add this to your package.json file
 
 ```

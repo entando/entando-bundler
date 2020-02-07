@@ -3,10 +3,28 @@
 Digital exchange allows registration of several components.
 
 ## Bundle
-In order to install components, Digital Exchange will require a bundle with a descriptor file inside and component descriptors.
+In order to install components, Digital Exchange will require a bundle with a descriptor file inside and component descriptors. 
+
+Here a generic bundle structure
+
+```
+.
+├ descriptor.yaml
+├ resources/
+│ └ ...
+└ ... (folders reported in descriptor.yaml file)
+```
+
+### Bundle convensions
+Note that there are only two conventions on how to structure the bundle:
+1. The bundle descriptor file needs to be named `descriptor.yaml` otherwise the bundle will not be recognized 
+2. Static resources are not defined in the `descriptor.yaml` file as they are by default read from a `resources` folder. If you need to install static resources, please follow this convention.
+
 
 ## Descriptor File
-The descriptor file will aggregate all components inside and has the following structure. The extension is YAML.
+The descriptor file will aggregate all components inside and has the following structure. 
+**Note that the extension is required to be `yaml`**.
+
 
 ```yaml
 code: inail_bundle # The bundle ID
@@ -47,7 +65,9 @@ components: # All components will be here
 ```
 
 ## Plugin Descriptor
-A plugin should be described using the EntandoPlugin CustomResource format.
+A plugin should be described using the [EntandoPlugin CustomResource format](https://github.com/entando-k8s/entando-k8s-custom-model/blob/master/src/main/resources/crd/EntandoPluginCRD.yaml).
+
+Here an example, but check the CRD for details on the available fields.
 ```yaml
 kind: "EntandoPlugin"
 apiVersion: "entando.org/v1alpha1"

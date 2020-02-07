@@ -3,7 +3,7 @@
 ## Purpose
 This CLI application has the purpose of generate Entando Bundles for the Digital-Exchange using NPM as supporting technology for modules and registry
 
-## Getting started
+## Install the CLI globally
 
 To install the tool globally for development
 ```
@@ -21,12 +21,17 @@ To generate a bundle you can use the `generate` command. Check the details for t
 entando-bundle generate --help
 ```
 
-## Workflow to generate and publish an Entando Digital-Exchange Bundle
+## How to create and publish an Entando Digital-Exchange Bundle
 
 Here a simple step-by-step guide on how to create, publish and generate a custom resource file for an Entando Digital-Exchange Bundle.
 
-**Create bundle -> Create package.json -> Publish bundle -> Generate custom resource**
+The workflow will be
+1. Create bundle
+2. Create package.json 
+3. Publish bundle Generate 
+4. Generate the K8S custom resource 
 
+### Workflow 
 
 1. Start composing your boundle following the instructions you can find in the [bundle's documentation](./COMPONENTS.md)
 2. Create a `package.json` and add the relevant information. Remember that more details you provide, easier it will be for users to search for your bundle
@@ -41,6 +46,8 @@ entando-de-bundle generate <module-name>
 ```
 
 Check the relevant sections below to get more informations about the steps.
+
+---
 
 ## Local development of npm modules
 

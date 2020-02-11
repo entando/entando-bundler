@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@kubernetes/client-node": "^0.11.0",
+    "base64-img": "^1.0.4",
     "commander": "^4.1.0",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.15",
@@ -28,10 +29,10 @@
     "generate": "node ./bin/index.js generate"
   },
   "keywords": [
-      "entando",
-      "digital-exchange",
-      "bundle",
-      "k8s"
+    "entando",
+    "digital-exchange",
+    "bundle",
+    "k8s"
   ],
   "readme": "Readme.md",
   "homepage": "https://github.com/entando-k8s/entando-bundle-cli"

@@ -92,7 +92,7 @@ describe('Bundle convertion', () => {
     })
 
     it("Should use the provided image as thumbnail", async () => {
-        let b = await bundle.convertToEntandoDeBundle(mockedNpmResponses.allVersions, {"thumb_file": "test/entando-thumb.jpeg"});
+        let b = await bundle.convertToEntandoDeBundle(mockedNpmResponses.allVersions, {"thumbnailFile": "test/entando-thumb.jpeg"});
         let expectedContent = await readFile("test/entando-thumb-base64enc");
         expect(b.spec.details.thumbnail).toBe(expectedContent);
     });

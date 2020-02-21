@@ -41,6 +41,10 @@ describe('Bundle convertion', () => {
         expect(b.metadata.name).toBe('my-entando');
     })
 
+    it("Should throw an error if the bundle name is not valid", async () => {
+        await expect(bundle.convertToEntandoDeBundle(mockedNpmResponses.singleVersionInvalidName)).rejects.toThrow();
+    })
+
     it("Should use custom name only for k8s metadata, bundle name is not changed", async () => {
         let b = await bundle.convertToEntandoDeBundle(mockedNpmResponses.allVersions, {'name': 'my-name'});
         expect(b.metadata.name).toBe('my-name');

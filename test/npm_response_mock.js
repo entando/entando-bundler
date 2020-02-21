@@ -936,7 +936,43 @@ let singleVersion = {
   "_hasShrinkwrap": false
 }
 
+let singleVersionInvalidName = {
+    "_id": "training_bundle@1.0.0",
+    "name": "training_bundle",
+    "description": "A bundle for entando digital-exchange built with JHipster Entando Blueprint",
+    "dist-tags": {
+      "latest": "1.0.0"
+    },
+    "versions": [
+      "1.0.0"
+    ],
+    "_rev": "1",
+    "time": {
+      "created": "2020-02-21T13:33:28.898Z",
+      "modified": "2020-02-21T13:33:28.898Z",
+      "1.0.0": "2020-02-21T13:33:28.898Z"
+    },
+    "_cached": false,
+    "_contentLength": 0,
+    "version": "1.0.0",
+    "main": "descriptor.yaml",
+    "keywords": [
+      "entando6",
+      "digital-exchange"
+    ],
+    "license": "LGPL3",
+    "readme": "ERROR: No README data found!",
+    "_nodeVersion": "12.15.0",
+    "_npmVersion": "6.13.4",
+    "dist": {
+      "integrity": "sha512-BFU0wZ9PUdZfDtY6cx3rFP1N1eJZLGXmpWU6DG0I5QkIVauWnPFzypdWmRSBnkNfop+zvT3qLINpa1zmlAVSmg==",
+      "shasum": "22244652b0f9f66582ed1125f594689ba5ddc044",
+      "tarball": "http://nexus.lab.entando.org/repository/npm-entando-demo/training_bundle/-/training_bundle-1.0.0.tgz"
+    }
+  }
+
 module.exports = {
+    singleVersionInvalidName,
     singleVersion, 
     allVersions
 }

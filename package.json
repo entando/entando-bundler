@@ -26,7 +26,7 @@
   "scripts": {
     "test": "jest",
     "start": "node ./bin/index.js",
-    "generate": "node ./bin/index.js generate"
+    "generate": "node ./bin/index.js generate --dry-run"
   },
   "keywords": [
     "entando",

@@ -14,7 +14,7 @@ function validateOrExit(validation) {
 program.storeOptionsAsProperties(false);
 program.passCommandToAction(false);
 
-program.version(version).name('@entando/de-cli');
+program.version(version).name('entando-bundle');
 program.description("A tool to interact with Entando's Digital-Exchange bundles")
 
 

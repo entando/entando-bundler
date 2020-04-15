@@ -1,27 +1,20 @@
 {
   "name": "@entando/entando-bundle-cli",
-  "version": "0.0.1",
-  "license": "LGPL-2.1",
-  "description": "Command line interface to generate Entando Digital-exchange bundles",
-  "main": "./lib/actions.js",
+  "version": "6.1.0",
+  "license": "LGPL-3.0",
+  "description": "Command line interface to generate Entando Bundle custom resources",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/entando-k8s/entando-bundle-cli"
   },
-  "dependencies": {
-    "@kubernetes/client-node": "^0.11.0",
-    "base64-img": "^1.0.4",
-    "commander": "^4.1.0",
-    "js-yaml": "^3.13.1",
-    "lodash": "^4.17.15",
-    "package-json": "^6.5.0",
-    "prettyjson": "^1.2.1"
+  "homepage": "https://www.entando.com",
+  "author": {
+    "name": "Entando Inc.",
+    "email": "info@entando.com"
   },
+  "main": "./lib/actions.js",
   "bin": {
     "entando-bundle": "./bin/index.js"
-  },
-  "devDependencies": {
-    "jest": "^24.9.0"
   },
   "scripts": {
     "test": "jest",
@@ -34,6 +27,23 @@
     "bundle",
     "k8s"
   ],
+  "dependencies": {
+    "@kubernetes/client-node": "^0.11.0",
+    "base64-img": "^1.0.4",
+    "commander": "^4.1.0",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.15",
+    "package-json": "^6.5.0",
+    "prettyjson": "^1.2.1"
+  },
+  "devDependencies": {
+    "jest": "^25.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "readme": "Readme.md",
-  "homepage": "https://github.com/entando-k8s/entando-bundle-cli"
+  "bugs": {
+    "url": "https://github.com/entando-k8s/entando-bundle-cli/issues"
+  }
 }

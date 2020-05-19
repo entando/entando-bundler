@@ -1,7 +1,7 @@
 const childProcess = require('child_process');
 
 const mockParsedDescriptor = require('./descriptor');
-const repositoryBundler = require('../lib/repository');
+const repositoryBundler = require('../lib/git-bundler');
 
 jest.mock('child_process');
 

@@ -19,21 +19,21 @@ describe('Bundle naming', () => {
 
 describe('Bundle convertion', () => {
   it('Should take the name from first module if no custom name is provided', async () => {
-    const b = await bundle.convertPackageToEntandoDeBundle(mockedNpmResponses.allVersions, {});
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(mockedNpmResponses.allVersions, {});
     expect(b.metadata.name).toBe('entando-menu');
   });
 
   it('Should use custom name', async () => {
-    const b = await bundle.convertPackageToEntandoDeBundle(mockedNpmResponses.allVersions, { name: 'my-entando' });
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(mockedNpmResponses.allVersions, { name: 'my-entando' });
     expect(b.metadata.name).toBe('my-entando');
   });
 
   it('Should throw an error if the bundle name is not valid', async () => {
-    await expect(bundle.convertPackageToEntandoDeBundle(mockedNpmResponses.singleVersionInvalidName)).rejects.toThrow();
+    await expect(bundle.convertNpmModuleToEntandoDeBundle(mockedNpmResponses.singleVersionInvalidName)).rejects.toThrow();
   });
 
   it('Should use custom name only for k8s metadata, bundle name is not changed', async () => {
-    const b = await bundle.convertPackageToEntandoDeBundle(mockedNpmResponses.allVersions, { name: 'my-name' });
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(mockedNpmResponses.allVersions, { name: 'my-name' });
     expect(b.metadata.name).toBe('my-name');
     expect(b.spec.details.name).toBe('@entando/menu');
   });
@@ -41,7 +41,7 @@ describe('Bundle convertion', () => {
   it('Should generate details based on module infos', async () => {
     const allVersions = mockedNpmResponses.allVersions;
     const refVersion = allVersions[0];
-    const b = await bundle.convertPackageToEntandoDeBundle(allVersions, {});
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(allVersions, {});
     const expectObject = {
       name: '@entando/menu',
       description: refVersion.description,
@@ -57,13 +57,13 @@ describe('Bundle convertion', () => {
 
   it('Should generate a number of tags equal to the number of versions available', async () => {
     const allVersions = mockedNpmResponses.allVersions;
-    const b = await bundle.convertPackageToEntandoDeBundle(allVersions, {});
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(allVersions, {});
     expect(b.spec.tags).toHaveLength(allVersions[0].versions.length);
   });
 
   it('Should contains the latest dist-tag in the tags', async () => {
     const allVersions = mockedNpmResponses.allVersions;
-    const b = await bundle.convertPackageToEntandoDeBundle(allVersions, {});
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(allVersions, {});
     const expectedTag = {
       version: '2.0.0',
       integrity: 'sha512-hG2S0CP716VH6urSd17MT2vpOQJt77yOfDQSTF0hOm60rUuyUFEHpkY5cJ2XI7yLJHQRrOkn7zRR8/uB4VuWPQ==',
@@ -78,12 +78,12 @@ describe('Bundle convertion', () => {
   });
 
   it('Should use the provided namespace', async () => {
-    const b = await bundle.convertPackageToEntandoDeBundle(mockedNpmResponses.allVersions, { namespace: 'test-namespace' });
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(mockedNpmResponses.allVersions, { namespace: 'test-namespace' });
     expect(b.metadata.namespace).toBe('test-namespace');
   });
 
   it('Should use the provided image as thumbnail', async () => {
-    const b = await bundle.convertPackageToEntandoDeBundle(mockedNpmResponses.allVersions, { thumbnailFile: 'test/entando-thumb.jpeg' });
+    const b = await bundle.convertNpmModuleToEntandoDeBundle(mockedNpmResponses.allVersions, { thumbnailFile: 'test/entando-thumb.jpeg' });
     const expectedContent = await readFile('test/entando-thumb-base64enc');
     expect(b.spec.details.thumbnail).toBe(expectedContent);
   });

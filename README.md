@@ -32,11 +32,7 @@ entando-bundle from-git --help
 
 `--repository` option will clone the repository to `/tmp/tmp-ecr-bundle-repo_<TIMESTAMP>` folder, gather the needed information and will remove the folder.
 
-`--repository-path` option will work with repository under provided path. To work with repository that is at working dir, just provide `--repository-path=.` as an option. If both `--repository` and `--repository-path` are provided - `--repository` takes precedence and `--repository-path` is ignored.
-
 `descriptor.yaml` is expected to be at the root of repository or repository path.
-
-> We recommend you running the `entando-bundle from-git` command using `--repository` option as this will ensure that repository has the latest changes (code and tags wise) from all contributors.
 
 ### Tag sorting and filtration
 

@@ -2,7 +2,7 @@
 
 const program = require('commander');
 
-const { generateBundle, generateRepositoryBundle } = require('../lib/actions');
+const { generateFromNpm, generateFromGit } = require('../lib/actions');
 const version = require('../package.json').version;
 
 function validateOrExit (validation) {
@@ -27,7 +27,7 @@ program
   .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
   .option('--registry <registry>', 'The registry to use for searching the module, by default uses the registry configured in your .npmrc')
   .option('--dry-run', 'Print the output instead of create the custom resource automatically')
-  .action(generateBundle);
+  .action(generateFromNpm);
 
 program
   .command('from-git')
@@ -41,7 +41,7 @@ program
   .option('--repository-path <repositoryPath>', 'Path to local repository, if local repository should be used (--repository has precedence')
 
   .option('--dry-run', 'Print the output instead of create the custom resource automatically')
-  .action(generateRepositoryBundle);
+  .action(generateFromGit);
 
 program.parse(process.argv);
 validateOrExit(

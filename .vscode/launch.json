@@ -26,7 +26,7 @@
       "args": [
         "from-git",
         "--namespace=entando",
-        "--repository=https://github.com/<PROVIDE YOUR REPOSITORY>",
+        "--repository=https://github.com/rimselis/pda-ecr-bundle",
         "--dry-run"
       ],
       "skipFiles": [

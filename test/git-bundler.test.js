@@ -1,7 +1,6 @@
 const childProcess = require('child_process');
 
-const mockParsedDescriptor = require('./descriptor');
-const repositoryBundler = require('../lib/git-bundler');
+const gitBundler = require('../lib/git-bundler');
 
 jest.mock('child_process');
 
@@ -14,17 +13,18 @@ describe('Repository bundler module\'s cloneRepository()', function () {
   });
 
   it('should not run the clone command if repository is not provided', async () => {
-    await expect(repositoryBundler.cloneRepository()).rejects.toEqual(expect.any(Error));
+    await expect(gitBundler.cloneRepository()).rejects.toEqual(expect.any(Error));
   });
 
   it('should run the git clone command if repository is provided', () => {
-    repositoryBundler.cloneRepository({
+    gitBundler.cloneRepository({
       repository: REPO,
     });
 
     const execCommand = childProcess.exec;
     expect(execCommand).toHaveBeenCalledTimes(1);
-    expect(execCommand.mock.calls[0][0]).toMatch(`git clone ${REPO}`);
+    expect(execCommand.mock.calls[0][0]).toMatch(`git clone -n ${REPO} . --depth 1`);
+    expect(execCommand.mock.calls[0][0]).toMatch('git checkout HEAD descriptor.yaml');
   });
 });
 
@@ -35,7 +35,7 @@ describe('Repository bundler module\'s removeRepository()', function () {
   });
 
   it('should run the rm -fr command if repository is provided', () => {
-    repositoryBundler.removeRepository();
+    gitBundler.removeRepository();
 
     const execCommand = childProcess.exec;
     expect(execCommand).toHaveBeenCalledTimes(1);
@@ -44,25 +44,11 @@ describe('Repository bundler module\'s removeRepository()', function () {
 
   it('should pass through the object it gets as parameter', async () => {
     const passedObject = { test: 'object' };
-    const executed = repositoryBundler.removeRepository(passedObject);
+    const executed = gitBundler.removeRepository(passedObject);
     const execCommand = childProcess.exec;
 
     expect(execCommand).toHaveBeenCalledTimes(1);
     await expect(executed).resolves.toBe(passedObject);
-  });
-});
-
-describe('Repository bundler module\'s getDescriptorData()', function () {
-  beforeEach(() => {
-    childProcess.exec.mockClear();
-    childProcess.exec.mockImplementation((cmd, opts, cb) => cb(null, '', ''));
-  });
-
-  it('should parse test descriptor.yaml to JS object', async () => {
-    const executed = repositoryBundler.getDescriptorData({
-      repositoryPath: 'test/',
-    });
-    await expect(executed).resolves.toStrictEqual(mockParsedDescriptor);
   });
 });
 
@@ -72,35 +58,33 @@ describe('Repository bundler module\'s getRepositoryData()', function () {
   beforeEach(() => {
     childProcess.exec.mockClear();
     childProcess.exec
-      .mockImplementationOnce((cmd, opts, cb) => cb(null, MOCK_GIT_TAGS_STDOUT, '')) // tagListPromise
-      .mockImplementationOnce((cmd, opts, cb) => cb(null, REPO, '')); // repositoryFetchUrlPromise
+      .mockImplementationOnce((cmd, opts, cb) => cb(null, MOCK_GIT_TAGS_STDOUT, '')); // tagListPromise
   });
 
   it('should run git tag and git remote get-url commands', async () => {
-    repositoryBundler.getRepositoryData();
+    gitBundler.getRepositoryData();
 
     const execCommands = childProcess.exec;
 
-    expect(execCommands).toHaveBeenCalledTimes(2);
+    expect(execCommands).toHaveBeenCalledTimes(1);
     expect(execCommands.mock.calls[0][0]).toMatch('git tag');
-    expect(execCommands.mock.calls[1][0]).toMatch('git remote get-url');
   });
 
   it('should parse and filter git tags', async () => {
-    const repositoryData = await repositoryBundler.getRepositoryData();
+    const repositoryData = await gitBundler.getRepositoryData();
 
     expect(JSON.stringify(repositoryData.tags)).toEqual(MOCK_GIT_TAGS_PARSED);
   });
 
   it('should pass first tag as latest tag', async () => {
-    const repositoryData = await repositoryBundler.getRepositoryData();
+    const repositoryData = await gitBundler.getRepositoryData();
 
     expect(repositoryData.latestTag).toEqual(repositoryData.tags[0]);
   });
 
   it('should pass through the object it gets as parameter', async () => {
     const passedObject = { test: 'object' };
-    const executed = repositoryBundler.removeRepository(passedObject);
+    const executed = gitBundler.removeRepository(passedObject);
     const execCommand = childProcess.exec;
 
     expect(execCommand).toHaveBeenCalledTimes(1);

@@ -37,8 +37,7 @@ program
   .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
   .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
   .option('--dry-run', 'Print the output instead of create the custom resource automatically')
-  .option('--repository <repository>', 'Repository URL to be sued for bundle creation')
-  .option('--repository-path <repositoryPath>', 'Path to local repository, if local repository should be used (--repository has precedence')
+  .requiredOption('--repository <repository>', 'Repository URL to be sued for bundle creation')
   .action(generateFromGit);
 
 program.parse(process.argv);

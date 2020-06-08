@@ -40,7 +40,6 @@ describe('Registry module', function () {
     const requestedRegistry = 'https://registry.npmjs.org';
     npmBundler.getBundleInfo({ name: '@entando/bundle@1.0.0', registry: requestedRegistry });
     const executed = childProcess.exec.mock.calls[0][0];
-    console.log(childProcess.exec.mock);
     expect(executed).toBe(`npm view @entando/bundle@* --json --registry=${requestedRegistry}`);
   });
 });

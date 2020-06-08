@@ -54,7 +54,7 @@ describe('Repository bundler module\'s removeRepository()', function () {
 
 describe('Repository bundler module\'s getRepositoryData()', function () {
   const MOCK_GIT_TAGS_STDOUT = '1.0.0\n1.1.1\nv1.2.3\nsome-feature-tag\n0.0.1-rc';
-  const MOCK_GIT_TAGS_PARSED = JSON.stringify(['1.0.0', '1.1.1', '0.0.1-rc']);
+  const MOCK_GIT_TAGS_PARSED = JSON.stringify(['1.0.0', '1.1.1', 'v1.2.3', '0.0.1-rc']);
   beforeEach(() => {
     childProcess.exec.mockClear();
     childProcess.exec

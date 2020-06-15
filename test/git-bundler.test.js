@@ -1,8 +1,15 @@
 const childProcess = require('child_process');
+const fs = require('fs');
 
 const gitBundler = require('../lib/git-bundler');
+const descriptors = require('./mocks/descriptors');
 
 jest.mock('child_process');
+jest.mock('fs', () => ({
+  promises: {
+    readFile: jest.fn(),
+  },
+}));
 
 const REPO = 'https://github.com/entando-k8s/entando-sample-bundle.git';
 
@@ -54,7 +61,7 @@ describe('Repository bundler module\'s removeRepository()', function () {
 
 describe('Repository bundler module\'s getRepositoryData()', function () {
   const MOCK_GIT_TAGS_STDOUT = '1.0.0\n1.1.1\nv1.2.3\nsome-feature-tag\n0.0.1-rc';
-  const MOCK_GIT_TAGS_PARSED = JSON.stringify(['1.0.0', '1.1.1', '0.0.1-rc']);
+  const MOCK_GIT_TAGS_PARSED = JSON.stringify(['1.0.0', '1.1.1', 'v1.2.3', '0.0.1-rc']);
   beforeEach(() => {
     childProcess.exec.mockClear();
     childProcess.exec
@@ -89,5 +96,55 @@ describe('Repository bundler module\'s getRepositoryData()', function () {
 
     expect(execCommand).toHaveBeenCalledTimes(1);
     await expect(executed).resolves.toBe(passedObject);
+  });
+});
+
+describe('Repository bundler module\'s getDescriptorData()', function () {
+  it('should convert plural componentType names', async () => {
+    fs.promises.readFile.mockImplementationOnce(
+      () => new Promise(resolve => resolve(descriptors.pluralDescriptor)),
+    );
+    const executed = gitBundler.getDescriptorData();
+
+    await expect(executed).resolves.toHaveProperty('components.plugin');
+    await expect(executed).resolves.not.toHaveProperty('components.plugins');
+    await expect(executed).resolves.toHaveProperty('components.widget');
+    await expect(executed).resolves.not.toHaveProperty('components.widgets');
+    await expect(executed).resolves.toHaveProperty('components.fragment');
+    await expect(executed).resolves.not.toHaveProperty('components.fragments');
+    await expect(executed).resolves.toHaveProperty('components.contentType');
+    await expect(executed).resolves.not.toHaveProperty('components.contentTypes');
+    await expect(executed).resolves.toHaveProperty('components.pageTemplate');
+    await expect(executed).resolves.not.toHaveProperty('components.pageTemplates');
+    await expect(executed).resolves.toHaveProperty('components.contentTemplate');
+    await expect(executed).resolves.not.toHaveProperty('components.contentTemplates');
+  });
+
+  it('should convert old nomenclature componentType names', async () => {
+    fs.promises.readFile.mockImplementationOnce(
+      () => new Promise(resolve => resolve(descriptors.oldNomenclatureDescriptor)),
+    );
+    const executed = gitBundler.getDescriptorData();
+
+    await expect(executed).resolves.not.toHaveProperty('components.pageModel');
+    await expect(executed).resolves.not.toHaveProperty('components.pageModels');
+    await expect(executed).resolves.not.toHaveProperty('components.contentModel');
+    await expect(executed).resolves.not.toHaveProperty('components.contentModels');
+    await expect(executed).resolves.toHaveProperty('components.pageTemplate');
+    await expect(executed).resolves.toHaveProperty('components.contentTemplate');
+  });
+
+  it('should skip componentTypes without resources', async () => {
+    fs.promises.readFile.mockImplementationOnce(
+      () => new Promise(resolve => resolve(descriptors.emptyDescriptor)),
+    );
+    const executed = gitBundler.getDescriptorData();
+
+    await expect(executed).resolves.not.toHaveProperty('components.plugin');
+    await expect(executed).resolves.not.toHaveProperty('components.widget');
+    await expect(executed).resolves.not.toHaveProperty('components.fragment');
+    await expect(executed).resolves.not.toHaveProperty('components.contentType');
+    await expect(executed).resolves.not.toHaveProperty('components.pageTemplate');
+    await expect(executed).resolves.not.toHaveProperty('components.contentTemplate');
   });
 });

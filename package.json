@@ -17,7 +17,7 @@
     "entando-bundle": "./bin/index.js"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch",
     "start": "node ./bin/index.js",
     "generate": "node ./bin/index.js generate --dry-run",
     "lint": "eslint ."

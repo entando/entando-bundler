@@ -36,8 +36,9 @@ program
   .option('--thumbnail-url <thumb_url>', 'A URL hosting the image to use as a thumbnail for the bundle')
   .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
   .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
-  .option('--dry-run', 'Print the output instead of create the custom resource automatically')
-  .requiredOption('--repository <repository>', 'Repository URL to be sued for bundle creation')
+  .option('-d, --dry-run', 'Print the output instead of create the custom resource automatically')
+  .option('--no-tags', 'Create bundle even if repository tags are not available')
+  .requiredOption('-r, --repository <repository>', 'Repository URL to be sued for bundle creation')
   .action(generateFromGit);
 
 program.parse(process.argv);

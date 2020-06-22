@@ -26,7 +26,22 @@
       "args": [
         "from-git",
         "--namespace=entando",
-        "--repository=https://github.com/rimselis/pda-ecr-bundle",
+        "--repository=https://github.com/rimselis/ecr-bundle-pda",
+        "--dry-run"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Remote tagless repository bundle",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": [
+        "from-git",
+        "--namespace=entando",
+        "--repository=https://github.com/rimselis/ecr-bundle-pda-tagless",
         "--dry-run"
       ],
       "skipFiles": [

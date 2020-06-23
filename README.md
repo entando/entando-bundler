@@ -37,3 +37,7 @@ entando-bundle from-git --help
 ### Tag sorting and filtration
 
 Currently, tags are sorted using semver logic and are filtered out using  `/^v?\d+\.\d+.\d+/` regex, which would match tags like: `v2.0.0`, `v1.0.12`, `v2.0.1-rc`, etc.
+
+### Thumbnails
+
+Thumbnail URLs (`--thumbnail-url` option) have to be surrounded with quotation marks.

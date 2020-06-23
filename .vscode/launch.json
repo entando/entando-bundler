@@ -26,7 +26,8 @@
       "args": [
         "from-git",
         "--namespace=entando",
-        "--repository=https://github.com/rimselis/pda-ecr-bundle",
+        "--repository=https://github.com/rimselis/ecr-bundle-pda",
+        "--thumbnail-url=https://www.gravatar.com/avatar/c8d33cd141d249abed5fb202dc47b281?s=328&d=identicon&r=PG",
         "--dry-run"
       ],
       "skipFiles": [

@@ -98,6 +98,14 @@ describe('Repository bundler module\'s getRepositoryData()', function () {
       expect(execCommand).toHaveBeenCalledTimes(1);
       await expect(executed).resolves.toBe(passedObject);
     });
+
+    it('should skip git tags if --no-tags is provided', async () => {
+      const repositoryData = await gitBundler.getRepositoryData({ tags: false });
+
+      expect(repositoryData).toHaveProperty('tags', []);
+      expect(repositoryData).toHaveProperty('latestTag', undefined);
+      expect(repositoryData).toHaveProperty('fetchUrl', undefined);
+    });
   });
 
   describe('for repository without tags', function () {

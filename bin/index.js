@@ -37,7 +37,7 @@ program
   .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
   .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
   .option('-d, --dry-run', 'Print the output instead of create the custom resource automatically')
-  .option('--no-tags', 'Create bundle even if repository tags are not available')
+  .option('--no-tags', 'Create bundle without tags, can be used when repository does not have tags available')
   .requiredOption('-r, --repository <repository>', 'Repository URL to be sued for bundle creation')
   .action(generateFromGit);
 

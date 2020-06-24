@@ -21,8 +21,8 @@ program.description("A tool to interact with Entando's Digital-Exchange bundles"
 program
   .command('from-npm <module>')
   .description('Generates an Entando\'s Content Digital-Exchange bundle k8s custom resource')
-  .option('--thumbnail-file <thumb_file>', 'A file to use as a thumbnail for the bundle')
-  .option('--thumbnail-url <thumb_url>', 'A URL hosting the image to use as a thumbnail for the bundle')
+  .option('--thumbnail-file <thumbnailFile>', 'A file to use as a thumbnail for the bundle')
+  .option('--thumbnail-url <thumbnailUrl>', 'A URL hosting the image to use as a thumbnail for the bundle. URL must be surrounded with quotation marks.')
   .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
   .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
   .option('--dry-run', 'Print the output instead of create the custom resource automatically')
@@ -32,8 +32,8 @@ program
 program
   .command('from-git')
   .description('Generates an Entando\'s Content Digital-Exchange bundle k8s custom resource using repository')
-  .option('--thumbnail-file <thumb_file>', 'A file to use as a thumbnail for the bundle')
-  .option('--thumbnail-url <thumb_url>', 'A URL hosting the image to use as a thumbnail for the bundle')
+  .option('--thumbnail-file <thumbnailFile>', 'A file to use as a thumbnail for the bundle')
+  .option('--thumbnail-url <thumbnailUrl>', 'An URL hosting the image to use as a thumbnail for the bundle. URL must be surrounded with quotation marks.')
   .option('--name <name>', 'The name to give to the EntandoDigitalExchangeBundle')
   .option('--namespace <namespace>', 'The namespace where the EntandoDigitalExchangeBundle will be created')
   .option('-d, --dry-run', 'Print the output instead of create the custom resource automatically')

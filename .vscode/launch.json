@@ -27,6 +27,53 @@
         "from-git",
         "--namespace=entando",
         "--repository=https://github.com/rimselis/ecr-bundle-pda",
+        "--dry-run"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Remote repository bundle with --no-tags",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": [
+        "from-git",
+        "--namespace=entando",
+        "--repository=https://github.com/rimselis/ecr-bundle-pda",
+        "--no-tags",
+        "--dry-run"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Remote tagless repository bundle",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": [
+        "from-git",
+        "--namespace=entando",
+        "--repository=https://github.com/rimselis/ecr-bundle-pda-tagless",
+        "--dry-run"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Remote tagless repository bundle with --no-tags",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": [
+        "from-git",
+        "--namespace=entando",
+        "--repository=https://github.com/rimselis/ecr-bundle-pda-tagless",
+        "--no-tags",
         "--thumbnail-url=https://www.gravatar.com/avatar/c8d33cd141d249abed5fb202dc47b281?s=328&d=identicon&r=PG",
         "--dry-run"
       ],

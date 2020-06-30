@@ -30,7 +30,7 @@ describe('Repository bundler module\'s cloneRepository()', function () {
 
     const execCommand = childProcess.exec;
     expect(execCommand).toHaveBeenCalledTimes(1);
-    expect(execCommand.mock.calls[0][0]).toMatch(`git clone -n ${REPO} . --depth 1`);
+    expect(execCommand.mock.calls[0][0]).toMatch(`git clone -n ${REPO} .`);
     expect(execCommand.mock.calls[0][0]).toMatch('git checkout HEAD descriptor.yaml');
   });
 });

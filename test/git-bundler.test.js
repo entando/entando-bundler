@@ -61,8 +61,9 @@ describe('Repository bundler module\'s removeRepository()', function () {
 
 describe('Repository bundler module\'s getRepositoryData()', function () {
   describe('for repository with tags', function () {
-    const MOCK_GIT_TAGS_STDOUT = '1.0.0\n1.1.1\nv1.2.3\nsome-feature-tag\n0.0.1-rc';
-    const MOCK_GIT_TAGS_PARSED = JSON.stringify(['1.0.0', '1.1.1', 'v1.2.3', '0.0.1-rc']);
+    const MOCK_GIT_TAGS_STDOUT = 'refs/tags/v0.0.12,Thu Jul 16 13:11:40 2020 +0300\nrefs/tags/v0.0.2,Tue Jun 30 13:38:03 2020 +0300\nrefs/tags/v0.0.1,Mon Jun 22 11:15:27 2020 +0300\nrefs/tags/0.0.1,Mon Jun 22 11:15:27 2020 +0300\n';
+    const MOCK_GIT_TAGS_PARSED = JSON.stringify([['v0.0.12', '2020-07-16T10:11:40.000Z'], ['v0.0.2', '2020-06-30T10:38:03.000Z'], ['v0.0.1', '2020-06-22T08:15:27.000Z'], ['0.0.1', '2020-06-22T08:15:27.000Z']]);
+
     beforeEach(() => {
       childProcess.exec.mockClear();
       childProcess.exec
@@ -75,7 +76,7 @@ describe('Repository bundler module\'s getRepositoryData()', function () {
       const execCommands = childProcess.exec;
 
       expect(execCommands).toHaveBeenCalledTimes(1);
-      expect(execCommands.mock.calls[0][0]).toMatch('git tag');
+      expect(execCommands.mock.calls[0][0]).toMatch('git for-each-ref');
     });
 
     it('should parse and filter git tags', async () => {

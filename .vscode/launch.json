@@ -2,6 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Test inquirer",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index-inquirer.js",
+      "args": [
+        "env.json"
+      ]
+    },
+    {
       "name": "Registry bundle",
       "type": "node",
       "request": "launch",
@@ -14,9 +23,7 @@
         "--namespace=entando",
         "--dry-run"
       ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Remote repository bundle",
@@ -29,9 +36,7 @@
         "--repository=https://github.com/rimselis/ecr-bundle-pda",
         "--dry-run"
       ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Remote repository bundle with --no-tags",
@@ -45,9 +50,7 @@
         "--no-tags",
         "--dry-run"
       ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Remote tagless repository bundle",
@@ -60,9 +63,7 @@
         "--repository=https://github.com/rimselis/ecr-bundle-pda-tagless",
         "--dry-run"
       ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Remote tagless repository bundle with --no-tags",
@@ -77,9 +78,7 @@
         "--thumbnail-url=https://www.gravatar.com/avatar/c8d33cd141d249abed5fb202dc47b281?s=328&d=identicon&r=PG",
         "--dry-run"
       ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
-    },
+      "skipFiles": ["<node_internals>/**"]
+    }
   ]
 }

@@ -109,15 +109,11 @@ const questions = [
     name: 'componentType',
     message: 'Which type of components you want to add to the bundle?',
     choices: [
-      { name: 'Microfrontends / Widgets', value: 'widget' },
+      { name: 'Pages', value: 'page' },
       { name: 'Page templates', value: 'pageTemplate' },
       { name: 'UX Fragments', value: 'fragment' },
-<<<<<<< HEAD
+      { name: 'Microfrontends / Widgets', value: 'widget' },
       { name: 'Microservices', value: 'microservice' },
-=======
-      { name: 'Pages', value: 'page' },
-      // {name:'Microservices', value: 'microservice'},
->>>>>>> 09d86b8... Added menu item for pages and fetched keycloak url from entando-core instead of env.json.
       { name: 'Content Templates', value: 'contentTemplate' },
       { name: 'Content Types', value: 'contentType' },
     ],

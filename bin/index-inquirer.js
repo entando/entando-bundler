@@ -11,17 +11,17 @@ const envContent = JSON.parse(fs.readFileSync(envFile));
 const { coreBaseApi, k8ssvcApi, clientId, clientSecret, tokenUrl } = envContent;
 
 const apiUrlTable = {
-  widget: `${coreBaseApi}/widgets`,
-  pageTemplate: `${coreBaseApi}/pageModels`,
-  fragment: `${coreBaseApi}/fragments`,
-  contentType: `${coreBaseApi}/plugins/cms/contentTypes`,
-  contentTemplate: `${coreBaseApi}/plugins/cms/contentmodels`,
+  widget: `${coreBaseApi}/api/widgets`,
+  pageTemplate: `${coreBaseApi}/api/pageModels`,
+  fragment: `${coreBaseApi}/api/fragments`,
+  page: `${coreBaseApi}/api/pages?status=published`,
+  contentType: `${coreBaseApi}/api/plugins/cms/contentTypes`,
+  contentTemplate: `${coreBaseApi}/api/plugins/cms/contentmodels`,
   microservice: `${k8ssvcApi}/plugins`,
-
 };
 
 const componentDetailExtractors = {
-  widget: (components) =>
+  page: (components) =>
     components.map((c) => {
       return { value: c.code, name: `${c.titles.en} (${c.code})` };
     }),
@@ -32,6 +32,10 @@ const componentDetailExtractors = {
   fragment: (components) =>
     components.map((c) => {
       return { value: c.code, name: c.code };
+    }),
+  widget: (components) =>
+    components.map((c) => {
+      return { value: c.code, name: `${c.titles.en} (${c.code})` };
     }),
   contentType: (components) =>
     components.map((c) => {
@@ -54,6 +58,9 @@ const urlEncoder = function (payload) {
 };
 
 const getToken = async function () {
+  const keycloakResponse = await axios.get(coreBaseApi + '/keycloak.json')
+  const tokenUrl =  keycloakResponse.data['auth-server-url'] + '/realms/entando/protocol/openid-connect/token'
+
   const payload = {
     client_id: clientId,
     client_secret: clientSecret,
@@ -105,7 +112,12 @@ const questions = [
       { name: 'Microfrontends / Widgets', value: 'widget' },
       { name: 'Page templates', value: 'pageTemplate' },
       { name: 'UX Fragments', value: 'fragment' },
+<<<<<<< HEAD
       { name: 'Microservices', value: 'microservice' },
+=======
+      { name: 'Pages', value: 'page' },
+      // {name:'Microservices', value: 'microservice'},
+>>>>>>> 09d86b8... Added menu item for pages and fetched keycloak url from entando-core instead of env.json.
       { name: 'Content Templates', value: 'contentTemplate' },
       { name: 'Content Types', value: 'contentType' },
     ],

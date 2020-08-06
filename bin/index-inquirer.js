@@ -8,7 +8,7 @@ var componentCache = {};
 const envFile = process.argv[2];
 const envContent = JSON.parse(fs.readFileSync(envFile));
 
-const { coreBaseApi, clientId, clientSecret, tokenUrl } = envContent;
+const { coreBaseApi, k8ssvcApi, clientId, clientSecret, tokenUrl } = envContent;
 
 const apiUrlTable = {
   widget: `${coreBaseApi}/widgets`,
@@ -16,6 +16,8 @@ const apiUrlTable = {
   fragment: `${coreBaseApi}/fragments`,
   contentType: `${coreBaseApi}/plugins/cms/contentTypes`,
   contentTemplate: `${coreBaseApi}/plugins/cms/contentmodels`,
+  microservice: `${k8ssvcApi}/plugins`,
+
 };
 
 const componentDetailExtractors = {
@@ -38,6 +40,10 @@ const componentDetailExtractors = {
   contentTemplate: (components) =>
     components.map((c) => {
       return { value: c.id, name: `${c.descr} (${c.id})` };
+    }),
+  microservice: (components) =>
+    components.map((c) => {
+      return { value: c.metadata.name, name: `${c.spec.image} (${c.metadata.name})` };
     }),
 };
 
@@ -69,7 +75,14 @@ const getComponents = async function (type) {
       Authorization: `Bearer ${token}`,
     },
   });
-  return res.data.payload;
+  let components = [];
+  // TODO this selection based on type is not ideal
+  if (type === 'microservice') {
+    components = res.data._embedded.entandoPlugins;
+  } else {
+    components = res.data.payload;
+  }
+  return components;
 };
 
 const hasProperty = function (obj, prop) {
@@ -92,7 +105,7 @@ const questions = [
       { name: 'Microfrontends / Widgets', value: 'widget' },
       { name: 'Page templates', value: 'pageTemplate' },
       { name: 'UX Fragments', value: 'fragment' },
-      // {name:'Microservices', value: 'microservice'},
+      { name: 'Microservices', value: 'microservice' },
       { name: 'Content Templates', value: 'contentTemplate' },
       { name: 'Content Types', value: 'contentType' },
     ],

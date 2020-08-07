@@ -33,11 +33,13 @@
     "axios": "^0.19.2",
     "base64-img": "^1.0.4",
     "commander": "^4.1.0",
+    "inquirer-file-path": "^1.0.1",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "package-json": "^6.5.0",
     "prettyjson": "^1.2.1",
+    "valid-url": "^1.0.9",
     "yaml": "^1.9.2"
   },
   "devDependencies": {

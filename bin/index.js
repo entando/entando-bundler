@@ -2,15 +2,16 @@
 
 const program = require('commander');
 
-const { generateFromNpm, generateFromGit } = require('../lib/actions');
+const { generateFromNpm, generateFromGit, generateInteractive } = require('../lib/actions');
 const version = require('../package.json').version;
 
-function validateOrExit (validation) {
-  if (!validation) {
-    program.outputHelp();
-    process.exit(1);
-  }
-}
+// function validateOrExit (validation) {
+//   if (!validation) {
+//     console.log("I'm here");
+//     program.outputHelp();
+//     process.exit(1);
+//   }
+// }
 
 program.storeOptionsAsProperties(false);
 program.passCommandToAction(false);
@@ -41,9 +42,14 @@ program
   .requiredOption('-r, --repository <repository>', 'Repository URL to be sued for bundle creation')
   .action(generateFromGit);
 
-program.parse(process.argv);
-validateOrExit(
-  program.rawArgs[2] === 'from-git'
-    ? program.args.length === 0
-    : program.args.length > 0,
-);
+if (process.argv.length > 2) {
+  program.parse(process.argv);
+} else {
+  generateInteractive();
+}
+
+// validateOrExit((program => )
+//   program.rawArgs[2] === 'from-git'
+//     ? program.args.length === 0
+//     : program.args.length > 0,
+// );

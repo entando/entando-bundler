@@ -12,6 +12,13 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "Test interactive",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index.js",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Registry bundle",
       "type": "node",
       "request": "launch",

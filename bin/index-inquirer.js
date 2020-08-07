@@ -8,7 +8,7 @@ var componentCache = {};
 const envFile = process.argv[2];
 const envContent = JSON.parse(fs.readFileSync(envFile));
 
-const { coreBaseApi, k8ssvcApi, clientId, clientSecret, tokenUrl } = envContent;
+const { coreBaseApi, k8ssvcApi, clientId, clientSecret } = envContent;
 
 const apiUrlTable = {
   widget: `${coreBaseApi}/api/widgets`,
@@ -58,8 +58,8 @@ const urlEncoder = function (payload) {
 };
 
 const getToken = async function () {
-  const keycloakResponse = await axios.get(coreBaseApi + '/keycloak.json')
-  const tokenUrl =  keycloakResponse.data['auth-server-url'] + '/realms/entando/protocol/openid-connect/token'
+  const keycloakResponse = await axios.get(coreBaseApi + '/keycloak.json');
+  const tokenUrl = keycloakResponse.data['auth-server-url'] + '/realms/entando/protocol/openid-connect/token';
 
   const payload = {
     client_id: clientId,
@@ -92,11 +92,25 @@ const getComponents = async function (type) {
   return components;
 };
 
+const collectAllComponents = async function () {
+  const allComponents = {};
+  for (const ct in apiUrlTable) {
+    console.log(`Collecting ${ct}s`);
+    const cmp = await getComponents(ct);
+    const dtls = componentDetailExtractors[ct](cmp);
+    if (!hasProperty(allComponents, ct)) {
+      allComponents[ct] = new Set();
+    }
+    allComponents[ct] = dtls.map(d => d.value);
+  }
+  return allComponents;
+};
+
 const hasProperty = function (obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
 
-const questions = [
+const collectQuestions = [
   {
     type: 'confirm',
     name: 'addComponents',
@@ -109,6 +123,7 @@ const questions = [
     name: 'componentType',
     message: 'Which type of components you want to add to the bundle?',
     choices: [
+      { name: 'All components', value: 'all' },
       { name: 'Pages', value: 'page' },
       { name: 'Page templates', value: 'pageTemplate' },
       { name: 'UX Fragments', value: 'fragment' },
@@ -120,7 +135,7 @@ const questions = [
   },
   {
     when: (answers) =>
-      answers.addComponents === true && answers.componentType !== null,
+      answers.addComponents === true && answers.componentType !== 'all',
     type: 'checkbox',
     name: 'components',
     message: 'Which widgets do you want to include in the bundle?',
@@ -141,18 +156,57 @@ const questions = [
   },
 ];
 
+const reviewQuestions = [
+  {
+    type: 'confirm',
+    name: 'reviewComponents',
+    message: 'Do you want to review all the selected components for a final check?',
+    default: true,
+  },
+  {
+    when: (answers) => answers.reviewComponents === true,
+    type: 'checkbox',
+    name: 'reviewedComponents',
+    message: 'Select the components you want to keep for the bundle?',
+    choices: async (answers) => {
+      const allChoices = [];
+      for (const ct in allAnswers) {
+        const cmps = Array.from(allAnswers[ct]);
+        allChoices.push(new inquirer.Separator(ct));
+        allChoices.push(...cmps.map(v => { return { value: `${ct}|${v}`, name: `${v}` }; }));
+      }
+      return allChoices;
+    },
+    default: async (answers) => {
+      const allValues = [];
+      for (const ct in allAnswers) {
+        const cmps = Array.from(allAnswers[ct]);
+        allValues.push(...cmps.map(v => `${ct}|${v}`));
+      }
+      return allValues;
+    },
+  },
+];
+
 async function main () {
   try {
-    let answers = await inquirer.prompt(questions);
+    let answers = await inquirer.prompt(collectQuestions);
     while (answers.addComponents) {
       const ct = answers.componentType;
-      const comps = answers.components;
-      if (!hasProperty(allAnswers, ct)) {
-        allAnswers[ct] = new Set();
+      if (ct === 'all') {
+        console.log('Collecting all components from the provided env...');
+        allAnswers = await collectAllComponents();
+        break;
+      } else {
+        const comps = answers.components;
+        if (!hasProperty(allAnswers, ct)) {
+          allAnswers[ct] = new Set();
+        }
+        comps.forEach((c) => allAnswers[ct].add(c));
+        answers = await inquirer.prompt(collectQuestions);
       }
-      comps.forEach((c) => allAnswers[ct].add(c));
-      answers = await inquirer.prompt(questions);
     }
+    answers = await inquirer.prompt(reviewQuestions);
     console.log(allAnswers);
     console.log('Goodbye');
   } catch (error) {

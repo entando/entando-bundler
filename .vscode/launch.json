@@ -2,16 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Test inquirer",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/bin/index-inquirer.js",
-      "args": [
-        "env.json"
-      ],
-      "console": "integratedTerminal"
-    },
-    {
       "name": "Test interactive",
       "type": "node",
       "request": "launch",

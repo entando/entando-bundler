@@ -1,38 +1,94 @@
 # Entando Bundle CLI
 
 ## Purpose
-This CLI application has the purpose of converting EntandoBundles published as an NPM module into EntandoDEBundle custom resource for Entando 6 digital-exchange consumption
+This CLI application has the purpose of helping with operations regarding Entando Bundles.
 
-For details on EntandoBundles structure, how to compose them and publish them to an NPM registry, please refer to the documentation in the [entando-sample-bundle](https://github.com/entando-k8s/entando-sample-bundle)
+It can be run as an interactive terminal application or as a single command for scripting.
 
-## Install the CLI globally
-To install the tool globally for development
+At this moment, these are the supported functions:
+- Converting an existing Bundle package from a Git repository or NPM registry (deprecated) into a Kubernetes Custom Resource (EntandoDeBundle).
+- (Still in beta) Creating a Bundle package based on an existing environment.
+
+For details on EntandoBundle package structure or how to publish it to a Git repository, please refer to the documentation in the [entando-sample-bundle](https://github.com/entando-k8s/entando-sample-bundle).
+
+Also check the [Standard Demo Bundle](https://github.com/entando/standard-demo-bundle) for an example of a Bundle generated using this tool.
+
+## Install
+To install this cli tool globally:
 ```
 npm install -g ./
 ```
 
-This CLI tool is able to convert npm module(s) into EntandoDeBundle custom resources. You can see the help for the tool by invoking the `--help` command
+## Usage
 
+This tool can be ran both as an interactive cli terminal application ([inquirer.js](https://github.com/SBoudrias/Inquirer.js)) or as a single command for scripting purposes ([commander.js](https://github.com/tj/commander.js)).
+
+`$ entando-bundle` for interactive or `$ entando-bundle <command> <options>` for single command
+
+## Generating Bundles from an existing environment:
+Create an `env.json` file with the configurations for the environment to extract the components:
 ```
-entando-bundle --help
+{
+    "coreBaseApi": "http://quickstart-sales-demo.lab.entando.org/entando-de-app",
+    "k8ssvcApi": "http://quickstart-eci-sales-demo.lab.entando.org/k8s",
+    "clientId": "entando-bundle-cli",
+    "clientSecret": "<insert_secret_here>"
+}
 ```
 
-To generate a bundle using npm repository you can use the `from-npm` command. Check the details for the generate command
+### Interactive command:
 ```
-entando-bundle from-npm --help
+$ entando-bundle
+? What do you want to do? Create a new bundle using components from an environment
+? Please select an env.json file with the environment variables: env.json
+? Which type of components do you want to add to the bundle? All components
+Collecting all components from the provided environment...
+Collecting widgets
+Collecting pageModels
+Collecting fragments
+Collecting pages
+Collecting contentTypes
+Collecting contentModels
+Collecting plugins
+? Do you want to generate the Bundle with the selected components? Yes
+? Where do you want to generate the Bundle? ./
+? What's the code for the Bundle? standard-demo-bundle
+? Please add a description to the Bundle: Standard Demo Bundle
+Generating bundle...
 ```
 
-To generate a bundle using git repository you can use the `from-git` command. Check the details for the generate command
+### Single command:
 ```
-entando-bundle from-git --help
+$ entando-bundle from-env \
+    --env env.json \
+    --code standard-demo-bundle \
+    --description "Standard Demo Bundle"
 ```
 
+For more details, please refer to:
+```
+entando-bundle from-env --help
+```
 
-### entando-bundle from-git
+## Generate a Kubernetes Custom Resource (EntandoDeApp) from a git repository:
+```
+$ entando-bundle from-git \
+	--thumbnail-file <thumbnail_file_path> \
+	--name <bundle_code> \
+	--namespace <k8s_namespace> \
+	--repository <git_repository_url>
+	--dry-run
+```
 
 `--repository` option will clone the repository to `/tmp/tmp-ecr-bundle-repo_<TIMESTAMP>` folder, gather the needed information and will remove the folder.
 
-`descriptor.yaml` is expected to be at the root of repository or repository path.
+`descriptor.yaml` is expected to be at the root of the repository.
+
+For more details, please refer to:
+```
+entando-bundle from-git help
+```
+
 
 ### Tag sorting and filtration
 
@@ -41,3 +97,9 @@ Currently, tags are sorted using semver logic and are filtered out using  `/^v?\
 ### Thumbnails
 
 Thumbnail URLs (`--thumbnail-url` option) have to be surrounded with quotation marks.
+
+## (Deprecated) Generate a Kubernetes Custom Resource (EntandoDeApp) from an npm registry:
+```
+entando-bundle from-npm --help
+```
+

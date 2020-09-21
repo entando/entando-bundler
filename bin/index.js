@@ -2,7 +2,7 @@
 
 const program = require('commander');
 
-const { generateFromNpm, generateFromGit, generateFromEnv, generateInteractivly } = require('../lib/actions');
+const { generateFromNpm, generateFromGit, generateFromEnv, generateInteractively } = require('../lib/actions');
 const version = require('../package.json').version;
 
 program.storeOptionsAsProperties(false);
@@ -46,5 +46,5 @@ program
 if (process.argv.length > 2) {
   program.parse(process.argv);
 } else {
-  generateInteractivly();
+  generateInteractively();
 }

@@ -1,7 +1,7 @@
-# Entando Bundle CLI
+# Entando Bundle Application
 
 ## Purpose
-This CLI application has the purpose of helping with operations regarding Entando Bundles.
+This application has the purpose of helping with operations regarding Entando Bundles.
 
 It can be run as an interactive terminal application or as a single command for scripting.
 
@@ -14,14 +14,14 @@ For details on EntandoBundle package structure or how to publish it to a Git rep
 Also check the [Standard Demo Bundle](https://github.com/entando/standard-demo-bundle) for an example of a Bundle generated using this tool.
 
 ## Install
-To install this cli tool globally:
+To install this tool globally:
 ```
 npm install -g ./
 ```
 
 ## Usage
 
-This tool can be ran both as an interactive cli terminal application ([inquirer.js](https://github.com/SBoudrias/Inquirer.js)) or as a single command for scripting purposes ([commander.js](https://github.com/tj/commander.js)).
+This tool can be ran both as an interactive terminal application ([inquirer.js](https://github.com/SBoudrias/Inquirer.js)) or as a single command for scripting purposes ([commander.js](https://github.com/tj/commander.js)).
 
 `$ entando-bundle` for interactive or `$ entando-bundle <command> <options>` for single command
 

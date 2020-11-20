@@ -8,7 +8,7 @@ It can be run as an interactive terminal application or as a single command for 
 At this moment, these are the supported functions:
 - Converting an existing Bundle package from a Git repository or NPM registry (deprecated) into a Kubernetes Custom Resource (EntandoDeBundle).
 - Creating a Bundle package based on an existing environment.
-
+  
 For details on EntandoBundle package structure or how to publish it to a Git repository, please refer to the documentation in the [entando-sample-bundle](https://github.com/entando-k8s/entando-sample-bundle).
 
 Also check the [Standard Demo Bundle](https://github.com/entando/standard-demo-bundle) for a full example of a Bundle generated using this tool.
@@ -31,10 +31,13 @@ Create an `env.json` file with the configurations for the environment to extract
 {
     "coreBaseApi": "http://quickstart-sales-demo.lab.entando.org/entando-de-app",
     "k8ssvcApi": "http://quickstart-eci-sales-demo.lab.entando.org/k8s",
-    "clientId": "entando-bundle-cli",
+    "clientId": "entando-bundler",
     "clientSecret": "<insert_secret_here>"
 }
 ```
+
+Note:
+the clientId "entando-bundler" should be manually added to the keycloak of the source environment.
 
 ### Interactive command:
 ```

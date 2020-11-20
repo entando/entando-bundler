@@ -1,11 +1,11 @@
 {
-  "name": "@entando/entando-bundle-cli",
+  "name": "@entando/entando-bundler",
   "version": "6.1.0",
   "license": "LGPL-3.0",
-  "description": "Command line interface to generate Entando Bundle custom resources",
+  "description": "Command line interface to generate Entando Bundles",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/entando-k8s/entando-bundle-cli"
+    "url": "git+https://github.com/entando/entando-bundler"
   },
   "homepage": "https://www.entando.com",
   "author": {
@@ -14,7 +14,7 @@
   },
   "main": "./lib/actions.js",
   "bin": {
-    "entando-bundle": "./bin/index.js"
+    "entando-bundler": "./bin/index.js"
   },
   "scripts": {
     "test": "jest --watch",
@@ -24,7 +24,9 @@
   },
   "keywords": [
     "entando",
-    "digital-exchange",
+    "ecr",
+    "repository",
+    "component",
     "bundle",
     "k8s"
   ],
@@ -63,7 +65,7 @@
   },
   "readme": "README.md",
   "bugs": {
-    "url": "https://github.com/entando-k8s/entando-bundle-cli/issues"
+    "url": "https://github.com/entando/entando-bundler/issues"
   },
   "husky": {
     "hooks": {

@@ -1,4 +1,4 @@
-# Entando Bundle Application
+# Entando Bundler
 
 ## Purpose
 This application has the purpose of helping with operations regarding Entando Bundles.
@@ -7,11 +7,11 @@ It can be run as an interactive terminal application or as a single command for 
 
 At this moment, these are the supported functions:
 - Converting an existing Bundle package from a Git repository or NPM registry (deprecated) into a Kubernetes Custom Resource (EntandoDeBundle).
-- (Still in beta) Creating a Bundle package based on an existing environment.
+- Creating a Bundle package based on an existing environment.
 
 For details on EntandoBundle package structure or how to publish it to a Git repository, please refer to the documentation in the [entando-sample-bundle](https://github.com/entando-k8s/entando-sample-bundle).
 
-Also check the [Standard Demo Bundle](https://github.com/entando/standard-demo-bundle) for an example of a Bundle generated using this tool.
+Also check the [Standard Demo Bundle](https://github.com/entando/standard-demo-bundle) for a full example of a Bundle generated using this tool.
 
 ## Install
 To install this tool globally:
@@ -23,7 +23,7 @@ npm install -g ./
 
 This tool can be ran both as an interactive terminal application ([inquirer.js](https://github.com/SBoudrias/Inquirer.js)) or as a single command for scripting purposes ([commander.js](https://github.com/tj/commander.js)).
 
-`$ entando-bundle` for interactive or `$ entando-bundle <command> <options>` for single command
+`$ entando-bundler` for interactive or `$ entando-bundler <command> <options>` for single command
 
 ## Generating Bundles from an existing environment:
 Create an `env.json` file with the configurations for the environment to extract the components:

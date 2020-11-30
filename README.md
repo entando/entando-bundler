@@ -41,7 +41,7 @@ the clientId "entando-bundler" should be manually added to the keycloak of the s
 
 ### Interactive command:
 ```
-$ entando-bundle
+$ entando-bundler
 ? What do you want to do? Create a new bundle using components from an environment
 ? Please select an env.json file with the environment variables: env.json
 ? Which type of components do you want to add to the bundle? All components
@@ -62,7 +62,7 @@ Generating bundle...
 
 ### Single command:
 ```
-$ entando-bundle from-env \
+$ entando-bundler from-env \
     --env env.json \
     --code standard-demo-bundle \
     --description "Standard Demo Bundle"
@@ -70,12 +70,12 @@ $ entando-bundle from-env \
 
 For more details, please refer to:
 ```
-entando-bundle from-env --help
+entando-bundler from-env --help
 ```
 
 ## Generate a Kubernetes Custom Resource (EntandoDeApp) from a git repository:
 ```
-$ entando-bundle from-git \
+$ entando-bundler from-git \
 	--thumbnail-file <thumbnail_file_path> \
 	--name <bundle_code> \
 	--namespace <k8s_namespace> \
@@ -89,7 +89,7 @@ $ entando-bundle from-git \
 
 For more details, please refer to:
 ```
-entando-bundle from-git help
+entando-bundler from-git help
 ```
 
 
@@ -103,6 +103,6 @@ Thumbnail URLs (`--thumbnail-url` option) have to be surrounded with quotation m
 
 ## (Deprecated) Generate a Kubernetes Custom Resource (EntandoDeApp) from an npm registry:
 ```
-entando-bundle from-npm --help
+entando-bundler from-npm --help
 ```
 

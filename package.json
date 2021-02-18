@@ -33,6 +33,8 @@
   "dependencies": {
     "@kubernetes/client-node": "^0.11.0",
     "axios": "^0.19.2",
+    "axios-concurrency": "^1.0.4",
+    "axios-debug-log": "^0.8.2",
     "axios-retry": "^3.1.8",
     "base64-img": "^1.0.4",
     "cli-highlight": "^2.1.4",

@@ -31,15 +31,15 @@
     "k8s"
   ],
   "dependencies": {
-    "@kubernetes/client-node": "^0.11.0",
-    "axios": "^0.19.2",
+    "@kubernetes/client-node": "^0.14.3",
+    "axios": "^0.21.1",
     "axios-retry": "^3.1.8",
     "base64-img": "^1.0.4",
     "cli-highlight": "^2.1.4",
     "commander": "^4.1.0",
     "inquirer-file-path": "^1.0.1",
     "js-yaml": "^3.13.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.0",
     "object-mapper": "^6.2.0",
     "package-json": "^6.5.0",
@@ -57,7 +57,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.5",
-    "inquirer": "^7.3.3",
+    "inquirer": "^8.1.0",
     "jest": "^25.3.0"
   },
   "publishConfig": {

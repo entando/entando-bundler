@@ -12,4 +12,4 @@ COPY . .
 # COPY docker-entrypoint.sh ./
 ENV REGISTRY=http://registry.npmjs.org
 
-ENTRYPOINT ["sh", "/usr/src/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/docker-entrypoint.sh"]

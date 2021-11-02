@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@kubernetes/client-node": "^0.14.3",
-    "axios": "^0.21.1",
+    "axios": "^0.23.0",
     "axios-retry": "^3.1.8",
     "base64-img": "^1.0.4",
     "cli-highlight": "^2.1.4",

@@ -3,17 +3,23 @@ const { readFile } = require('./utils');
 const mockedNpmResponses = require('./npm_response_mock');
 
 describe('Bundle naming', () => {
-  it('Should not validate module with organization in the name', () => {
-    const name = '@entando/name';
-    expect(bundle.validateModuleName(name)).toBe(false);
-  });
+  const testCases = {
+    'http://www.github.com/entando/my-bundle.git': 'my-bundle.entando.www.github.com',
+    'http://github.com/entando/my-bundle.git': 'my-bundle.entando.github.com',
+    'http://www.github.com/entando/my-bundle': 'my-bundle.entando.www.github.com',
+    'http://.github.com/entando/my-bundle': 'my-bundle.entando..github.com',
+    'http://www.github.com/entando/my-bundle.': 'my-bundle..entando.www.github.com',
+    'http://www.github.com./entando/my-bundle.': 'my-bundle..entando.www.github.com',
+    'http://www.github.com/entando/.my-bundle': 'my-bundle.entando.www.github.com',
+    'http://github.com/entando/my-bundle/': 'my-bundle.entando.github.com',
+    'http://www.github.com/entando/my-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundle':
+      'my-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundle.entando.www',
+  };
 
-  it('Should fallback to module name if no custom name is provided', () => {
-    expect(bundle.generateModuleName(undefined, { name: 'entando' })).toBe('entando');
-  });
-
-  it('Should use provided name for the module', () => {
-    expect(bundle.generateModuleName('entando', {})).toBe('entando');
+  Object.entries(testCases).forEach(function (keyValue) {
+    it('Should generate the expected moduleName', () => {
+      expect(bundle.generateModuleName(keyValue[0])).toBe(keyValue[1]);
+    });
   });
 });
 

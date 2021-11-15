@@ -12,8 +12,6 @@ describe('Bundle naming', () => {
     'http://www.github.com./entando/my-bundle.': 'my-bundle..entando.www.github.com',
     'http://www.github.com/entando/.my-bundle': 'my-bundle.entando.www.github.com',
     'http://github.com/entando/my-bundle/': 'my-bundle.entando.github.com',
-    'http://www.github.com/entando/my-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundle':
-      'my-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundle.entando.www',
   };
 
   Object.entries(testCases).forEach(function (keyValue) {
@@ -21,6 +19,16 @@ describe('Bundle naming', () => {
       expect(bundle.generateModuleName(keyValue[0])).toBe(keyValue[1]);
     });
   });
+
+  it('Should return an error when the resulting moduleName exceeds 253 chars',
+    async () => {
+
+      let tooLongUrl = 'http://www.github.com/entando/my-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundle';
+      let promise = new Promise((resolve, reject) => {
+        bundle.generateModuleName(tooLongUrl, reject);
+      });
+      expect(promise).rejects.toEqual(new Error('The bundle resulting name is "my-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemymy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundlemy-bundle.entando.www.github.com" but its size exceeds 253 characters'));
+    });
 });
 
 describe('Bundle convertion', () => {

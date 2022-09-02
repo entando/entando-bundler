@@ -1,6 +1,8 @@
 FROM node:14.17-alpine
 
-RUN apk add git
+RUN apk add --no-cache openssh-client git && \
+    mkdir -p /root/.ssh && \
+    touch /root/.ssh/known_hosts
 
 WORKDIR /usr/src/app
 COPY package*.json ./
@@ -12,4 +14,6 @@ COPY . .
 # COPY docker-entrypoint.sh ./
 ENV REGISTRY=http://registry.npmjs.org
 
-ENTRYPOINT ["/usr/src/app/docker-entrypoint.sh"]
+#ENTRYPOINT ["/usr/src/app/docker-entrypoint.sh"]
+
+CMD ssh-agent sh -c "ssh-add ~/.my-key; ssh-keyscan $VCS_SERVER >> ~/.ssh/known_hosts 2>/dev/null; node ./bin/index.js from-git --repository=$GIT_REPOSITORY --namespace=$NAMESPACE --name=$BUNDLE_NAME --dry-run"

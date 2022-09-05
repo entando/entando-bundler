@@ -104,3 +104,29 @@ Thumbnail URLs (`--thumbnail-url` option) have to be surrounded with quotation m
 entando-bundler from-npm --help
 ```
 
+## Docker container usage
+
+The docker image is `entando/bundler:632` .
+
+To use the image we have to pass some ENV vars to inject all the required parameters needed to install the bundle.
+
+The ENV variables are listed below and are all mandatory except the `DRY_RUN` one.
+
+- **VCS_SERVER**: This variable must contain the hostname of the VCS server for the SSH authentication. Common values are: github.com, gitlab.com, bitbucket.org.
+- **GIT_REPOSITORY**: The SSH form of the git repository address: git@github.com:[user|organization]/[YOU PROJECT BUNDLE].git
+- **NAMESPACE**: The namespace of the cluster where the entando operator is installed.
+- **BUNDLE_NAME**: The name of the bundle.
+- **DRY_RUN**: `OPTIONAL` If you want to see the yaml of the generated manifest. The value of this environment variable must be only: `--dry-run`
+
+**IMPORTANT**: To be able to connect to the VCS server in SSH you must mount a volume with the correct SSH key. The key must be copied
+in this path: `/home/node/.my-key:ro` :
+
+```bash
+docker run -it -v ~/.ssh/id_rsa:/home/node/.my-key:ro --rm \
+  -e VCS_SERVER=gitlab.com \
+  -e GIT_REPOSITORY=git@gitlab.com:[USER]/[bundle-project].git \
+  -e NAMESPACE=entando \
+  -e BUNDLE_NAME=[my-bundle] \
+  -e DRY_RUN=--dry-run entando/bundler:632
+```
+

@@ -113,7 +113,7 @@ To use the image we have to pass some ENV vars to inject all the required parame
 The ENV variables are listed below and are all mandatory except the `DRY_RUN` one.
 
 - **VCS_SERVER**: This variable must contain the hostname of the VCS server for the SSH authentication. Common values are: github.com, gitlab.com, bitbucket.org.
-- **GIT_REPOSITORY**: The SSH form of the git repository address: git@github.com:[user|organization]/[YOU PROJECT BUNDLE].git
+- **GIT_REPOSITORY**: The SSH form of the git repository address: git@github.com:[user|organization]/[YOUR PROJECT BUNDLE].git
 - **NAMESPACE**: The namespace of the cluster where the entando operator is installed.
 - **BUNDLE_NAME**: The name of the bundle.
 - **DRY_RUN**: `OPTIONAL` If you want to see the yaml of the generated manifest. The value of this environment variable must be only: `--dry-run`

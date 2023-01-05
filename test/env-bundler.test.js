@@ -14,44 +14,32 @@ const { setupEnvironment, collectAllComponents, generateBundle, ALL_TYPES } = re
 jest.mock('axios');
 
 describe('env-bundler', function () {
+  const testDir = process.cwd();
   let tmpDir;
+  let envFile;
 
   beforeEach(async () => {
     // create test env.json file
     tmpDir = path.resolve(os.tmpdir(), 'env-bundler-test');
     fs.mkdirSync(tmpDir);
-    const envFile = path.resolve(tmpDir, 'env.json');
+    envFile = path.resolve(tmpDir, 'env.json');
     fs.writeFileSync(envFile, JSON.stringify({
       coreBaseApi: 'http://my-server/entando-de-app',
       clientId: 'my-client-id',
       clientSecret: 'my-client-secret',
       componentManagerApi: 'http://my-server/digital-exchange',
     }));
-
-    // mock token
-    axios.get.mockImplementationOnce(() => Promise.resolve({ data: { 'auth-server-url': 'http://keycloak-server' } }));
-    axios.post.mockImplementationOnce(() => Promise.resolve({ data: { access_token: 'token' } }));
-
-    // mock default language
-    axios.get.mockImplementationOnce(() => Promise.resolve({
-      data: {
-        payload: [{ code: 'en', isDefault: true }],
-      },
-    }));
-
-    await setupEnvironment({
-      env: envFile,
-      excludeMicroservices: true,
-    });
-
     process.chdir(tmpDir);
   });
 
   afterEach(() => {
+    process.chdir(testDir);
     fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
   it('Should save resources skipping the directories', async () => {
+    await setupSuccess();
+
     for (const componentType of ALL_TYPES) {
       if (componentType === 'widget') {
         axios.get.mockImplementationOnce(() => Promise.resolve({ data: widgets }));
@@ -95,4 +83,33 @@ describe('env-bundler', function () {
       expect.any(Object),
     );
   });
+
+  it('Should display message about invalid certificate', async () => {
+    const axiosError = new Error('self signed certificate');
+    axiosError.isAxiosError = true;
+    axios.get.mockImplementationOnce(() => Promise.reject(axiosError));
+
+    await expect(setupEnvironment({
+      env: envFile,
+      excludeMicroservices: true,
+    })).rejects.toThrow('Invalid certificate detected. Use the --no-tls-verify flag to skip TLS validation');
+  });
+
+  async function setupSuccess () {
+    // mock token
+    axios.get.mockImplementationOnce(() => Promise.resolve({ data: { 'auth-server-url': 'http://keycloak-server' } }));
+    axios.post.mockImplementationOnce(() => Promise.resolve({ data: { access_token: 'token' } }));
+
+    // mock default language
+    axios.get.mockImplementationOnce(() => Promise.resolve({
+      data: {
+        payload: [{ code: 'en', isDefault: true }],
+      },
+    }));
+
+    await setupEnvironment({
+      env: envFile,
+      excludeMicroservices: true,
+    });
+  }
 });

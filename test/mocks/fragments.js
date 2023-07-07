@@ -1,730 +1,663 @@
 module.exports = {
-  payload: [
-    {
+  payload: [{
+    code: 'breadcrumb',
+    locked: true,
+    widgetType: {
       code: 'breadcrumb',
-      locked: true,
-      widgetType: {
-        code: 'breadcrumb',
-        title: 'Breadcrumbs',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'breadcrumb',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<@wp.currentPage param="code" var="currentViewCode" />\n\n<div class="navbar-position">\n    <nav aria-label="breadcrumb">\n        <ol class="breadcrumb">\n\n            <span class="noscreen">\n                <@wp.i18n key="ESNB_YOU_ARE_HERE" />\n            </span>\n            <#assign first=true>\n            <@wp.nav spec="current.path" var="currentTarget">\n            <#assign currentCode=currentTarget.code>\n\n            <!--            <#if first>\n                        <span class="divider">/</span>\n                        </#if>-->\n\n            <#if !currentTarget.voidPage>\n            <#if (currentCode == currentViewCode)>\n            <li class="breadcrumb-item active" aria-current="page">currentTarget.title</li>\n            <#else>\n            <li class="breadcrumb-item">\n                <a href="currentTarget.url">currentTarget.title</a>\n            </li>\n            </#if>\n            <#else>\n         </#if>\n            <#assign first=false>\n            </@wp.nav>\n        </ol>\n    </nav>\n</div>\n',
+      title: 'Breadcrumbs',
     },
-    {
-      code: 'default_pagerBlock',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n\n<#if (group.size > group.max)>\n\t<div class="pagination pagination-centered">\n\t\t<ul>\n\t\t<#if (1 != group.currItem)>\n\t\t\t<#if (group.advanced)>\n\t\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >1</@wp.parameter></@wp.url>" title="<@wp.i18n key="PAGER_FIRST" />"><i class="icon-fast-backward"></i></a></li>\n\t\t\t\t<#if (1 != group.beginItemAnchor)>\n\t\t\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >group.currItem - group.offset}</@wp.parameter></@wp.url>" title="<@wp.i18n key="PAGER_STEP_BACKWARD" />&#32;group.offset}"><i class="icon-step-backward"></i></a></li>\n\t\t\t\t</#if>\n\t\t\t</#if>\n\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >group.prevItem}</@wp.parameter></@wp.url>"><@wp.i18n key="PAGER_PREV" /></a></li>\n\t\t</#if>\n\t\t<#list group.items as item>\n\t\t<#if (item_index >= (group.beginItemAnchor-1)) && (item_index <= (group.endItemAnchor-1))>\n\t\t\t<#if (item == group.currItem)>\n\t\t\t<li class="active"><a href="#">item}</a></li>\n\t\t\t<#else>\n\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >item}</@wp.parameter></@wp.url>">item}</a></li>\n\t\t\t</#if>\n\t\t</#if>\n\t\t</#list>\n\t\t<#if (group.maxItem != group.currItem)>\n\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >group.nextItem}</@wp.parameter></@wp.url>"><@wp.i18n key="PAGER_NEXT" /></a></li>\n\t\t\t<#if (group.advanced)>\n\t\t\t\t<#if (group.maxItem != group.endItemAnchor)>\n\t\t\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >group.currItem + group.offset}</@wp.parameter></@wp.url>" title="<@wp.i18n key="PAGER_STEP_FORWARD" />&#32;group.offset}"><i class="icon-step-forward"></i></a></li>\n\t\t\t\t</#if>\n\t\t\t\t<li><a href="<@wp.url paramRepeat=true escapeAmp=false ><@wp.parameter name="group.paramItemName}" >group.maxItem}</@wp.parameter></@wp.url>" title="<@wp.i18n key="PAGER_LAST" />"><i class="icon-fast-forward"></i></a></li>\n\t\t\t</#if>\n\t\t</#if>\n\t\t</ul>\n\t</div>\n</#if>',
+    pluginCode: null,
+    widgetTypeCode: 'breadcrumb',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'default_pagerBlock',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'default_pagerFormBlock_is',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n<#assign s=JspTaglibs[\"/struts-tags\"]>\n<@s.if test=\"#group.size > #group.max\">\n<ul class=\"pagination\">\n\t<@s.if test=\"null != #group.pagerId\">\n\t\t<@s.set var=\"pagerIdMarker\" value=\"#group.pagerId\" />\n\t</@s.if>\n\t<@s.else>\n\t\t<@s.set var=\"pagerIdMarker\">pagerItem</@s.set>\n\t</@s.else>\n\t<@s.if test=\"#group.advanced\">\n\t<li>\n\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_1'}\" type=\"button\" disabled=\"%{1 == #group.currItem}\" title=\"%{getText('label.goToFirst')}\">\n\t\t\t<span class=\"icon fa fa-step-backward\"></span>\n\t\t</@wpsf.submit>\n\t</li>\n\t<li>\n\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_' + (#group.currItem - #group.offset) }\" type=\"button\" disabled=\"%{1 == #group.beginItemAnchor}\" title=\"%{getText('label.jump') + ' ' + #group.offset + ' ' + getText('label.backward')}\">\n\t\t\t<span class=\"icon fa fa-fast-backward\"></span>\n\t\t</@wpsf.submit>\n\t</li>\n\t</@s.if>\n\t<li>\n\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_' + #group.prevItem}\" type=\"button\" title=\"%{getText('label.prev.full')}\" disabled=\"%{1 == #group.currItem}\">\n\t\t\t<span class=\"icon fa fa-long-arrow-left\"></span>\n\t\t</@wpsf.submit>\n\t</li>\n\t<@s.subset source=\"#group.items\" count=\"#group.endItemAnchor-#group.beginItemAnchor+1\" start=\"#group.beginItemAnchor-1\">\n\t\t<@s.iterator id=\"item\">\n\t\t\t<li>\n\t\t\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_' + #item}\" type=\"button\" disabled=\"%{#item == #group.currItem}\">\n\t\t\t\t\t<@s.property value=\"%{#item}\" />\n\t\t\t\t</@wpsf.submit>\n\t\t\t</li>\n\t\t</@s.iterator>\n\t</@s.subset>\n\t<li>\n\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_' + #group.nextItem}\" type=\"button\" title=\"%{getText('label.next.full')}\" disabled=\"%{#group.maxItem == #group.currItem}\">\n\t\t\t<span class=\"icon fa fa-long-arrow-right\"></span>\n\t\t</@wpsf.submit>\n\t</li>\n\t<@s.if test=\"#group.advanced\">\n\t<@s.set var=\"jumpForwardStep\" value=\"#group.currItem + #group.offset\"></@s.set>\n\t<li>\n\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_' + (#jumpForwardStep)}\" type=\"button\" disabled=\"%{#group.maxItem == #group.endItemAnchor}\" title=\"%{getText('label.jump') + ' ' + #group.offset + ' ' + getText('label.forward')}\">\n\t\t\t<span class=\"icon fa fa-fast-forward\"></span>\n\t\t</@wpsf.submit>\n\t</li>\n\t<li>\n\t\t<@wpsf.submit name=\"%{#pagerIdMarker + '_' + #group.maxItem}\" type=\"button\" disabled=\"%{#group.maxItem == #group.currItem}\" title=\"%{getText('label.goToLast')}\">\n\t\t\t<span class=\"icon fa fa-step-forward\"></span>\n\t\t</@wpsf.submit>\n\t</li>\n\t</@s.if>\n\t<@s.set var=\"pagerIdMarker\" value=\"null\" />\n</ul>\n</@s.if>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'default_pagerFormBlock_is',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'default_pagerInfo_is',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<p><@s.text name="note.searchIntro" />&#32;<@s.property value="#group.size" />&#32;<@s.text name="note.searchOutro" />.<br />\n<@s.text name="label.page" />: [<@s.property value="#group.currItem" />/<@s.property value="#group.maxItem" />].</p>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'default_pagerInfo_is',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'entandoapi_is_resource_detail',
-      locked: true,
-      widgetType: {
-        code: 'entando_apis',
-        title: 'APIs',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'entando_apis',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<@s.set var=\"apiResourceVar\" value=\"apiResource\" />\n<@s.set var=\"GETMethodVar\" value=\"#apiResourceVar.getMethod\" />\n<@s.set var=\"POSTMethodVar\" value=\"#apiResourceVar.postMethod\" />\n<@s.set var=\"PUTMethodVar\" value=\"#apiResourceVar.putMethod\" />\n<@s.set var=\"DELETEMethodVar\" value=\"#apiResourceVar.deleteMethod\" />\n<@s.set var=\"apiNameVar\" value=\"(#apiResourceVar.namespace!=null && #apiResourceVar.namespace.length()>0 ? '/' + #apiResourceVar.namespace : '')+'/'+#apiResourceVar.resourceName\" />\n<section>\n<p>\n\t<a href=\"<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/list.action\" />\" class=\"btn btn-primary\"><i class=\"icon-arrow-left icon-white\"></i>&#32;<@wp.i18n key=\"ENTANDO_API_GOTO_LIST\" /></a>\n</p>\n<h2><@wp.i18n key=\"ENTANDO_API_RESOURCE\" />&#32;<@s.property value=\"#apiNameVar\" /></h2>\n<@s.if test=\"hasActionMessages()\">\n\t<div class=\"alert alert-box alert-success\">\n\t\t<h3 class=\"alert-heading\"><@wp.i18n key=\"ENTANDO_API_ERROR\" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value=\"actionMessages\">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<@s.if test=\"hasActionErrors()\">\n\t<div class=\"alert alert-box alert-error\">\n\t\t<h3 class=\"alert-heading\"><@wp.i18n key=\"ENTANDO_API_ERROR\" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value=\"actionErrors\">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<!-- DESCRIPTION -->\n<p><@s.property value=\"#apiResourceVar.description\" /></p>\n\n<!-- INFO -->\n<dl class=\"dl-horizontal\">\n\t<dt><@wp.i18n key=\"ENTANDO_API_RESOURCE_NAME\" /></dt>\n\t\t<dd><@s.property value=\"#apiResourceVar.resourceName\" /></dd>\n\t<dt><span lang=\"en\"><@wp.i18n key=\"ENTANDO_API_RESOURCE_NAMESPACE\" /></span></dt>\n\t\t<dd>/<@s.property value=\"#apiResourceVar.namespace\" /></dd>\n\t<dt><@wp.i18n key=\"ENTANDO_API_RESOURCE_SOURCE\" /></dt>\n\t\t<dd>\n\t\t\t<@s.property value=\"#apiResourceVar.source\" /><@s.if test=\"%{#apiResourceVar.pluginCode != null && #apiResourceVar.pluginCode.length() > 0}\">,&#32;<@s.property value=\"%{getText(#apiResourceVar.pluginCode+'.name')}\" />&#32;(<@s.property value=\"%{#apiResourceVar.pluginCode}\" />)</@s.if>\n\t\t</dd>\n\t<dt><@wp.i18n key=\"ENTANDO_API_RESOURCE_URI\" /></dt>\n\t\t<dd>\n\t\t\t<a href=\"<@wp.info key=\"systemParam\" paramName=\"applicationBaseURL\" />api/legacy/<@wp.info key=\"currentLang\" /><@s.if test=\"null != #apiResourceVar.namespace\">/<@s.property value=\"#apiResourceVar.namespace\" /></@s.if>/<@s.property value=\"#apiResourceVar.resourceName\" />\"><@wp.info key=\"systemParam\" paramName=\"applicationBaseURL\" />api/legacy/<@wp.info key=\"currentLang\" /><@s.if test=\"null != #apiResourceVar.namespace\">/<@s.property value=\"#apiResourceVar.namespace\" /></@s.if>/<@s.property value=\"#apiResourceVar.resourceName\" /></a>\n\t\t</dd>\n\t<dt>\n\t\t<@wp.i18n key=\"ENTANDO_API_EXTENSION\" />\n\t</dt>\n\t\t<dd>\n\t\t\t<@wp.i18n key=\"ENTANDO_API_EXTENSION_NOTE\" />\n\t\t</dd>\n</dl>\n\n\t<@s.set var=\"methodVar\" value=\"#GETMethodVar\" />\n\t<@s.set var=\"currentMethodNameVar\" value=\"%{'GET'}\" />\n\t<h3 id=\"api_method_GET\">GET</h3>\n\t<#include \"entandoapi_is_resource_detail_include\" >\n\n\t<@s.set var=\"methodVar\" value=\"#POSTMethodVar\" />\n\t<@s.set var=\"currentMethodNameVar\" value=\"%{'POST'}\" />\n\t<h3 id=\"api_method_POST\">POST</h3>\n\t<#include \"entandoapi_is_resource_detail_include\" >\n\n\t<@s.set var=\"methodVar\" value=\"#PUTMethodVar\" />\n\t<@s.set var=\"currentMethodNameVar\" value=\"%{'PUT'}\" />\n\t<h3 id=\"api_method_PUT\">PUT</h3>\n\t<#include \"entandoapi_is_resource_detail_include\" >\n\n\t<@s.set var=\"methodVar\" value=\"#DELETEMethodVar\" />\n\t<@s.set var=\"currentMethodNameVar\" value=\"%{'DELETE'}\" />\n\t<h3 id=\"api_method_DELETE\">DELETE</h3>\n\t<#include \"entandoapi_is_resource_detail_include\" >\n<p>\n\t<a href=\"<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/list.action\" />\" class=\"btn btn-primary\"><i class=\"icon-arrow-left icon-white\"></i>&#32;<@wp.i18n key=\"ENTANDO_API_GOTO_LIST\" /></a>\n</p>\n</section>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'entandoapi_is_resource_detail',
+    locked: true,
+    widgetType: {
+      code: 'entando_apis',
+      title: 'APIs',
     },
-    {
-      code: 'entandoapi_is_resource_detail_include',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<@s.if test=\"#methodVar == null\">\n\t<p>\n\t\t<@s.property value=\"#currentMethodNameVar\" />,&#32;<@wp.i18n key=\"ENTANDO_API_METHOD_KO\" />\n\t</p>\n</@s.if>\n<@s.else>\n\t<dl class=\"dl-horizontal\">\n\t\t<dt>\n\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD\" />\n\t\t</dt>\n\t\t\t<dd>\n\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_OK\" />\n\t\t\t</dd>\n\t\t<@s.if test=\"#methodVar != null\">\n\t\t\t<dt>\n\t\t\t\t<@wp.i18n key=\"ENTANDO_API_DESCRIPTION\" />\n\t\t\t</dt>\n\t\t\t\t<dd><@s.property value=\"#methodVar.description\" /></dd>\n\t\t\t<dt>\n\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_AUTHORIZATION\" />\n\t\t\t</dt>\n\t\t\t\t<dd>\n\t\t\t\t\t<@s.if test=\"%{null != #methodVar.requiredPermission}\">\n\t\t\t\t\t\t<@s.iterator value=\"methodAuthorityOptions\" var=\"permission\"><@s.if test=\"#permission.key==#methodVar.requiredPermission\"><@s.property value=\"#permission.value\" /></@s.if></@s.iterator>\n\t\t\t\t\t</@s.if>\n\t\t\t\t\t<@s.elseif test=\"%{#methodVar.requiredAuth}\">\n\t\t\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_AUTH_SIMPLE\" />\n\t\t\t\t\t</@s.elseif>\n\t\t\t\t\t<@s.else>\n\t\t\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_AUTH_FREE\" />\n\t\t\t\t\t</@s.else>\n\t\t\t\t</dd>\n\t\t\t<@s.if test='%{!#methodVar.resourceName.equalsIgnoreCase(\"getService\")}' >\n\t\t\t<dt>\n\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_SCHEMAS\" />\n\t\t\t</dt>\n\t\t\t\t<dd class=\"schemas\">\n\t\t\t\t\t<@s.if test='%{#methodVar.httpMethod.toString().equalsIgnoreCase(\"POST\") || #methodVar.httpMethod.toString().equalsIgnoreCase(\"PUT\")}'>\n\t\t\t\t\t\t<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/requestSchema.action\" var=\"requestSchemaURLVar\" >\n\t\t\t\t\t\t\t<@wp.parameter name=\"resourceName\"><@s.property value=\"#methodVar.resourceName\" /></@wp.parameter>\n\t\t\t\t\t\t\t<@wp.parameter name=\"namespace\"><@s.property value=\"#methodVar.namespace\" /></@wp.parameter>\n\t\t\t\t\t\t\t<@wp.parameter name=\"httpMethod\"><@s.property value=\"#methodVar.httpMethod\" /></@wp.parameter>\n\t\t\t\t\t\t</@wp.action>\n\t\t\t\t\t\t<a href=\"requestSchemaURLVar}\" >\n\t\t\t\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_SCHEMA_REQ\" />\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<br />\n\t\t\t\t\t</@s.if>\n\t\t\t\t\t\t<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/responseSchema.action\" var=\"responseSchemaURLVar\" >\n\t\t\t\t\t\t\t<@wp.parameter name=\"resourceName\"><@s.property value=\"#methodVar.resourceName\" /></@wp.parameter>\n\t\t\t\t\t\t\t<@wp.parameter name=\"namespace\"><@s.property value=\"#methodVar.namespace\" /></@wp.parameter>\n\t\t\t\t\t\t\t<@wp.parameter name=\"httpMethod\"><@s.property value=\"#methodVar.httpMethod\" /></@wp.parameter>\n\t\t\t\t\t\t</@wp.action>\n\t\t\t\t\t\t<a href=\"responseSchemaURLVar}\" >\n\t\t\t\t\t\t\t<@wp.i18n key=\"ENTANDO_API_METHOD_SCHEMA_RESP\" />\n\t\t\t\t\t\t</a>\n\t\t\t\t</dd>\n\t\t\t</@s.if>\n\t\t</@s.if>\n\t</dl>\n\t<@s.if test=\"#methodVar != null\">\n\t\t<@s.set var=\"methodParametersVar\" value=\"#methodVar.parameters\" />\n\t\t<@s.if test=\"null != #methodParametersVar && #methodParametersVar.size() > 0\">\n\t\t\t<table class=\"table table-striped table-bordered table-condensed\">\n\t\t\t\t<caption><@wp.i18n key=\"ENTANDO_API_METHOD_REQUEST_PARAMS\" /></caption>\n\t\t\t\t<tr>\n\t\t\t\t\t<th><@wp.i18n key=\"ENTANDO_API_PARAM_NAME\" /></th>\n\t\t\t\t\t<th><@wp.i18n key=\"ENTANDO_API_PARAM_DESCRIPTION\" /></th>\n\t\t\t\t\t<th><@wp.i18n key=\"ENTANDO_API_PARAM_REQUIRED\" /></th>\n\t\t\t\t</tr>\n\t\t\t\t<@s.iterator value=\"#methodParametersVar\" var=\"apiParameter\" >\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td><@s.property value=\"#apiParameter.key\" /></td>\n\t\t\t\t\t\t<td><@s.property value=\"#apiParameter.description\" /></td>\n\t\t\t\t\t\t<td class=\"icon required_<@s.property value=\"#apiParameter.required\" />\">\n\t\t\t\t\t\t\t<@s.if test=\"#apiParameter.required\">\n\t\t\t\t\t\t\t\t<@wp.i18n key=\"YES\" />\n\t\t\t\t\t\t\t</@s.if>\n\t\t\t\t\t\t\t<@s.else>\n\t\t\t\t\t\t\t\t<@wp.i18n key=\"NO\" />\n\t\t\t\t\t\t\t</@s.else>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</@s.iterator>\n\t\t\t</table>\n\t\t</@s.if>\n\t</@s.if>\n</@s.else>",
+    pluginCode: null,
+    widgetTypeCode: 'entando_apis',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'entandoapi_is_resource_detail_include',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'entandoapi_is_resource_list',
-      locked: true,
-      widgetType: {
-        code: 'entando_apis',
-        title: 'APIs',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'entando_apis',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<h2><@wp.i18n key=\"ENTANDO_API_RESOURCES\" /></h2>\n<@s.if test=\"hasActionErrors()\">\n\t<div class=\"alert alert-block alert-error\">\n\t\t<h3 class=\"alert-heading\"><@wp.i18n key=\"ENTANDO_API_ERROR\" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value=\"actionErrors\">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<@s.set var=\"resourceFlavoursVar\" value=\"resourceFlavours\" />\n\n<@s.if test=\"#resourceFlavoursVar.size() > 0\">\n\t<@s.set var=\"icon_free\"><span class=\"icon icon-ok\"></span><span class=\"noscreen sr-only\"><@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_FREE\" /></span></@s.set>\n\t<@s.set var=\"title_free\"><@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_FREE\" />. <@wp.i18n key=\"ENTANDO_API_GOTO_DETAILS\" /></@s.set>\n\n\t<@s.set var=\"icon_auth\"><span class=\"icon icon-user\"></span><span class=\"noscreen sr-only\"><@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_AUTH\" /></span></@s.set>\n\t<@s.set var=\"title_auth\"><@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_AUTH\" />. <@wp.i18n key=\"ENTANDO_API_GOTO_DETAILS\" /></@s.set>\n\n\t<@s.set var=\"icon_lock\"><span class=\"icon icon-lock\"></span><span class=\"noscreen sr-only\"><@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_LOCK\" /></span></@s.set>\n\t<@s.set var=\"title_lock\"><@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_LOCK\" />. <@wp.i18n key=\"ENTANDO_API_GOTO_DETAILS\" /></@s.set>\n\n\t<@s.iterator var=\"resourceFlavourVar\" value=\"#resourceFlavoursVar\" status=\"resourceFlavourStatusVar\">\n\t\t<table class=\"table table-striped table-bordered table-condensed\">\n\t\t\t<@s.iterator value=\"#resourceFlavourVar\" var=\"resourceVar\" status=\"statusVar\" >\n\t\t\t\t<@s.if test=\"#statusVar.first\">\n\t\t\t\t\t<@s.if test=\"#resourceVar.source=='core'\"><@s.set var=\"captionVar\"><@s.property value=\"#resourceVar.source\" escapeHtml=false /></@s.set></@s.if>\n\t\t\t\t\t<@s.else><@s.set var=\"captionVar\"><@s.property value=\"%{getText(#resourceVar.sectionCode+'.name')}\" escapeHtml=false /></@s.set></@s.else>\n\t\t\t\t\t<caption>\n\t\t\t\t\t\t<@s.property value=\"#captionVar\" />\n\t\t\t\t\t</caption>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th class=\"span3\"><@wp.i18n key=\"ENTANDO_API_RESOURCE\" /></th>\n\t\t\t\t\t\t<th><@wp.i18n key=\"ENTANDO_API_DESCRIPTION\" /></th>\n\t\t\t\t\t\t<th class=\"text-center span1\">GET</th>\n\t\t\t\t\t\t<th class=\"text-center span1\">POST</th>\n\t\t\t\t\t\t<th class=\"text-center span1\">PUT</th>\n\t\t\t\t\t\t<th class=\"text-center span1\">DELETE</th>\n\t\t\t\t\t</tr>\n\t\t\t\t</@s.if>\n\t\t\t\t<tr>\n\t\t\t\t\t<td>\n\t\t\t\t\t\t<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/detail.action\" var=\"detailActionURL\">\n\t\t\t\t\t\t\t<@wp.parameter name=\"resourceName\"><@s.property value=\"#resourceVar.resourceName\" /></@wp.parameter>\n\t\t\t\t\t\t\t<@wp.parameter name=\"namespace\"><@s.property value=\"#resourceVar.namespace\" /></@wp.parameter>\n\t\t\t\t\t\t</@wp.action>\n\t\t\t\t\t\t<a title=\"<@wp.i18n key=\"ENTANDO_API_GOTO_DETAILS\" />:&#32;/<@s.property value=\"%{#resourceVar.namespace.length()>0?#resourceVar.namespace+'/':''}\" /><@s.property value=\"#resourceVar.resourceName\" />\" href=\"detailActionURL}\" ><@s.property value=\"#resourceVar.resourceName\" /></a>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td><@s.property value=\"#resourceVar.description\" /></td>\n\t\t\t\t\t<td class=\"text-center\">\n\t\t\t\t\t\t<@s.if test=\"#resourceVar.getMethod != null && #resourceVar.getMethod.active && (!#resourceVar.getMethod.hidden)\" >\n\t\t\t\t\t\t\t<@s.if test=\"#resourceVar.getMethod.requiredPermission != null\" ><@s.set var=\"icon\" value=\"#icon_lock\" /><@s.set var=\"title\" value=\"#title_lock\" /></@s.if>\n\t\t\t\t\t\t\t<@s.elseif test=\"#resourceVar.getMethod.requiredAuth\" ><@s.set var=\"icon\" value=\"#icon_auth\" /><@s.set var=\"title\" value=\"#title_auth\" /></@s.elseif>\n\t\t\t\t\t\t\t<@s.else><@s.set var=\"icon\" value=\"#icon_free\" /><@s.set var=\"title\" value=\"#title_free\" /></@s.else>\n\t\t\t\t\t\t\t<a href=\"detailActionURL}#api_method_GET\" title=\"<@s.property value=\"#title\" />\">\n\t\t\t\t\t\t\t\t<@s.property value=\"#icon\" escapeHtml=false />\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</@s.if>\n\t\t\t\t\t\t<@s.else><abbr title=\"<@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_NA\" />\">&ndash;</abbr></@s.else>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td class=\"text-center\">\n\t\t\t\t\t\t<@s.if test=\"#resourceVar.postMethod != null && #resourceVar.postMethod.active && (!#resourceVar.postMethod.hidden)\" >\n\t\t\t\t\t\t\t<@s.if test=\"#resourceVar.postMethod.requiredPermission != null\" ><@s.set var=\"icon\" value=\"#icon_lock\" /><@s.set var=\"title\" value=\"#title_lock\" /></@s.if>\n\t\t\t\t\t\t\t<@s.elseif test=\"#resourceVar.postMethod.requiredAuth\" ><@s.set var=\"icon\" value=\"#icon_auth\" /><@s.set var=\"title\" value=\"#title_auth\" /></@s.elseif>\n\t\t\t\t\t\t\t<@s.else><@s.set var=\"icon\" value=\"#icon_free\" /><@s.set var=\"title\" value=\"#title_free\" /></@s.else>\n\t\t\t\t\t\t\t<a href=\"detailActionURL}#api_method_POST\" title=\"<@s.property value=\"#title\" />\">\n\t\t\t\t\t\t\t\t<@s.property value=\"#icon\" escapeHtml=false />\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</@s.if>\n\t\t\t\t\t\t<@s.else><abbr title=\"<@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_NA\" />\">&ndash;</abbr></@s.else>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td class=\"text-center\">\n\t\t\t\t\t\t<@s.if test=\"#resourceVar.putMethod != null && #resourceVar.putMethod.active && (!#resourceVar.putMethod.hidden)\" >\n\t\t\t\t\t\t\t<@s.if test=\"#resourceVar.putMethod.requiredPermission != null\" ><@s.set var=\"icon\" value=\"#icon_lock\" /><@s.set var=\"title\" value=\"#title_lock\" /></@s.if>\n\t\t\t\t\t\t\t<@s.elseif test=\"#resourceVar.putMethod.requiredAuth\" ><@s.set var=\"icon\" value=\"#icon_auth\" /><@s.set var=\"title\" value=\"#title_auth\" /></@s.elseif>\n\t\t\t\t\t\t\t<@s.else><@s.set var=\"icon\" value=\"#icon_free\" /><@s.set var=\"title\" value=\"#title_free\" /></@s.else>\n\t\t\t\t\t\t\t<a href=\"detailActionURL}#api_method_PUT\" title=\"<@s.property value=\"#title\" />\">\n\t\t\t\t\t\t\t\t<@s.property value=\"#icon\" escapeHtml=false />\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</@s.if>\n\t\t\t\t\t\t<@s.else><abbr title=\"<@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_NA\" />\">&ndash;</abbr></@s.else>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td class=\"text-center\">\n\t\t\t\t\t\t<@s.if test=\"#resourceVar.deleteMethod != null && #resourceVar.deleteMethod.active && (!#resourceVar.deleteMethod.hidden)\" >\n\t\t\t\t\t\t\t<@s.if test=\"#resourceVar.deleteMethod.requiredPermission != null\" ><@s.set var=\"icon\" value=\"#icon_lock\" /><@s.set var=\"title\" value=\"#title_lock\" /></@s.if>\n\t\t\t\t\t\t\t<@s.elseif test=\"#resourceVar.deleteMethod.requiredAuth\" ><@s.set var=\"icon\" value=\"#icon_auth\" /><@s.set var=\"title\" value=\"#title_auth\" /></@s.elseif>\n\t\t\t\t\t\t\t<@s.else><@s.set var=\"icon\" value=\"#icon_free\" /><@s.set var=\"title\" value=\"#title_free\" /></@s.else>\n\t\t\t\t\t\t\t<a href=\"detailActionURL}#api_method_DELETE\" title=\"<@s.property value=\"#title\" />\">\n\t\t\t\t\t\t\t\t<@s.property value=\"#icon\" escapeHtml=false />\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</@s.if>\n\t\t\t\t\t\t<@s.else><abbr title=\"<@wp.i18n key=\"ENTANDO_API_METHOD_STATUS_NA\" />\">&ndash;</abbr></@s.else>\n\t\t\t\t\t</td>\n\t\t\t\t</tr>\n\t\t\t</@s.iterator>\n\t\t</table>\n\n\t\t<@s.if test=\"#resourceVar.source=='core'\">\n\t\t\t<a href=\"<@wp.action path=\"/ExtStr2/do/Front/Api/Service/list.action\" />\" class=\"btn btn-primary pull-right\"><@wp.i18n key=\"ENTANDO_API_GOTO_SERVICE_LIST\" /></a>\n\t\t</@s.if>\n\t</@s.iterator>\n</@s.if>\n<@s.else>\n\t<p><@wp.i18n key=\"ENTANDO_API_NO_RESOURCES\" /></p>\n</@s.else>\n<script nonce=\"<@wp.cspNonce />\" >\n  $(function () {\n    $('#api-togglers a:first').tab('show');\n  })\n</script>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'entandoapi_is_resource_list',
+    locked: true,
+    widgetType: {
+      code: 'entando_apis',
+      title: 'APIs',
     },
-    {
-      code: 'entandoapi_is_service_detail',
-      locked: true,
-      widgetType: {
-        code: 'entando_apis',
-        title: 'APIs',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'entando_apis',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n\n<@wp.headInfo type="CSS" info="widgets/api.css"/>\n<@s.set var="apiServiceVar" value="%{getApiService(serviceKey)}" />\n<div class="entando-api api-resource-detail">\n<h2><@wp.i18n key="ENTANDO_API_SERVICE" />&#32;<@s.property value="serviceKey" /></h2>\n<@s.if test="hasActionMessages()">\n\t<div class="message message_confirm">\n\t\t<h3><@wp.i18n key="ENTANDO_API_ERROR" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value="actionMessages">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<@s.if test="hasActionErrors()">\n\t<div class="message message_error">\n\t\t<h3><@wp.i18n key="ENTANDO_API_ERROR" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value="actionErrors">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n\n<p class="description"><@s.property value="getTitle(serviceKey, #apiServiceVar.description)" /></p>\n\n<@s.set var="masterMethodVar" value="#apiServiceVar.master" />\n\n<dl class="dl-horizontal">\n\t<dt><@wp.i18n key="ENTANDO_API_SERVICE_KEY" /></dt>\n\t\t<dd><@s.property value="serviceKey" /></dd>\n\t<dt><@wp.i18n key="ENTANDO_API_SERVICE_PARENT_API" /></dt>\n\t\t<dd><@s.property value="#masterMethodVar.description" />&#32;(/<@s.if test="#masterMethodVar.namespace!=null && #masterMethodVar.namespace.length()>0"><@s.property value="#masterMethodVar.namespace" />/</@s.if><@s.property value="#masterMethodVar.resourceName" />)</dd>\n\t<dt>\n\t\t<@wp.i18n key="ENTANDO_API_SERVICE_AUTHORIZATION" />\n\t</dt>\n\t\t<dd>\n\t\t\t<@s.if test="%{!#apiServiceVar.requiredAuth}" >\n\t\t\t\t<@wp.i18n key="ENTANDO_API_SERVICE_AUTH_FREE" />\n\t\t\t</@s.if>\n\t\t\t<@s.elseif test="%{null == #apiServiceVar.requiredPermission && null == #apiServiceVar.requiredGroup}">\n\t\t\t\t<@wp.i18n key="ENTANDO_API_SERVICE_AUTH_SIMPLE" />\n\t\t\t</@s.elseif>\n\t\t\t<@s.else>\n\t\t\t\t<@s.set var="serviceAuthGroupVar" value="%{getGroup(#apiServiceVar.requiredGroup)}" />\n\t\t\t\t<@s.set var="serviceAuthPermissionVar" value="%{getPermission(#apiServiceVar.requiredPermission)}" />\n\t\t\t\t<@s.if test="%{null != #serviceAuthPermissionVar}">\n\t\t\t\t\t<@wp.i18n key="ENTANDO_API_SERVICE_AUTH_WITH_PERM" />&#32;<@s.property value="#serviceAuthPermissionVar.description" />\n\t\t\t\t</@s.if>\n\t\t\t\t<@s.if test="%{null != #serviceAuthGroupVar}">\n\t\t\t\t\t<@s.if test="%{null != #serviceAuthPermissionVar}"><br /></@s.if>\n\t\t\t\t\t<@wp.i18n key="ENTANDO_API_SERVICE_AUTH_WITH_GROUP" />&#32;<@s.property value="#serviceAuthGroupVar.descr" />\n\t\t\t\t</@s.if>\n\t\t\t</@s.else>\n\t\t</dd>\n\t<dt><@wp.i18n key="ENTANDO_API_SERVICE_URI" /></dt>\n\t\t<dd>\n\t\t\t<a href="<@wp.info key="systemParam" paramName="applicationBaseURL" />api/legacy/<@wp.info key="currentLang" />/getService?key=<@s.property value="serviceKey" />"><@wp.info key="systemParam" paramName="applicationBaseURL" />api/legacy/<@wp.info key="currentLang" />/getService?key=<@s.property value="serviceKey" /></a>\n\t\t</dd>\n\t<dt>\n\t\t<@wp.i18n key="ENTANDO_API_EXTENSION" />\n\t</dt>\n\t\t<dd>\n\t\t\t<@wp.i18n key="ENTANDO_API_EXTENSION_NOTE" />\n\t\t</dd>\n\t<dt>\n\t\t<@wp.i18n key="ENTANDO_API_SERVICE_SCHEMAS" />\n\t</dt>\n\t\t<dd class="schemas">\n\t\t\t<@wp.action path="/ExtStr2/do/Front/Api/Service/responseSchema.action" var="responseSchemaURLVar" >\n\t\t\t\t<@wp.parameter name="serviceKey"><@s.property value="serviceKey" /></@wp.parameter>\n\t\t\t</@wp.action>\n\t\t\t<a href="responseSchemaURLVar}" >\n\t\t\t\t<@wp.i18n key="ENTANDO_API_SERVICE_SCHEMA_RESP" />\n\t\t\t</a>\n\t\t</dd>\n</dl>\n\n<@s.if test="%{null != #apiServiceVar.freeParameters && #apiServiceVar.freeParameters.length > 0}" >\n<table class="table table-striped table-bordered table-condensed" summary="<@wp.i18n key="ENTANDO_API_SERVICE_PARAMETERS_SUMMARY" />">\n\t<caption><span><@wp.i18n key="ENTANDO_API_SERVICE_PARAMETERS" /></span></caption>\n\t<tr>\n\t\t<th><@wp.i18n key="ENTANDO_API_SERVICE_PARAM_NAME" /></th>\n\t\t<th><@wp.i18n key="ENTANDO_API_SERVICE_PARAM_DESCRIPTION" /></th>\n\t\t<th><@wp.i18n key="ENTANDO_API_SERVICE_PARAM_REQUIRED" /></th>\n\t\t<th><@wp.i18n key="ENTANDO_API_SERVICE_PARAM_DEFAULT_VALUE" /></th>\n\t</tr>\n\t<@s.iterator value="#apiServiceVar.freeParameters" var="apiParameterNameVar" >\n\t\t<@s.set var="apiParameterValueVar" value="%{#apiServiceVar.parameters[#apiParameterNameVar]}" />\n\t\t<@s.set var="apiParameterVar" value="%{#apiServiceVar.master.getParameter(#apiParameterNameVar)}" />\n\t\t<@s.set var="apiParameterRequiredVar" value="%{#apiParameterVar.required && null == #apiParameterValueVar}" />\n\t\t<tr>\n\t\t\t<td><label for="<@s.property value="#apiParameterNameVar" />"><@s.property value="#apiParameterNameVar" /></label></td>\n\t\t\t<td><@s.property value="%{#apiParameterVar.description}" /></td>\n\t\t\t<td class="icon required_<@s.property value="#apiParameterRequiredVar" />">\n\t\t\t\t<@s.if test="#apiParameterRequiredVar" ><@wp.i18n key="YES" /></@s.if>\n\t\t\t\t<@s.else><@wp.i18n key="NO" /></@s.else>\n\t\t\t</td>\n\t\t\t<td><@s.if test="null != #apiParameterValueVar"><@s.property value="#apiParameterValueVar" /></@s.if><@s.else>-</@s.else></td>\n\t\t</tr>\n\t</@s.iterator>\n</table>\n</@s.if>\n<p class="api-back">\n\t<a class="btn btn-primary" href="<@wp.action path="/ExtStr2/do/Front/Api/Resource/list.action" />"><span class="icon-arrow-left icon-white"></span>&#32;<@wp.i18n key="ENTANDO_API_GOTO_LIST" /></a>\n</p>\n</div>',
+    pluginCode: null,
+    widgetTypeCode: 'entando_apis',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'entandoapi_is_service_detail',
+    locked: true,
+    widgetType: {
+      code: 'entando_apis',
+      title: 'APIs',
     },
-    {
-      code: 'entandoapi_is_service_list',
-      locked: true,
-      widgetType: {
-        code: 'entando_apis',
-        title: 'APIs',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'entando_apis',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<section>\n\n<p>\n\t<a href=\"<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/list.action\" />\" class=\"btn btn-primary\"><i class=\"icon-arrow-left icon-white\"></i>&#32;<@wp.i18n key=\"ENTANDO_API_GOTO_LIST\" /></a>\n</p>\n\n<h2><@wp.i18n key=\"ENTANDO_API_GOTO_SERVICE_LIST\" /></h2>\n<@s.if test=\"hasActionErrors()\">\n\t<div class=\"alert alert-block alert-error\">\n\t\t<h3 class=\"alert-heading\"><@s.text name=\"message.title.ActionErrors\" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value=\"actionErrors\">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<@s.if test=\"hasFieldErrors()\">\n\t<div class=\"alert alert-block alert-error\">\n\t\t<h3 class=\"alert-heading\"><@s.text name=\"message.title.FieldErrors\" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value=\"fieldErrors\">\n\t\t\t\t<@s.iterator value=\"value\">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t\t</@s.iterator>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<@s.if test=\"hasActionMessages()\">\n\t<div class=\"alert alert-block alert-info\">\n\t\t<h3 class=\"alert-heading\"><@s.text name=\"messages.confirm\" /></h3>\n\t\t<ul>\n\t\t\t<@s.iterator value=\"actionMessages\">\n\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t</@s.iterator>\n\t\t</ul>\n\t</div>\n</@s.if>\n<@s.set var=\"resourceFlavoursVar\" value=\"resourceFlavours\" />\n<@s.set var=\"serviceFlavoursVar\" value=\"serviceFlavours\" />\n\n<@s.if test=\"#serviceFlavoursVar != null && #serviceFlavoursVar.size() > 0\">\n<div class=\"tabbable tabs-left\">\n\t<ul class=\"nav nav-tabs\">\n\t\t<@s.iterator var=\"resourceFlavour\" value=\"#resourceFlavoursVar\" status=\"statusVar\">\n\t\t\t<@s.set var=\"serviceGroupVar\" value=\"#resourceFlavour.get(0).getSectionCode()\" />\n\t\t\t<@s.set var=\"servicesByGroupVar\" value=\"#serviceFlavoursVar[#serviceGroupVar]\" />\n\t\t\t<@s.if test=\"null != #servicesByGroupVar && #servicesByGroupVar.size() > 0\">\n\t\t\t\t<@s.if test=\"#serviceGroupVar == 'core'\"><@s.set var=\"captionVar\" value=\"%{#serviceGroupVar}\" /></@s.if>\n\t\t\t\t<@s.else><@s.set var=\"captionVar\" value=\"%{getText(#serviceGroupVar + '.name')}\" /></@s.else>\n\t\t\t\t<li<@s.if test=\"#statusVar.first\"> class=\"active\"</@s.if>>\n\t\t\t\t\t<a href=\"#api-flavour-<@s.property value='%{#captionVar.toLowerCase().replaceAll(\"[^a-z0-9-]\", \"\")}' />\" data-toggle=\"tab\"><@s.property value='%{#captionVar}' /></a>\n\t\t\t\t</li>\n\t\t\t</@s.if>\n\t\t</@s.iterator>\n\t</ul>\n\n  <div class=\"tab-content\">\n\t<@s.iterator var=\"resourceFlavour\" value=\"#resourceFlavoursVar\" status=\"moreStatusVar\">\n\t\t<@s.set var=\"serviceGroupVar\" value=\"#resourceFlavour.get(0).getSectionCode()\" />\n\t\t<@s.set var=\"servicesByGroupVar\" value=\"#serviceFlavoursVar[#serviceGroupVar]\" />\n\t\t<@s.if test=\"null != #servicesByGroupVar && #servicesByGroupVar.size() > 0\">\n\t\t\t<@s.if test=\"#serviceGroupVar == 'core'\"><@s.set var=\"captionVar\" value=\"%{#serviceGroupVar}\" /></@s.if>\n\t\t\t<@s.else><@s.set var=\"captionVar\" value=\"%{getText(#serviceGroupVar + '.name')}\" /></@s.else>\n\t\t\t<div class=\"tab-pane<@s.if test=\"#moreStatusVar.first\"> active</@s.if>\" id=\"api-flavour-<@s.property value='%{#captionVar.toLowerCase().replaceAll(\"[^a-z0-9]\", \"\")}' />\">\n\t\t\t<table class=\"table table-striped table-bordered table-condensed\">\n\t\t\t\t<caption>\n\t\t\t\t\t<@s.property value=\"#captionVar\" />\n\t\t\t\t</caption>\n\t\t\t\t<tr>\n\t\t\t\t\t<th><@wp.i18n key=\"ENTANDO_API_SERVICE\" /></th>\n\t\t\t\t\t<th><@wp.i18n key=\"ENTANDO_API_DESCRIPTION\" /></th>\n\t\t\t\t</tr>\n\t\t\t\t<@s.iterator var=\"serviceVar\" value=\"#servicesByGroupVar\" >\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td class=\"monospace\">\n\t\t\t\t\t\t\t<@wp.action path=\"/ExtStr2/do/Front/Api/Service/detail.action\" var=\"detailActionURL\">\n\t\t\t\t\t\t\t\t<@wp.parameter name=\"serviceKey\"><@s.property value=\"#serviceVar.key\" /></@wp.parameter>\n\t\t\t\t\t\t\t</@wp.action>\n\t\t\t\t\t\t\t<a href=\"detailActionURL}\"><@s.property value=\"#serviceVar.key\" /></a>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t\t<td><@s.property value=\"#serviceVar.value\" /></td>\n\t\t\t\t\t</tr>\n\t\t\t\t</@s.iterator>\n\t\t\t</table>\n\t\t\t</div>\n\t\t</@s.if>\n\t</@s.iterator>\n\t</div>\n</div>\n</@s.if>\n<@s.else>\n<div class=\"alert alert-block alert-info\">\n\t<p><@wp.i18n key=\"ENTANDO_API_NO_SERVICES\" escapeXml=false /></p>\n</div>\n</@s.else>\n\n<p>\n\t<a href=\"<@wp.action path=\"/ExtStr2/do/Front/Api/Resource/list.action\" />\" class=\"btn btn-primary\"><i class=\"icon-arrow-left icon-white\"></i>&#32;<@wp.i18n key=\"ENTANDO_API_GOTO_LIST\" /></a>\n</p>\n\n</section>",
+    pluginCode: null,
+    widgetTypeCode: 'entando_apis',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'entandoapi_is_service_list',
+    locked: true,
+    widgetType: {
+      code: 'entando_apis',
+      title: 'APIs',
     },
-    {
-      code: 'entando_ootb_carbon_include',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<script nonce="<@wp.cspNonce />" src="<@wp.resourceURL />ootb-widgets/static/js/2.ootb.chunk.js" nonce="<@wp.cspNonce />"></script>\n<script nonce="<@wp.cspNonce />" src="<@wp.resourceURL />ootb-widgets/static/js/main.ootb.chunk.js" nonce="<@wp.cspNonce />"></script>\n<script nonce="<@wp.cspNonce />" src="<@wp.resourceURL />ootb-widgets/static/js/runtime-main.ootb.js" nonce="<@wp.cspNonce />"></script>\n<link href="<@wp.resourceURL />ootb-widgets/static/css/main.ootb.chunk.css" rel="stylesheet">\n',
+    pluginCode: null,
+    widgetTypeCode: 'entando_apis',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'entando_ootb_carbon_include',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'internal_servlet_generic_error',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<@wp.i18n key="GENERIC_ERROR" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'internal_servlet_generic_error',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'internal_servlet_user_not_allowed',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<@wp.i18n key="USER_NOT_ALLOWED" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'internal_servlet_user_not_allowed',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer',
-      locked: true,
-      widgetType: {
-        code: 'content_viewer',
-        title: 'Content',
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: 'content_viewer',
-      guiCode: '<#assign jacms=JspTaglibs["/jacms-aps-core"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<@jacms.contentInfo param="authToEdit" var="canEditThis" />\n<@jacms.contentInfo param="contentId" var="myContentId" />\n<#if (canEditThis?? && canEditThis)>\n\t<style>\n\t\t.bar-content-edit {\n\t\t\t\tposition: absolute;\n\t\t\t\ttransform: translate(4px, 20px);\n\t\t}\n\t\t.bar-content-edit .btn {\n\t\t\t\tcolor: white;\n\t\t\t\tpadding: 12px 32px;\n\t\t\t\tbackground: #33B5E5;\n\t\t\t\ttext-transform: uppercase;\n\t\t\t\ttext-decoration: none;\n\t\t\t\tborder-radius: 2px;\n\t\t\t\tbox-shadow: 4px 4px 8px 1px rgba(0,0,0,0.5);\n\t\t}\n\t\t.bar-content-edit-container:not(:hover) .bar-content-edit {\n\t\t\t\tdisplay: none;\n\t\t}\n\t</style>\n\t<div class="bar-content-edit-container">\n\t\t<div class="bar-content-edit">\n\t\t\t<a href="<@wp.info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/edit.action?contentId=<@jacms.contentInfo param="contentId" />" class="btn btn-info">\n\t\t\t<@wp.i18n key="EDIT_THIS_CONTENT" /> <i class="icon-edit icon-white"></i></a>\n\t\t</div>\n\t\t<@jacms.content publishExtraTitle=true />\n\t</div>\n<#else>\n  <@jacms.content publishExtraTitle=true />\n</#if>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer',
+    locked: true,
+    widgetType: {
+      code: 'content_viewer',
+      title: 'Content',
     },
-    {
-      code: 'jacms_content_viewer_list',
-      locked: true,
-      widgetType: {
-        code: 'content_viewer_list',
-        title: 'Content Search Query',
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: 'content_viewer_list',
-      guiCode: '<#assign jacms=JspTaglibs["/jacms-aps-core"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<@wp.headInfo type="JS_EXT" info="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" />\n<@jacms.contentList listName="contentList" titleVar="titleVar"\n\tpageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" userFilterOptionsVar="userFilterOptionsVar" />\n<#if (titleVar??)>\n\t<h1>titleVar}</h1>\n</#if>\n<#include "jacms_content_viewer_list_userfilters" >\n<#if (contentList??) && (contentList?has_content) && (contentList?size > 0)>\n\t<@wp.pager listName="contentList" objectName="groupContent" pagerIdFromFrame=true advanced=true offset=5>\n                <#assign group=groupContent >\n\t\t<#include "default_pagerBlock" >\n<#list contentList as contentId>\n<#if (contentId_index >= groupContent.begin) && (contentId_index <= groupContent.end)>\n\t<@jacms.content contentId="contentId}" />\n</#if>\n</#list>\n\t\t<#include "default_pagerBlock" >\n\t</@wp.pager>\n<#else>\n\t\t<p class="alert alert-info"><@wp.i18n key="LIST_VIEWER_EMPTY" /></p>\n</#if>\n<#if (pageLinkVar??) && (pageLinkDescriptionVar??)>\n\t<p class="text-right"><a class="btn btn-primary" href="<@wp.url page="pageLinkVar}"/>">pageLinkDescriptionVar}</a></p>\n</#if>\n<#assign group="" >\n<#assign contentList="">',
+    pluginCode: 'jacms',
+    widgetTypeCode: 'content_viewer',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list',
+    locked: true,
+    widgetType: {
+      code: 'content_viewer_list',
+      title: 'Content Search Query',
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_Boolean',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<fieldset>\n<legend><@wp.i18n key="i18n_Attribute_Key}" /></legend>\n<#include "jacms_content_viewer_list_userfilter_ent_Bool_io">\n<div class="control-group">\n\t<div class="controls">\n\t\t<label for="formFieldNameVar}" class="radio">\n\t\t<input name="formFieldNameVar}" id="true_formFieldNameVar}" <#if (formFieldValue??) && (formFieldValue == "true")>checked="checked"</#if> value="true" type="radio" />\n\t\t<@wp.i18n key="YES"/></label>\n\t</div>\n\t<div class="controls">\n\t\t<label for="false_formFieldNameVar}" class="radio">\n\t\t<input name="formFieldNameVar}" id="false_formFieldNameVar}" <#if (formFieldValue??) && (formFieldValue == "false")>checked="checked"</#if> value="false" type="radio" />\n\t\t<@wp.i18n key="NO"/></label>\n\t</div>\n</div>\n</fieldset>',
+    pluginCode: 'jacms',
+    widgetTypeCode: 'content_viewer_list',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_Boolean',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_Bool_io',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameControlVar = userFilterOptionVar.formFieldNames[2] >\n<input name="formFieldNameControlVar}" type="hidden" value="true" />\n<#assign formFieldNameIgnoreVar = userFilterOptionVar.formFieldNames[1] >\n<#assign formFieldIgnoreValue = userFilterOptionVar.getFormFieldValue(formFieldNameIgnoreVar) >\n<#assign formFieldControlValue = userFilterOptionVar.getFormFieldValue(formFieldNameControlVar) >\n<div class="controls">\n\t<label for="ignore_formFieldNameIgnoreVar}" class="checkbox">\n\t<input id="ignore_formFieldNameIgnoreVar}" name="formFieldNameIgnoreVar}" <#if (formFieldIgnoreValue?? && formFieldIgnoreValue == "true")>checked="checked"</#if> value="true" type="checkbox" />\n\t<@wp.i18n key="IGNORE" /></label>\n</div>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_Bool_io',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_CheckBox',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<fieldset>\n<legend><@wp.i18n key="i18n_Attribute_Key}" /></legend>\n<#include "jacms_content_viewer_list_userfilter_ent_Bool_io" >\n<div class="control-group">\n\t<div class="controls">\n\t\t<label for="true_formFieldNameVar}" class="checkbox">\n\t\t<input name="formFieldNameVar}" id="true_formFieldNameVar}" <#if (formFieldValue??) && (formFieldValue == "true")>checked="checked"</#if> value="true" type="checkbox" />\n\t\t<@wp.i18n key="YES"/></label>\n\t</div>\n</div>\n</fieldset>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_CheckBox',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_Date',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: "<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<#assign currentLangVar ><@wp.info key=\"currentLang\" /></#assign>\n\n<#assign js_for_datepicker=\"jQuery(function($){\n\t$.datepicker.regional['it'] = {\n\t\tcloseText: 'Chiudi',\n\t\tprevText: '&#x3c;Prec',\n\t\tnextText: 'Succ&#x3e;',\n\t\tcurrentText: 'Oggi',\n\t\tmonthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',\n\t\t\t'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],\n\t\tmonthNamesShort: ['Gen','Feb','Mar','Apr','Mag','Giu',\n\t\t\t'Lug','Ago','Set','Ott','Nov','Dic'],\n\t\tdayNames: ['Domenica','Luned&#236','Marted&#236','Mercoled&#236','Gioved&#236','Venerd&#236','Sabato'],\n\t\tdayNamesShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],\n\t\tdayNamesMin: ['Do','Lu','Ma','Me','Gi','Ve','Sa'],\n\t\tweekHeader: 'Sm',\n\t\tdateFormat: 'yy-mm-dd',\n\t\tfirstDay: 1,\n\t\tisRTL: false,\n\t\tshowMonthAfterYear: false,\n\t\tyearSuffix: ''};\n});\n\njQuery(function($){\n\tif (Modernizr.touch && Modernizr.inputtypes.date) {\n\t\t$.each(\t$('input[data-isdate=true]'), function(index, item) {\n\t\t\titem.type = 'date';\n\t\t});\n\t} else {\n\t\t$.datepicker.setDefaults( $.datepicker.regional['currentLangVar}'] );\n\t\t$('input[data-isdate=true]').datepicker({\n      \t\t\tchangeMonth: true,\n      \t\t\tchangeYear: true,\n      \t\t\tdateFormat: 'yyyy-mm-dd'\n    \t\t});\n\t}\n});\" >\n\n<@wp.headInfo type=\"JS\" info=\"entando-misc-html5-essentials/modernizr-2.5.3-full.js\" />\n<@wp.headInfo type=\"JS_EXT\" info=\"http://code.jquery.com/ui/1.10.0/jquery-ui.min.js\" />\n<@wp.headInfo type=\"CSS_EXT\" info=\"http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css\" />\n<@wp.headInfo type=\"JS_RAW\" info=\"js_for_datepicker}\" />\n<fieldset>\n<legend>\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<@wp.i18n key=\"i18n_Attribute_Key}\" />\n</legend>\n<div class=\"control-group\">\n\t<#assign formFieldStartNameVar = userFilterOptionVar.formFieldNames[0] >\n\t<#assign formFieldStartValueVar = userFilterOptionVar.getFormFieldValue(formFieldStartNameVar) >\n\t<label for=\"formFieldStartNameVar}\" class=\"control-label\">\n\t\t<@wp.i18n key=\"DATE_FROM\" />\n\t</label>\n\t<div class=\"controls\">\n\t\t<input id=\"formFieldStartNameVar}\" name=\"formFieldStartNameVar}\" value=\"formFieldStartValueVar?default(\"\")}\" type=\"text\" data-isdate=\"true\" class=\"input-xlarge\" placeholder=\"YYYY-MM-DD\" />\n\t</div>\n</div>\n<div class=\"control-group\">\n\t<#assign formFieldEndNameVar = userFilterOptionVar.formFieldNames[1] >\n\t<#assign formFieldEndValueVar = userFilterOptionVar.getFormFieldValue(formFieldEndNameVar) >\n\t<label for=\"formFieldEndNameVar}\" class=\"control-label\">\n\t\t<@wp.i18n key=\"DATE_TO\" />\n\t</label>\n\t<div class=\"controls\">\n\t\t<input id=\"formFieldEndNameVar}\" name=\"formFieldEndNameVar}\" value=\"formFieldEndValueVar?default(\"\")}\" type=\"text\" data-isdate=\"true\" class=\"input-xlarge\" placeholder=\"YYYY-MM-DD\" />\n\t</div>\n</div>\n</fieldset>",
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_Date',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_Enumer',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<div class="control-group">\n\t<label for="formFieldNameVar}" class="control-label"><@wp.i18n key="i18n_Attribute_Key}" /></label>\n\t<div class="controls">\n\t\t<select name="formFieldNameVar}" id="formFieldNameVar}" class="input-xlarge">\n\t\t\t<option value=""><@wp.i18n key="ALL" /></option>\n\t\t\t<#list userFilterOptionVar.attribute.items as enumeratorItemVar>\n\t\t\t<option value="enumeratorItemVar}" <#if (formFieldValue??) && (enumeratorItemVar == formFieldValue)>selected="selected"</#if> >enumeratorItemVar}</option>\n\t\t\t</#list>\n\t\t</select>\n\t</div>\n</div>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_Enumer',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_EnumerMap',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<div class="control-group">\n\t<label for="formFieldNameVar}" class="control-label"><@wp.i18n key="i18n_Attribute_Key}" /></label>\n\t<div class="controls">\n\t\t<select name="formFieldNameVar}" id="formFieldNameVar}" class="input-xlarge">\n\t\t\t<option value=""><@wp.i18n key="ALL" /></option>\n\t\t\t<#list userFilterOptionVar.attribute.mapItems as enumeratorMapItemVar>\n\t\t\t<option value="enumeratorMapItemVar.key}" <#if (formFieldValue??) && (enumeratorMapItemVar.key == formFieldValue)>selected="selected"</#if> >enumeratorMapItemVar.value}</option>\n\t\t\t</#list>\n\t\t</select>\n\t</div>\n</div>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_EnumerMap',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_Number',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<fieldset>\n<legend>\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<@wp.i18n key="i18n_Attribute_Key}" />\n</legend>\n<div class="control-group">\n\t<#assign formFieldStartNameVar = userFilterOptionVar.formFieldNames[0] >\n\t<#assign formFieldStartValueVar = userFilterOptionVar.getFormFieldValue(formFieldStartNameVar) >\n\t<label for="formFieldStartNameVar}" class="control-label">\n\t\t<@wp.i18n key="NUMBER_FROM" />\n\t</label>\n\t<div class="controls">\n\t\t<input id="formFieldStartNameVar}" name="formFieldStartNameVar}" value="formFieldStartValueVar?default("")}" type="number" class="input-medium" />\n\t</div>\n</div>\n<div class="control-group">\n\t<#assign formFieldEndNameVar = userFilterOptionVar.formFieldNames[1] >\n\t<#assign formFieldEndValueVar = userFilterOptionVar.getFormFieldValue(formFieldEndNameVar) >\n\t<label for="formFieldEndNameVar}" class="control-label">\n\t\t<@wp.i18n key="NUMBER_TO" />\n\t</label>\n\t<div class="controls">\n\t\t<input id="formFieldEndNameVar}" name="formFieldEndNameVar}" value="formFieldEndValueVar?default("")}" type="number" class="input-medium" />\n\t</div>\n</div>\n</fieldset>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_Number',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_Text',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<div class="control-group">\n\t<label for="formFieldNameVar}" class="control-label"><@wp.i18n key="i18n_Attribute_Key}" /></label>\n\t<div class="controls">\n\t\t<input name="formFieldNameVar}" id="formFieldNameVar}" value="formFieldValue}" type="text" class="input-xlarge"/>\n\t</div>\n</div>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_Text',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_ent_ThreeSt',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign i18n_Attribute_Key = userFilterOptionVar.attribute.name >\n<fieldset>\n<legend><@wp.i18n key="i18n_Attribute_Key}" /></legend>\n<#include "jacms_content_viewer_list_userfilter_ent_Bool_io">\n<div class="control-group">\n\t<div class="controls">\n\t\t<label for="true_formFieldNameVar}" class="radio">\n\t\t<input name="formFieldNameVar}" id="true_formFieldNameVar}" <#if (formFieldValue??) && (formFieldValue == "true")>checked="checked"</#if> value="true" type="radio" />\n\t\t<@wp.i18n key="YES"/></label>\n\t\t<label for="false_formFieldNameVar}" class="radio">\n\t\t<input name="formFieldNameVar}" id="false_formFieldNameVar}" <#if (formFieldValue??) && (formFieldValue == "false")>checked="checked"</#if> value="false" type="radio" />\n\t\t<@wp.i18n key="NO"/></label>\n\t\t<label for="both_formFieldNameVar}" class="radio">\n\t\t<input name="formFieldNameVar}" id="both_formFieldNameVar}" <#if (formFieldValue??) && (formFieldValue == "both")>checked="checked"</#if> value="both" type="radio" />\n\t\t<@wp.i18n key="BOTH"/></label>\n\t</div>\n</div>\n</fieldset>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_ent_ThreeSt',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_met_category',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<#assign userFilterCategoryCodeVar = userFilterOptionVar.userFilterCategoryCode?default("") >\n<@wp.categories var="systemCategories" titleStyle="prettyFull" root="userFilterCategoryCodeVar}" />\n<div class="control-group">\n\t<label for="category" class="control-label"><@wp.i18n key="CATEGORY" /></label>\n\t<div class="controls">\n\t\t<select id="category" name="formFieldNameVar}" class="input-xlarge">\n\t\t\t<option value=""><@wp.i18n key="ALL" /></option>\n\t\t\t<#list systemCategories as systemCategory>\n\t\t\t<option value="systemCategory.key}" <#if (formFieldValue == systemCategory.key)>selected="selected"</#if> >systemCategory.value}</option>\n\t\t\t</#list>\n\t\t</select>\n\t</div>\n</div>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_met_category',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilter_met_fulltext',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign formFieldNameVar = userFilterOptionVar.formFieldNames[0] >\n<#assign formFieldValue = userFilterOptionVar.getFormFieldValue(formFieldNameVar) >\n<div class="control-group">\n    <label for="formFieldNameVar}" class="control-label"><@wp.i18n key="TEXT" /></label>\n    <div class="controls">\n        <input name="formFieldNameVar}" id="formFieldNameVar}" value="formFieldValue}" type="text" class="input-xlarge"/>\n    </div>\n</div>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilter_met_fulltext',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_content_viewer_list_userfilters',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#if (userFilterOptionsVar??) && userFilterOptionsVar?has_content && (userFilterOptionsVar?size > 0)>\n<div class="row-fluid"><div class="span12 padding-medium-top">\n<#assign hasUserFilterError = false >\n<#list userFilterOptionsVar as userFilterOptionVar>\n<#if (userFilterOptionVar.formFieldErrors??) && userFilterOptionVar.formFieldErrors?has_content && (userFilterOptionVar.formFieldErrors?size > 0)>\n<#assign hasUserFilterError = true >\n</#if>\n</#list>\n<#if (hasUserFilterError)>\n<div class="alert alert-error">\n\t<a class="close" data-dismiss="alert" href="#"><i class="icon-remove"></i></a>\n\t<h2 class="alert-heading"><@wp.i18n key="ERRORS" /></h2>\n\t<ul>\n\t\t<#list userFilterOptionsVar as userFilterOptionVar>\n\t\t\t<#if (userFilterOptionVar.formFieldErrors??) && (userFilterOptionVar.formFieldErrors?size > 0)>\n\t\t\t<#assign formFieldErrorsVar = userFilterOptionVar.formFieldErrors >\n\t\t\t<#list formFieldErrorsVar?keys as formFieldErrorKey>\n\t\t\t<li>\n\t\t\t<@wp.i18n key="jacms_LIST_VIEWER_FIELD" />&#32;<em>formFieldErrorsVar[formFieldErrorKey].attributeName}</em><#if (formFieldErrorsVar[formFieldErrorKey].rangeFieldType??)>:&#32;<em><@wp.i18n key="formFieldErrorsVar[formFieldErrorKey].rangeFieldType}" /></em></#if>&#32;<@wp.i18n key="formFieldErrorsVar[formFieldErrorKey].errorKey}" />\n\t\t\t</li>\n\t\t\t</#list>\n\t\t\t</#if>\n\t\t</#list>\n\t</ul>\n</div>\n</#if>\n<#assign hasUserFilterError = false >\n<p><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#content-viewer-list-filters"><@wp.i18n key="SEARCH_FILTERS_BUTTON" /> <i class="icon-zoom-in icon-white"></i></button></p>\n<form action="<@wp.url />" method="post" class="form-horizontal collapse" id="content-viewer-list-filters">\n\t<#list userFilterOptionsVar as userFilterOptionVar>\n\t\t<#if !userFilterOptionVar.attributeFilter && (userFilterOptionVar.key == "fulltext" || userFilterOptionVar.key == "category")>\n\t\t\t<#include "jacms_content_viewer_list_userfilter_met_userFilterOptionVar.key}" >\n\t\t</#if>\n\t\t<#if userFilterOptionVar.attributeFilter >\n\t\t\t<#if userFilterOptionVar.attribute.type == "Monotext" || userFilterOptionVar.attribute.type == "Text" || userFilterOptionVar.attribute.type == "Longtext" || userFilterOptionVar.attribute.type == "Hypertext">\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_Text" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "Enumerator" >\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_Enumer" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "EnumeratorMap" >\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_EnumerMap" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "Number">\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_Number" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "Date">\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_Date" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "Boolean">\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_Boolean" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "CheckBox">\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_CheckBox" >\n\t\t\t</#if>\n\t\t\t<#if userFilterOptionVar.attribute.type == "ThreeState">\n\t\t\t\t<#include "jacms_content_viewer_list_userfilter_ent_ThreeSt" >\n\t\t\t</#if>\n\t\t</#if>\n\t</#list>\n\t<p class="form-actions">\n\t\t<input type="submit" value="<@wp.i18n key="SEARCH" />" class="btn btn-primary" />\n\t</p>\n</form>\n</div></div>\n</#if>',
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_content_viewer_list_userfilters',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'jacms_row_content_viewer_list',
-      locked: true,
-      widgetType: {
-        code: 'row_content_viewer_list',
-        title: 'Content List',
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: 'row_content_viewer_list',
-      guiCode: "<#assign jacms=JspTaglibs[\"/jacms-aps-core\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<@jacms.rowContentList listName=\"contentInfoList\" titleVar=\"titleVar\"\n\tpageLinkVar=\"pageLinkVar\" pageLinkDescriptionVar=\"pageLinkDescriptionVar\" />\n<#if (titleVar??)>\n\t<h1>titleVar}</h1>\n</#if>\n<#if (contentInfoList??) && (contentInfoList?has_content) && (contentInfoList?size > 0)>\n\t<@wp.pager listName=\"contentInfoList\" objectName=\"groupContent\" pagerIdFromFrame=true advanced=true offset=5>\n        <#assign group=groupContent >\n\t<#include \"default_pagerBlock\">\n\t<#list contentInfoList as contentInfoVar>\n\t<#if (contentInfoVar_index >= groupContent.begin) && (contentInfoVar_index <= groupContent.end)>\n\t\t<#if (contentInfoVar['modelId']??)>\n\t\t<@jacms.content contentId=\"contentInfoVar['contentId']}\" modelId=\"contentInfoVar['modelId']}\" />\n\t\t<#else>\n\t\t<@jacms.content contentId=\"contentInfoVar['contentId']}\" />\n\t\t</#if>\n\t</#if>\n\t</#list>\n\t<#include \"default_pagerBlock\" >\n\t</@wp.pager>\n</#if>\n<#if (pageLinkVar??) && (pageLinkDescriptionVar??)>\n\t<p class=\"text-right\"><a class=\"btn btn-primary\" href=\"<@wp.url page=\"pageLinkVar}\"/>\">pageLinkDescriptionVar}</a></p>\n</#if>\n<#assign group=\"\" >\n<#assign contentInfoList=\"\">",
+    pluginCode: 'jacms',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jacms_row_content_viewer_list',
+    locked: true,
+    widgetType: {
+      code: 'row_content_viewer_list',
+      title: 'Content List',
     },
-    {
+    pluginCode: 'jacms',
+    widgetTypeCode: 'row_content_viewer_list',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jpseo_content_viewer',
+    locked: true,
+    widgetType: {
       code: 'jpseo_content_viewer',
-      locked: true,
-      widgetType: {
-        code: 'jpseo_content_viewer',
-        title: 'Content SEO Meta-description',
-      },
-      pluginCode: 'jpseo',
-      widgetTypeCode: 'jpseo_content_viewer',
-      guiCode: '<#assign jacms=JspTaglibs["/jacms-aps-core"]>\n<#assign c=JspTaglibs["http://java.sun.com/jsp/jstl/core"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<#assign jpseo=JspTaglibs["/jpseo-aps-core"]>\n<@jacms.contentInfo param="authToEdit" var="canEditThis" />\n<@jacms.contentInfo param="contentId" var="myContentId" />\n<#if (canEditThis?? && canEditThis)>\n\t<div class="bar-content-edit">\n\t\t<a href="<@wp.info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/edit.action?contentId=<@jacms.contentInfo param="contentId" />" class="btn btn-info">\n\t\t<@wp.i18n key="EDIT_THIS_CONTENT" /> <i class="icon-edit icon-white"></i></a>\n\t</div>\n</#if>\n<@jpseo.content publishExtraTitle=true publishExtraDescription=true />',
+      title: 'Content SEO Meta-description',
     },
-    {
-      code: 'jpseo_model_meta_info',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: 'jpseo',
-      widgetTypeCode: '',
-      guiCode: '<#assign c=JspTaglibs["http://java.sun.com/jsp/jstl/core"]>\n<#assign jpseo=JspTaglibs["/jpseo-aps-core"]>\n\n<@jpseo.currentPage param="description" var="metaDescrVar" />\n<#if (metaDescrVar??)>\n<meta name="description" content="<@c.out value="metaDescrVar}" />" />\n</#if>\n\n<#-- EXAMPLE OF meta infos on page -->\n<#--\n<@jpseo.seoMetaTag key="author" var="metaAuthorVar" />\n<#if (metaAuthorVar??)>\n<meta name="author" content="<@c.out value="metaAuthorVar}" />" />\n</#if>\n\n<@jpseo.seoMetaTag key="keywords" var="metaKeywords" />\n<#if (metaKeywords??)>\n<meta name="keywords" content="<@c.out value="metaKeywords}" />" />\n</#if>\n-->\n',
+    pluginCode: 'jpseo',
+    widgetTypeCode: 'jpseo_content_viewer',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'jpseo_model_meta_info',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'keycloak_auth',
-      locked: false,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign wp=JspTaglibs[\"/aps-core\"]>\n<@wp.info key=\"systemParam\" paramName=\"applicationBaseURL\" var=\"appUrl\" />\n<script nonce=\"<@wp.cspNonce />\" >\n  (function () {\n    const consolePrefix = '[ENTANDO-KEYCLOAK]';\n    const keycloakConfigEndpoint = 'appUrl}keycloak.json';\n    let keycloakConfig;\n    function dispatchKeycloakEvent(eventType) {\n      console.info(consolePrefix, 'Dispatching', eventType, 'custom event');\n      return window.dispatchEvent(new CustomEvent('keycloak', { detail: { eventType } }));\n    };\n    function initKeycloak() {\n      const keycloak = new Keycloak(keycloakConfig);\n      keycloak.onReady = function() {\n        dispatchKeycloakEvent('onReady');\n      };\n      keycloak.onAuthSuccess = function() {\n        dispatchKeycloakEvent('onAuthSuccess');\n      };\n      keycloak.onAuthError = function() {\n        dispatchKeycloakEvent('onAuthError');\n      };\n      keycloak.onAuthRefreshSuccess = function() {\n        dispatchKeycloakEvent('onAuthRefreshSuccess');\n      };\n      keycloak.onAuthRefreshError = function() {\n        dispatchKeycloakEvent('onAuthRefreshError');\n      };\n      keycloak.onAuthLogout = function() {\n        dispatchKeycloakEvent('onAuthLogout');\n      };\n      keycloak.onTokenExpired = function() {\n        dispatchKeycloakEvent('onTokenExpired');\n      };\n      function onKeycloakInitialized(isAuthenticated) {\n        const username = entando.keycloak.token ?\n          JSON.parse(atob(entando.keycloak.token.split('.')[1])).preferred_username\n          : 'guest';\n        if (username !== 'Session.currentUser.username}') {\n          const headers = {}\n          if (entando.keycloak.token) {\n            headers['Authorization'] =  'Bearer ' + entando.keycloak.token;\n          }\n          fetch('appUrl}api/users/initSession', { headers })\n            .then(res => res.json())\n            .then(data => {\n                if (data.payload === true) {\n                    location.reload();\n                }\n            });\n        }\n        if (isAuthenticated) {\n          console.info(consolePrefix, 'Keycloak initialized, user authenticated');\n        } else {\n          console.info(consolePrefix, 'Keycloak initialized, user not authenticated');\n        }\n      };\n      window.entando = {\n        ...(window.entando || {}),\n        keycloak,\n      };\n      window.entando.keycloak\n        .init({ onLoad: 'check-sso', silentCheckSsoRedirectUri: 'appUrl}resources/static/silent-check-sso.html', promiseType: 'native', enableLogging: true })\n        .then(onKeycloakInitialized)\n        .catch(function (e) {\n          console.error(e);\n          console.error(consolePrefix, 'Failed to initialize Keycloak');\n        });\n    };\n    function onKeycloakScriptError(e) {\n      console.error(e);\n      console.error(consolePrefix, 'Failed to load keycloak.js script');\n    };\n    function addKeycloakScript(keycloakConfig) {\n      const script = document.createElement('script');\n      script.src = keycloakConfig['auth-server-url'] + '/js/keycloak.js';\n      script.async = true;\n      script.addEventListener('load', initKeycloak);\n      script.addEventListener('error', onKeycloakScriptError);\n      document.body.appendChild(script);\n    };\n    fetch(keycloakConfigEndpoint)\n      .then(function (response) {\n        return response.json();\n      })\n      .then(function (config) {\n        keycloakConfig = config;\n        if (!keycloakConfig.clientId) {\n          keycloakConfig.clientId = keycloakConfig.resource;\n        }\n        addKeycloakScript(keycloakConfig);\n      })\n      .catch(function (e) {\n        console.error(e);\n        console.error(consolePrefix, 'Failed to fetch Keycloak configuration');\n      });\n  })();</script>",
+    pluginCode: 'jpseo',
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'keycloak_auth',
+    locked: false,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'keycloak_auth_with_redirect',
-      locked: false,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign wp=JspTaglibs[\"/aps-core\"]>\n<script nonce=\"<@wp.cspNonce />\" >\n  (function () {\n    const consolePrefix = '[ENTANDO-KEYCLOAK]';\n    const keycloakConfigEndpoint = '<@wp.info key=\"systemParam\" paramName=\"applicationBaseURL\" />keycloak.json';\n    let keycloakConfig;\n    function dispatchKeycloakEvent(eventType) {\n      console.info(consolePrefix, 'Dispatching', eventType, 'custom event');\n      return window.dispatchEvent(new CustomEvent('keycloak', { detail: { eventType } }));\n    };\n    function initKeycloak() {\n      const keycloak = new Keycloak(keycloakConfig);\n      keycloak.onReady = function() {\n        dispatchKeycloakEvent('onReady');\n      };\n      keycloak.onAuthSuccess = function() {\n        dispatchKeycloakEvent('onAuthSuccess');\n      };\n      keycloak.onAuthError = function() {\n        dispatchKeycloakEvent('onAuthError');\n      };\n      keycloak.onAuthRefreshSuccess = function() {\n        dispatchKeycloakEvent('onAuthRefreshSuccess');\n      };\n      keycloak.onAuthRefreshError = function() {\n        dispatchKeycloakEvent('onAuthRefreshError');\n      };\n      keycloak.onAuthLogout = function() {\n        dispatchKeycloakEvent('onAuthLogout');\n      };\n      keycloak.onTokenExpired = function() {\n        dispatchKeycloakEvent('onTokenExpired');\n      };\n      window.entando = {\n        ...(window.entando || {}),\n        keycloak,\n      };\n      window.entando.keycloak\n        .init({ onLoad: 'login-required', promiseType: 'native', enableLogging: true })\n        .catch(function (e) {\n          console.error(e);\n          console.error(consolePrefix, 'Failed to initialize Keycloak');\n        });\n    };\n    function onKeycloakScriptError(e) {\n      console.error(e);\n      console.error(consolePrefix, 'Failed to load keycloak.js script');\n    };\n    function addKeycloakScript(keycloakConfig) {\n      const script = document.createElement('script');\n      script.src = keycloakConfig['auth-server-url'] + '/js/keycloak.js';\n      script.async = true;\n      script.addEventListener('load', initKeycloak);\n      script.addEventListener('error', onKeycloakScriptError);\n      document.body.appendChild(script);\n    };\n    fetch(keycloakConfigEndpoint)\n      .then(function (response) {\n        return response.json();\n      })\n      .then(function (config) {\n        keycloakConfig = config;\n        if (!keycloakConfig.clientId) {\n          keycloakConfig.clientId = keycloakConfig.resource;\n        }\n        addKeycloakScript(keycloakConfig);\n      })\n      .catch(function (e) {\n        console.error(e);\n        console.error(consolePrefix, 'Failed to fetch Keycloak configuration');\n      });\n  })();</script>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'keycloak_auth_with_redirect',
+    locked: false,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'keycloak-login',
+    locked: true,
+    widgetType: {
       code: 'keycloak-login',
-      locked: true,
-      widgetType: {
-        code: 'keycloak-login',
-        title: 'Login',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'keycloak-login',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n\n<#include "entando_ootb_carbon_include" >\n\n<#assign sessionUser = "" />\n<#assign userDisplayName = "" />\n<#if (Session.currentUser.username != "guest") >\n   <#assign sessionUser = Session.currentUser.username />\n   <#if (Session.currentUser.profile??) && (Session.currentUser.profile.displayName??)>\n      <#assign userDisplayName = Session.currentUser.profile.displayName />\n   <#else>\n      <#assign userDisplayName = Session.currentUser />\n   </#if>\n</#if>\n\n<login-button-widget\n   admin-url="<@wp.info key="systemParam" paramName="appBuilderBaseURL" />"\n   user-display-name="userDisplayName}"\n   redirect-url="<@wp.url baseUrlMode="requestIfRelative" />"\n></login-button-widget>',
+      title: 'Login',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'keycloak-login',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'language',
+    locked: true,
+    widgetType: {
       code: 'language',
-      locked: true,
-      widgetType: {
-        code: 'language',
-        title: 'Language',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'language',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n\n<@wp.info key="langs" var="langsVar" />\n<@wp.info key="currentLang" var="currentLangVar" />\n\n<#include "entando_ootb_carbon_include" >\n\n<#assign langstrs = [] />\n<#list langsVar as curLangVar>\n  <#assign langurl><@wp.url lang="curLangVar.code}" paramRepeat=true /></#assign>\n  <#assign langdesc><@wp.i18n key="LANG_curLangVar.code?upper_case}" /></#assign>\n  <#assign langstr = ["{\\"code\\": \\"" + curLangVar.code + "\\", \\"descr\\": \\"" + langdesc + "\\", \\"url\\": \\""+ langurl +"\\"}"]  />\n  <#assign langstrs = langstrs + langstr />\n</#list>\n<#assign lang_json_string = langstrs?join(", ") />\n\n<choose-language-widget\n  currentLang="currentLangVar}"\n  languages="[lang_json_string?html}]"\n></choose-language-widget>',
+      title: 'Language',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'language',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'legacy-navigation-menu',
+    locked: true,
+    widgetType: {
       code: 'legacy-navigation-menu',
-      locked: true,
-      widgetType: {
-        code: 'legacy-navigation-menu',
-        title: 'Legacy Navigation Menu',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'legacy-navigation-menu',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n\n<@wp.headInfo type="JS" info="entando-misc-jquery/jquery-3.4.1.min.js" />\n<@wp.headInfo type="JS" info="entando-misc-bootstrap/bootstrap.min.js" />\n\n<@wp.currentPage param="code" var="currentPageCode" />\n  <ul class="nav">\n<@wp.nav var="page">\n\n  <#if (previousPage?? && previousPage.code??)>\n    <#assign previousLevel=previousPage.level>\n    <#assign level=page.level>\n    <#include "legacy-navigation-menu_include" >\n  </#if>\n  <#assign previousPage=page>\n</@wp.nav>\n\n<#if (previousPage??)>\n  <#assign previousLevel=previousPage.level>\n  <#assign level=0>\n  <#include "legacy-navigation-menu_include" >\n\n  <#if (previousLevel != 0)>\n    <#list 0..(previousLevel - 1) as ignoreMe>\n      </ul></li>\n    </#list>\n\n  </#if>\n</#if>\n\n</ul>\n<#assign previousPage="">',
+      title: 'Legacy Navigation Menu',
     },
-    {
-      code: 'legacy-navigation-menu_include',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign c=JspTaglibs[\"http://java.sun.com/jsp/jstl/core\"]>\n\n\n<#assign liClass=\"\">\n<#assign homeIcon=\"\">\n<#assign caret=\"\">\n<#assign ulClass=' class=\"dropdown-menu\"'>\n<#assign aClassAndData=\"\">\n<#assign aURL=previousPage.url>\n\n<#if (previousPage.voidPage)>\n  <#assign aURL='#' />\n</#if>\n\n<#if (previousPage.code?contains(\"homepage\"))>\n  <#assign homeIcon='<i class=\"icon-home\"></i>&#32;'>\n</#if>\n\n<#if (previousPage.code == currentPageCode)>\n  <#assign liClass=' class=\"active\"'>\n</#if>\n\n<#if (previousLevel < level)>\n  <#assign liClass=' class=\"dropdown\"' >\n\n  <#if (previousPage.code == currentPageCode)>\n    <#assign liClass=' class=\"dropdown active\"'>\n  </#if>\n\n  <#if previousPage.voidPage>\n    <#assign liClass=' class=\" dropdown\"' >\n  </#if>\n\n  <#if (previousLevel > 0) >\n    <#assign liClass=' class=\"dropdown-submenu\"'>\n    <#if (previousPage.code == currentPageCode)>\n      <#assign liClass=' class=\"dropdown-submenu active\"'>\n    </#if>\n\n    <#assign ulClass=' class=\"dropdown-menu\"'>\n  </#if>\n\n  <#assign aClassAndData=' class=\"dropdown-toggle\" data-toggle=\"dropdown\"'>\n\n  <#if (previousLevel == 0)>\n    <#assign caret=' <span class=\"caret\"></span>'>\n  </#if>\n</#if>\n\n<li liClass} >\n  <a href=\"aURL}\"  aClassAndData} >\n    <!-- [ previousLevel} ] -->\n    homeIcon}\n    previousPage.title}\n    caret}\n  </a>\n\n  <#if (previousLevel == level)></li></#if>\n<#if (previousLevel < level)>\n<ul ulClass}>\n  </#if>\n  <#if (previousLevel > level)>\n  <#list 1..(previousLevel - level) as ignoreMe>\n  </li></ul>\n  </#list>\n  </li>\n</#if>",
+    pluginCode: null,
+    widgetTypeCode: 'legacy-navigation-menu',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'legacy-navigation-menu_include',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'login_form',
+    locked: false,
+    widgetType: {
       code: 'login_form',
-      locked: false,
-      widgetType: {
-        code: 'login_form',
-        title: 'Legacy Login Form',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'login_form',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<h1><@wp.i18n key="RESERVED_AREA" /></h1>\n<#if (Session.currentUser.username != "guest") >\n\t<p><@wp.i18n key="WELCOME" />, <em>Session.currentUser}</em>!</p>\n\t<#if (Session.currentUser.entandoUser) >\n\t<table class="table table-condensed">\n\t\t<tr>\n\t\t\t<th><@wp.i18n key="USER_DATE_CREATION" /></th>\n\t\t\t<th><@wp.i18n key="USER_DATE_ACCESS_LAST" /></th>\n\t\t\t<th><@wp.i18n key="USER_DATE_PASSWORD_CHANGE_LAST" /></th>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>Session.currentUser.creationDate?default("-")}</td>\n\t\t\t<td>Session.currentUser.lastAccess?default("-")}</td>\n\t\t\t<td>Session.currentUser.lastPasswordChange?default("-")}</td>\n\t\t</tr>\n\t</table>\n\t\t<#if (!Session.currentUser.credentialsNotExpired) >\n\t\t<div class="alert alert-block">\n\t\t\t<p><@wp.i18n key="USER_STATUS_EXPIRED_PASSWORD" />: <a href="<@wp.info key="systemParam" paramName="applicationBaseURL" />do/editPassword.action"><@wp.i18n key="USER_STATUS_EXPIRED_PASSWORD_CHANGE" /></a></p>\n\t\t</div>\n\t\t</#if>\n\t</#if>\n\t<@wp.ifauthorized permission="enterBackend">\n\t<div class="btn-group">\n\t\t<a href="<@wp.info key="systemParam" paramName="applicationBaseURL" />do/main.action?request_locale=<@wp.info key="currentLang" />" class="btn"><@wp.i18n key="ADMINISTRATION" /></a>\n\t</div>\n\t</@wp.ifauthorized>\n\t<p class="pull-right"><a href="<@wp.info key="systemParam" paramName="applicationBaseURL" />do/logout.action" class="btn"><@wp.i18n key="LOGOUT" /></a></p>\n\t<@wp.pageWithWidget widgetTypeCode="userprofile_editCurrentUser" var="userprofileEditingPageVar" listResult=false />\n\t<#if (userprofileEditingPageVar??) >\n\t<p><a href="<@wp.url page="userprofileEditingPageVar.code}" />" ><@wp.i18n key="userprofile_CONFIGURATION" /></a></p>\n\t</#if>\n<#else>\n\t<#if (accountExpired?? && accountExpired == true) >\n\t<div class="alert alert-block alert-error">\n\t\t<p><@wp.i18n key="USER_STATUS_EXPIRED" /></p>\n\t</div>\n\t</#if>\n\t<#if (wrongAccountCredential?? && wrongAccountCredential == true) >\n\t<div class="alert alert-block alert-error">\n\t\t<p><@wp.i18n key="USER_STATUS_CREDENTIALS_INVALID" /></p>\n\t</div>\n\t</#if>\n\t<form action="<@wp.url/>" method="post" class="form-horizontal margin-medium-top">\n\t\t<#if (RequestParameters.returnUrl??) >\n\t\t<input type="hidden" name="returnUrl" value="RequestParameters.returnUrl}" />\n\t\t</#if>\n\t\t<div class="control-group">\n\t\t\t<label for="username" class="control-label"><@wp.i18n key="USERNAME" /></label>\n\t\t\t<div class="controls">\n\t\t\t\t<input id="username" type="text" name="username" class="input-xlarge" />\n\t\t\t</div>\n\t\t</div>\n\t\t<div class="control-group">\n\t\t\t<label for="password" class="control-label"><@wp.i18n key="PASSWORD" /></label>\n\t\t\t<div class="controls">\n\t\t\t\t<input id="password" type="password" name="password" class="input-xlarge" />\n\t\t\t</div>\n\t\t</div>\n\t\t<div class="form-actions">\n\t\t\t<input type="submit" value="<@wp.i18n key="SIGNIN" />" class="btn btn-primary" />\n\t\t</div>\n\t</form>\n</#if>',
+      title: 'Legacy Login Form',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'login_form',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'logo',
+    locked: false,
+    widgetType: {
       code: 'logo',
-      locked: false,
-      widgetType: {
-        code: 'logo',
-        title: 'Logo',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'logo',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n\n<@wp.info key="systemParam" paramName="applicationBaseURL" var="appUrl" />\n<img src="appUrl}resources/static/img/Entando_light.svg" aria-label="Entando" alt="Logo" role="logo" />',
+      title: 'Logo',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'logo',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'messages_system',
+    locked: false,
+    widgetType: {
       code: 'messages_system',
-      locked: false,
-      widgetType: {
-        code: 'messages_system',
-        title: 'System Messages',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'messages_system',
-      guiCode: "<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<#if ((userUnauthorized?? && userUnauthorized == true) || (RequestParameters.userUnauthorized?? && RequestParameters.userUnauthorized?lower_case?matches(\"true\"))) >\n<h1 class=\"alert-heading\"><@wp.i18n key=\"USER_UNAUTHORIZED\" escapeXml=false /></h1>\n<#else>\n<#assign currentPageCode><@wp.currentPage param=\"code\" /></#assign>\n<#if (currentPageCode == 'notfound')>\n<div class=\"alert alert-error alert-block\">\n\t<h1 class=\"alert-heading\"><@wp.i18n key=\"PAGE_NOT_FOUND\" escapeXml=false /></h1>\n</div>\n</#if>\n<#if (currentPageCode == 'errorpage')>\n<div class=\"alert alert-error alert-block\">\n\t<h1 class=\"alert-heading\"><@wp.i18n key=\"GENERIC_ERROR\" escapeXml=false /></h1>\n</div>\n</#if>\n</#if>",
+      title: 'System Messages',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'messages_system',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'navigation-menu',
+    locked: true,
+    widgetType: {
       code: 'navigation-menu',
-      locked: true,
-      widgetType: {
-        code: 'navigation-menu',
-        title: 'Navigation Menu',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'navigation-menu',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n\n<@wp.currentPage param="code" var="currentPageCode" />\n\n<#include "entando_ootb_carbon_include" >\n\n<#assign navstrs = [] />\n<@wp.nav var="page">\n  <#assign navstr = ["{\\"code\\": \\"" + page.code + "\\", \\"title\\": \\"" + page.title + "\\", \\"level\\": \\"" + page.level + "\\", \\"url\\": \\""+ page.url +"\\", \\"voidPage\\": " + page.voidPage?string("true", "false") + "}"]  />\n  <#assign navstrs = navstrs + navstr />\n</@wp.nav>\n<#assign nav_json_string = navstrs?join(", ") />\n\n<navigation-bar-widget\n  current-page="currentPageCode}"\n  nav-items="[nav_json_string?html}]"\n></navigation-bar-widget>',
+      title: 'Navigation Menu',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'navigation-menu',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'search_form',
+    locked: true,
+    widgetType: {
       code: 'search_form',
-      locked: true,
-      widgetType: {
-        code: 'search_form',
-        title: 'Search Form',
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: 'search_form',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<@wp.pageWithWidget var="searchResultPageVar" widgetTypeCode="search_result" />\n<#include "entando_ootb_carbon_include" >\n<search-bar-widget\n   action-url="<#if (searchResultPageVar??) ><@wp.url page="searchResultPageVar.code}" /></#if>"\n   placeholder="<@wp.i18n key="ESSF_SEARCH" />"\n></search-bar-widget>',
+      title: 'Search Form',
     },
-    {
+    pluginCode: 'jacms',
+    widgetTypeCode: 'search_form',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'search_result',
+    locked: true,
+    widgetType: {
       code: 'search_result',
-      locked: true,
-      widgetType: {
-        code: 'search_result',
-        title: 'Search Results',
-      },
-      pluginCode: 'jacms',
-      widgetTypeCode: 'search_result',
-      guiCode: "<#assign jacms=JspTaglibs[\"/jacms-aps-core\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<h1><@wp.i18n key=\"SEARCH_RESULTS\" /></h1>\n<#if (RequestParameters.search?? && RequestParameters.search!='')>\n<@jacms.searcher listName=\"contentListResult\" />\n</#if>\n<p><@wp.i18n key=\"SEARCHED_FOR\" />: <em><strong><#if (RequestParameters.search??)>RequestParameters.search}</#if></strong></em></p>\n<#if (contentListResult??) && (contentListResult?has_content) && (contentListResult?size > 0)>\n<@wp.pager listName=\"contentListResult\" objectName=\"groupContent\" max=10 pagerIdFromFrame=true advanced=true offset=5>\n\t<p><em><@wp.i18n key=\"SEARCH_RESULTS_INTRO\" /> <!-- infamous whitespace hack -->\n\tgroupContent.size}\n\t<@wp.i18n key=\"SEARCH_RESULTS_OUTRO\" /> [groupContent.begin + 1} &ndash; groupContent.end + 1}]:</em></p>\n        <#assign group=groupContent >\n\t<#include \"default_pagerBlock\" >\n\t<#list contentListResult as contentId>\n\t<#if (contentId_index >= groupContent.begin) && (contentId_index <= groupContent.end)>\n\t\t<@jacms.content contentId=\"contentId}\" modelId=\"list\" />\n\t</#if>\n\t</#list>\n\t<#include \"default_pagerBlock\">\n</@wp.pager>\n<#else>\n<p class=\"alert alert-info\"><@wp.i18n key=\"SEARCH_NOTHING_FOUND\" /></p>\n</#if>\n<#assign group=\"\" >",
+      title: 'Search Results',
     },
-    {
+    pluginCode: 'jacms',
+    widgetTypeCode: 'search_result',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'sitemap',
+    locked: true,
+    widgetType: {
       code: 'sitemap',
-      locked: true,
-      widgetType: {
-        code: 'sitemap',
-        title: 'Sitemap',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'sitemap',
-      guiCode: '<#assign jacms=JspTaglibs["/jacms-aps-core"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<@jacms.contentList listName="contentList" contentType="NWS" />\n<@wp.currentPage param="code" var="currentPageCode" />\n<link rel="stylesheet" type="text/css" href="<@wp.resourceURL />ootb-widgets/static/css/sitemap.css">\n\n<div class="well well-small sitemap">\n<h2>Sitemap</h2>\n\n<ul class="nav nav-list">\n<@wp.nav spec="code(homepage).subtree(50)" var="page">\n   <#if (previousPage?? && previousPage.code??)>\n\t<#assign previousLevel=previousPage.level>\n\t<#assign level=page.level>\n\t<#include "sitemap_menu_include" >\n   </#if>\n   <#assign previousPage=page>\n</@wp.nav>\n<#if (previousPage??)>\n   <#assign previousLevel = previousPage.level>\n   <#assign level=0>\n   <#include "sitemap_menu_include" >\n   <#if (previousLevel != 0)>\n\t<#list 0..(previousLevel - 1) as ignoreMe>\n\t\t</ul></li>\n\t</#list>\n   </#if>\n</#if>\n<ul class="nav nav-list">\n     <li class="nav-header">\n     <strong>News</strong>\n<ul class="nav-list">\n<#list contentList as contentId>\n\t<@jacms.content contentId="contentId}" modelId="10020" />\n</#list>\n</ul>\n</li>\n</ul>\n</div>\n<#assign previousPage="">\n',
+      title: 'Sitemap',
     },
-    {
-      code: 'sitemap_menu_include',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign liClass=\"\">\n<#assign aClass=\"\">\n<#if previousPage.voidPage>\n <#assign liClass=' class=\"nav-header\" '>\n    <#assign aClass=' class=\"a-void\" '>\n</#if>\n<li liClass}>\n<#if previousLevel != 0>\n<#if (!previousPage.voidPage)>\n<a href=\"previousPage.url}\"  aClass}>\n<#else>\n<a aClass}>\n</#if>\npreviousPage.title}</a>\n<#else>\n<strong>Pages</strong>\n</#if>\n<#if (previousLevel == level)>\n</li>\n</#if>\n<#if (previousLevel < level)>\n<ul class=\"nav-list\">\n</#if>\n<#if (previousLevel > level)>\n<#list 1..(previousLevel - level) as ignoreMe>\n</li></ul>\n</#list>\n</#if>\n",
+    pluginCode: null,
+    widgetTypeCode: 'sitemap',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'sitemap_menu_include',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_editCurrentUser_password',
+    locked: true,
+    widgetType: {
       code: 'userprofile_editCurrentUser_password',
-      locked: true,
-      widgetType: {
-        code: 'userprofile_editCurrentUser_password',
-        title: 'Edit User Password',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'userprofile_editCurrentUser_password',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<#assign wpsa=JspTaglibs["/apsadmin-core"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n\n<h1><@wp.i18n key="userprofile_EDITPASSWORD" /></h1>\n\n<#if (Session.currentUser != "guest") >\n\n\t<form action="<@wp.action path="/ExtStr2/do/Front/CurrentUser/changePassword.action" />" method="post" class="form-horizontal">\n\n\t<@s.if test="hasFieldErrors()">\n\t\t<div class="alert alert-block">\n\t\t\t<p><strong><@wp.i18n key="userprofile_MESSAGE_TITLE_FIELDERRORS" /></strong></p>\n\t\t\t<ul class="unstyled">\n\t\t\t\t<@s.iterator value="fieldErrors">\n\t\t\t\t\t<@s.iterator value="value">\n\t\t\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t\t\t</@s.iterator>\n\t\t\t\t</@s.iterator>\n\t\t\t</ul>\n\t\t</div>\n\t</@s.if>\n\n\t<p class="noscreen">\n\t\t<wpsf:hidden name="username" />\n\t</p>\n\n\t<div class="control-group">\n\t\t<label for="userprofile-old-password" class="control-label"><@wp.i18n key="userprofile_OLDPASSWORD" /></label>\n\t\t<div class="controls">\n\t\t\t<@wpsf.password\n\t\t\t\tuseTabindexAutoIncrement=true\n\t\t\t\tname="oldPassword"\n\t\t\t\tid="userprofile-old-password" />\n\t\t</div>\n\t</div>\n\n\t<div class="control-group">\n\t\t<label for="userprofile-new-password" class="control-label"><@wp.i18n key="userprofile_NEWPASS" /></label>\n\t\t<div class="controls">\n\t\t\t<@wpsf.password\n\t\t\t\tuseTabindexAutoIncrement=true\n\t\t\t\tname="password"\n\t\t\t\tid="userprofile-new-password" />\n\t\t</div>\n\t</div>\n\n\t<div class="control-group">\n\t\t<label for="userprofile-new-password-confirm" class="control-label"><@wp.i18n key="userprofile_CONFIRM_NEWPASS" /></label>\n\t\t<div class="controls">\n\t\t\t<@wpsf.password\n\t\t\t\tuseTabindexAutoIncrement=true\n\t\t\t\tname="passwordConfirm"\n\t\t\t\tid="userprofile-new-password-confirm" />\n\t\t</div>\n\t</div>\n\n\t<p class="form-actions">\n\t\t<@wp.i18n key="userprofile_SAVE_PASSWORD" var="userprofile_SAVE_PASSWORD" />\n\t\t<@wpsf.submit\n\t\t\tuseTabindexAutoIncrement=true\n\t\t\tvalue="%{#attr.userprofile_SAVE_PASSWORD}"\n\t\t\tcssClass="btn btn-primary" />\n\t</p>\n\n\t</form>\n\n<#else>\n\t<p>\n\t\t<@wp.i18n key="userprofile_PLEASE_LOGIN_TO_EDIT_PASSWORD" />\n\t</p>\n</#if>',
+      title: 'Edit User Password',
     },
-    {
+    pluginCode: null,
+    widgetTypeCode: 'userprofile_editCurrentUser_password',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_editCurrentUser_profile',
+    locked: true,
+    widgetType: {
       code: 'userprofile_editCurrentUser_profile',
-      locked: true,
-      widgetType: {
-        code: 'userprofile_editCurrentUser_profile',
-        title: 'Edit User Profile',
-      },
-      pluginCode: null,
-      widgetTypeCode: 'userprofile_editCurrentUser_profile',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<#assign wpsa=JspTaglibs["/apsadmin-core"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n<h1><@wp.i18n key="userprofile_EDITPROFILE_TITLE" /></h1>\n<#if (Session.currentUser != "guest") >\n\t<form action="<@wp.action path="/ExtStr2/do/Front/CurrentUser/Profile/save.action" />" method="post" class="form-horizontal">\n\t<@s.if test="hasFieldErrors()">\n\t\t<div class="alert alert-block">\n\t\t\t<p><strong><@wp.i18n key="userprofile_MESSAGE_TITLE_FIELDERRORS" /></strong></p>\n\t\t\t<ul class="unstyled">\n\t\t\t\t<@s.iterator value="fieldErrors">\n\t\t\t\t\t<@s.iterator value="value">\n\t\t\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t\t\t</@s.iterator>\n\t\t\t\t</@s.iterator>\n\t\t\t</ul>\n\t\t</div>\n\t</@s.if>\n\t<@s.set var="lang" value="defaultLang" />\n\t<@s.iterator value="userProfile.attributeList" var="attribute">\n\t\t<@s.if test="%{#attribute.active}">\n\t\t\t<@wpsa.tracerFactory var="attributeTracer" lang="%{#lang.code}" />\n\t\t\t\t<@s.set var="i18n_attribute_name">userprofile_<@s.property value="userProfile.typeCode" />_<@s.property value="#attribute.name" /></@s.set>\n\t\t\t\t<@s.set var="attribute_id">userprofile_<@s.property value="#attribute.name" /></@s.set>\n\t\t\t\t<#include "userprofile_is_IteratorAttribute" >\n\t\t</@s.if>\n\t</@s.iterator>\n\n\t<p class="form-actions">\n\t\t<@wp.i18n key="userprofile_SAVE_PROFILE" var="userprofile_SAVE_PROFILE" />\n\t\t<@wpsf.submit useTabindexAutoIncrement=true value="%{#attr.userprofile_SAVE_PROFILE}" cssClass="btn btn-primary" />\n\t</p>\n\n\t</form>\n<#else>\n\t<p>\n\t\t<@wp.i18n key="userprofile_PLEASE_LOGIN" />\n\t</p>\n</#if>',
+      title: 'Edit User Profile',
     },
-    {
-      code: 'userprofile_is_currentWithoutProfile',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<h1><@wp.i18n key="userprofile_EDITPROFILE_TITLE" /></h1>\n<p class="label label-info">\n\t<@wp.i18n key="userprofile_CURRENT_USER_WITHOUT_PROFILE" />\n</p>',
+    pluginCode: null,
+    widgetTypeCode: 'userprofile_editCurrentUser_profile',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_currentWithoutProfile',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_entryCurrentProfile',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<#assign wpsa=JspTaglibs["/apsadmin-core"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n\n<#if (Session.currentUser != "guest") >\n<form action="<@wp.action path="/ExtStr2/do/Front/CurrentUser/Profile/save.action" />" method="post" class="form-horizontal">\n\t<@s.if test="hasFieldErrors()">\n\t\t<div class="alert alert-block">\n\t\t\t<p><strong><@wp.i18n key="userprofile_MESSAGE_TITLE_FIELDERRORS" /></strong></p>\n\t\t\t<ul class="unstyled">\n\t\t\t\t<@s.iterator value="fieldErrors">\n\t\t\t\t\t<@s.iterator value="value">\n\t\t\t\t\t\t<li><@s.property escapeHtml=false /></li>\n\t\t\t\t\t</@s.iterator>\n\t\t\t\t</@s.iterator>\n\t\t\t</ul>\n\t\t</div>\n\t</@s.if>\n\t<@s.set var="lang" value="defaultLang" />\n\t<@s.iterator value="userProfile.attributeList" var="attribute">\n\t\t<@s.if test="%{#attribute.active}">\n\t\t\t<@wpsa.tracerFactory var="attributeTracer" lang="%{#lang.code}" />\n\t\t\t<@s.set var="i18n_attribute_name">userprofile_<@s.property value="userProfile.typeCode" />_<@s.property value="#attribute.name" /></@s.set>\n\t\t\t<@s.set var="attribute_id">userprofile_<@s.property value="#attribute.name" /></@s.set>\n\t\t\t<#include "userprofile_is_IteratorAttribute" >\n\t\t</@s.if>\n\t</@s.iterator>\n\t<p class="form-actions">\n\t\t<@wp.i18n key="userprofile_SAVE_PROFILE" var="userprofile_SAVE_PROFILE" />\n\t\t<@wpsf.submit useTabindexAutoIncrement=true value="%{#attr.userprofile_SAVE_PROFILE}" cssClass="btn btn-primary" />\n\t</p>\n</form>\n<#else>\n\t<p><@wp.i18n key="userprofile_PLEASE_LOGIN" /></p>\n</#if>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_entryCurrentProfile',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-AllList-addElementButton',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsa=JspTaglibs[\"/apsadmin-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n\n<@s.set var=\"add_label\"><@wp.i18n key=\"userprofile_ADDITEM_LIST\" /></@s.set>\n\n<@wpsa.actionParam action=\"addListElement\" var=\"actionName\" >\n\t<@wpsa.actionSubParam name=\"attributeName\" value=\"%{#attribute.name}\" />\n\t<@wpsa.actionSubParam name=\"listLangCode\" value=\"%{#lang.code}\" />\n</@wpsa.actionParam>\n<@s.set var=\"iconImagePath\" id=\"iconImagePath\"><@wp.resourceURL/>administration/common/img/icons/list-add.png</@s.set>\n<@wpsf.submit\n\tcssClass=\"btn\"\n\tuseTabindexAutoIncrement=true\n\taction=\"%{#actionName}\"\n\tvalue=\"%{add_label}\"\n\ttitle=\"%{i18n_attribute_name}%{': '}%{add_label}\" />",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-AllList-addElementButton',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front_AllList_operationModule',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsa=JspTaglibs[\"/apsadmin-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n\n<@s.if test=\"null == #operationButtonDisabled\">\n\t<@s.set var=\"operationButtonDisabled\" value=\"false\" />\n</@s.if>\n<div class=\"btn-toolbar\">\n\t<div class=\"btn-group btn-group-sm\">\n\t\t<@wpsa.actionParam action=\"moveListElement\" var=\"actionName\" >\n\t\t\t<@wpsa.actionSubParam name=\"attributeName\" value=\"%{#attribute.name}\" />\n\t\t\t<@wpsa.actionSubParam name=\"listLangCode\" value=\"%{#lang.code}\" />\n\t\t\t<@wpsa.actionSubParam name=\"elementIndex\" value=\"%{#elementIndex}\" />\n\t\t\t<@wpsa.actionSubParam name=\"movement\" value=\"UP\" />\n\t\t</@wpsa.actionParam>\n\t\t<@wpsf.submit disabled=\"%{#operationButtonDisabled}\" action=\"%{#actionName}\" type=\"button\" cssClass=\"btn btn-default\" title=\"%{getText('label.moveInPositionNumber')}: %{#elementIndex}\">\n\t\t<span class=\"icon fa fa-sort-desc\"></span>\n\t\t<span class=\"sr-only\"><@s.text name=\"label.moveInPositionNumber\" />: <@s.property value=\"%{#elementIndex}\" /></span>\n\t\t</@wpsf.submit>\n\n\t\t<@wpsa.actionParam action=\"moveListElement\" var=\"actionName\" >\n\t\t\t<@wpsa.actionSubParam name=\"attributeName\" value=\"%{#attribute.name}\" />\n\t\t\t<@wpsa.actionSubParam name=\"listLangCode\" value=\"%{#lang.code}\" />\n\t\t\t<@wpsa.actionSubParam name=\"elementIndex\" value=\"%{#elementIndex}\" />\n\t\t\t<@wpsa.actionSubParam name=\"movement\" value=\"DOWN\" />\n\t\t</@wpsa.actionParam>\n\t\t<@wpsf.submit disabled=\"%{#operationButtonDisabled}\" action=\"%{#actionName}\" type=\"button\" cssClass=\"btn btn-default\" title=\"%{getText('label.moveInPositionNumber')}: %{#elementIndex+2}\">\n\t\t<span class=\"icon fa fa-sort-asc\"></span>\n\t\t<span class=\"sr-only\"><@s.text name=\"label.moveInPositionNumber\" />: <@s.property value=\"%{#elementIndex}\" /></span>\n\t\t</@wpsf.submit>\n\t</div>\n\t<div class=\"btn-group btn-group-sm\">\n\t\t<@wpsa.actionParam action=\"removeListElement\" var=\"actionName\" >\n\t\t\t<@wpsa.actionSubParam name=\"attributeName\" value=\"%{#attribute.name}\" />\n\t\t\t<@wpsa.actionSubParam name=\"listLangCode\" value=\"%{#lang.code}\" />\n\t\t\t<@wpsa.actionSubParam name=\"elementIndex\" value=\"%{#elementIndex}\" />\n\t\t</@wpsa.actionParam>\n\t\t<@wpsf.submit disabled=\"%{#operationButtonDisabled}\" action=\"%{#actionName}\" type=\"button\" cssClass=\"btn btn-default btn-warning\" title=\"%{getText('label.remove')}: %{#elementIndex}\">\n\t\t<span class=\"icon fa fa-times-circle-o\"></span>\n\t\t<span class=\"sr-only\"><@s.text name=\"label.remove\" />: <@s.property value=\"%{#elementIndex}\" /></span>\n\t\t</@wpsf.submit>\n\t</div>\n</div>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front_AllList_operationModule',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front_AttributeInfo',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n\n<@s.if test="#attribute.required">\n\t<abbr class="icon icon-asterisk" title="<@wp.i18n key="userprofile_ENTITY_ATTRIBUTE_MANDATORY_FULL" />"><span class="noscreen"><@wp.i18n key="userprofile_ENTITY_ATTRIBUTE_MANDATORY_SHORT" /></span></abbr>\n</@s.if>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front_AttributeInfo',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front_attributeInfo-help-block',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n\n<@s.set var=\"validationRules\" value=\"#attribute.validationRules.ognlValidationRule\" />\n<@s.set var=\"hasValidationRulesVar\" value=\"%{#validationRules != null && #validationRules.expression != null}\" />\n\n<@s.if test=\"%{#hasValidationRulesVar || #attribute.type == 'Date' || (#attribute.textAttribute && (#attribute.minLength != -1 || #attribute.maxLength != -1))}\">\n\t\t<span class=\"help-block\">\n\t\t<@s.if test=\"#attribute.type == 'Date'\">dd/MM/yyyy&#32;</@s.if>\n\t\t<@s.if test=\"%{#validationRules.helpMessageKey != null}\">\n\t\t\t<@s.set var=\"label\" scope=\"page\" value=\"#validationRules.helpMessageKey\" /><@wp.i18n key=\"label}\" />\n\t\t</@s.if>\n\t\t<@s.elseif test=\"%{#validationRules.helpMessage != null}\">\n\t\t\t<@s.property value=\"#validationRules.helpMessage\" />\n\t\t</@s.elseif>\n\t\t<@s.if test=\"#attribute.minLength != -1\">\n\t\t\t&#32;\n\t\t\t<abbr title=\"<@wp.i18n key=\"userprofile_ENTITY_ATTRIBUTE_MINLENGTH_FULL\" />&#32;<@s.property value=\"#attribute.minLength\" />\">\n\t\t\t\t<@wp.i18n key=\"userprofile_ENTITY_ATTRIBUTE_MINLENGTH_SHORT\" />:&#32;<@s.property value=\"#attribute.minLength\" />\n\t\t\t</abbr>\n\t\t</@s.if>\n\t\t<@s.if test=\"#attribute.maxLength != -1\">\n\t\t\t&#32;\n\t\t\t<abbr title=\"<@wp.i18n key=\"userprofile_ENTITY_ATTRIBUTE_MAXLENGTH_FULL\" />&#32;<@s.property value=\"#attribute.maxLength\" />\">\n\t\t\t\t<@wp.i18n key=\"userprofile_ENTITY_ATTRIBUTE_MAXLENGTH_SHORT\" />:&#32;<@s.property value=\"#attribute.maxLength\" />\n\t\t\t</abbr>\n\t\t</@s.if>\n\t</span>\n</@s.if>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front_attributeInfo-help-block',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-BooleanAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n<label class=\"radio inline\" for=\"<@s.property value=\"%{#attribute_id + '-true'}\" />\">\n\t<@wpsf.radio\n\t\tuseTabindexAutoIncrement=true\n\t\tname=\"%{#attributeTracer.getFormFieldName(#attribute)}\"\n\t\tid=\"%{#attribute_id + '-true'}\"\n\t\tvalue=\"true\"\n\t\tchecked=\"%{#attribute.value == true}\"\n\t\tcssClass=\"radio\" />\n\t\t<@wp.i18n key=\"userprofile_YES\" />\n</label>\n&#32;\n<label class=\"radio inline\" for=\"<@s.property value=\"%{#attribute_id+'-false'}\" />\">\n\t<@wpsf.radio\n\t\tuseTabindexAutoIncrement=true\n\t\tname=\"%{#attributeTracer.getFormFieldName(#attribute)}\"\n\t\tid=\"%{#attribute_id + '-false'}\"\n\t\tvalue=\"false\"\n\t\tchecked=\"%{#attribute.value == false}\"\n\t\tcssClass=\"radio\" />\n\t\t<@wp.i18n key=\"userprofile_NO\" />\n</label>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-BooleanAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-CheckboxAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n\n<@wpsf.checkbox useTabindexAutoIncrement=true\n\tname="%{#attributeTracer.getFormFieldName(#attribute)}"\n\tid="%{attribute_id}" value="%{#attribute.value == true}"/>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-CheckboxAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-CompositeAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<#assign wpsa=JspTaglibs["/apsadmin-core"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n<@s.set var="i18n_parent_attribute_name" value="#attribute.name" />\n<@s.set var="masterCompositeAttributeTracer" value="#attributeTracer" />\n<@s.set var="masterCompositeAttribute" value="#attribute" />\n<@s.iterator value="#attribute.attributes" var="attribute">\n\t<@s.set var="attributeTracer" value="#masterCompositeAttributeTracer.getCompositeTracer(#masterCompositeAttribute)"></@s.set>\n\t<@s.set var="parentAttribute" value="#masterCompositeAttribute"></@s.set>\n\t<@s.set var="i18n_attribute_name">userprofile_ATTR<@s.property value="%{i18n_parent_attribute_name}" /><@s.property value="#attribute.name" /></@s.set>\n\t<@s.set var="attribute_id">userprofile_<@s.property value="%{i18n_parent_attribute_name}" /><@s.property value="#attribute.name" />_<@s.property value="#elementIndex" /></@s.set>\n\t<#include "userprofile_is_IteratorAttribute" >\n</@s.iterator>\n<@s.set var="attributeTracer" value="#masterCompositeAttributeTracer" />\n<@s.set var="attribute" value="#masterCompositeAttribute" />\n<@s.set var="parentAttribute" value=""></@s.set>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-CompositeAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-DateAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n\n<#assign currentLangVar ><@wp.info key=\"currentLang\" /></#assign>\n\n<@s.if test=\"#attribute.failedDateString == null\">\n<@s.set var=\"dateAttributeValue\" value=\"#attribute.getFormattedDate('dd/MM/yyyy')\" />\n</@s.if>\n<@s.else>\n<@s.set var=\"dateAttributeValue\" value=\"#attribute.failedDateString\" />\n</@s.else>\n<@wpsf.textfield\nuseTabindexAutoIncrement=true id=\"%{attribute_id}\"\nname=\"%{#attributeTracer.getFormFieldName(#attribute)}\"\nvalue=\"%{#dateAttributeValue}\" maxlength=\"10\" cssClass=\"text userprofile-date\" />\n&#32;\n<#assign js_for_datepicker=\"jQuery(function($){\n\t$.datepicker.regional['it'] = {\n\t\tcloseText: 'Chiudi',\n\t\tprevText: '&#x3c;Prec',\n\t\tnextText: 'Succ&#x3e;',\n\t\tcurrentText: 'Oggi',\n\t\tmonthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',\n\t\t\t'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],\n\t\tmonthNamesShort: ['Gen','Feb','Mar','Apr','Mag','Giu',\n\t\t\t'Lug','Ago','Set','Ott','Nov','Dic'],\n\t\tdayNames: ['Domenica','Luned&#236','Marted&#236','Mercoled&#236','Gioved&#236','Venerd&#236','Sabato'],\n\t\tdayNamesShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],\n\t\tdayNamesMin: ['Do','Lu','Ma','Me','Gi','Ve','Sa'],\n\t\tweekHeader: 'Sm',\n\t\tdateFormat: 'dd/mm/yy',\n\t\tfirstDay: 1,\n\t\tisRTL: false,\n\t\tshowMonthAfterYear: false,\n\t\tyearSuffix: ''};\n});\n\njQuery(function($){\n\tif (Modernizr.touch && Modernizr.inputtypes.date) {\n\t\t$.each(\t$('input.userprofile-date'), function(index, item) {\n\t\t\titem.type = 'date';\n\t\t});\n\t} else {\n\t\t$.datepicker.setDefaults( $.datepicker.regional['currentLangVar}'] );\n\t\t$('input.userprofile-date').datepicker({\n      \t\t\tchangeMonth: true,\n      \t\t\tchangeYear: true,\n      \t\t\tdateFormat: 'dd/mm/yyyy'\n    \t\t});\n\t}\n});\" >\n\n<@wp.headInfo type=\"JS\" info=\"entando-misc-html5-essentials/modernizr-2.5.3-full.js\" />\n<@wp.headInfo type=\"JS_EXT\" info=\"http://code.jquery.com/ui/1.12.1/jquery-ui.min.js\" />\n<@wp.headInfo type=\"CSS_EXT\" info=\"http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.min.css\" />\n<@wp.headInfo type=\"JS_RAW\" info=\"js_for_datepicker}\" />",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-DateAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-EnumeratorAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n<@wpsf.select useTabindexAutoIncrement=true\n\tname="%{#attributeTracer.getFormFieldName(#attribute)}"\n\tid="%{attribute_id}"\n\theaderKey="" headerValue=""\n\tlist="#attribute.items" value="%{#attribute.getText()}" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-EnumeratorAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-EnumeratorMapAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n<@wpsf.select useTabindexAutoIncrement=true\n\tname="%{#attributeTracer.getFormFieldName(#attribute)}"\n\tid="%{attribute_id}"\n\theaderKey="" headerValue=""\n\tlist="#attribute.mapItems" value="%{#attribute.getText()}" listKey="key" listValue="value" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-EnumeratorMapAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-HypertextAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n\n<@wpsf.textarea\n\tuseTabindexAutoIncrement=true\n\tcols="50"\n\trows="3"\n\tid="%{#attribute_id}"\n\tname="%{#attributeTracer.getFormFieldName(#attribute)}"\n\tvalue="%{#attribute.textMap[#lang.code]}"  />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-HypertextAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-LongtextAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n<@wpsf.textarea useTabindexAutoIncrement=true cols="30" rows="5" id="%{attribute_id}" name="%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#attribute.getTextForLang(#lang.code)}" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-LongtextAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-MonolistAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsa=JspTaglibs[\"/apsadmin-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n<@s.if test=\"#attribute.attributes.size() != 0\">\n\t<ul class=\"unstyled\">\n</@s.if>\n\n<@s.set var=\"masterListAttributeTracer\" value=\"#attributeTracer\" />\n<@s.set var=\"masterListAttribute\" value=\"#attribute\" />\n\n<@s.iterator value=\"#attribute.attributes\" var=\"attribute\" status=\"elementStatus\">\n\t<@s.set var=\"attributeTracer\" value=\"#masterListAttributeTracer.getMonoListElementTracer(#elementStatus.index)\"></@s.set>\n\t<@s.set var=\"elementIndex\" value=\"#elementStatus.index\" />\n\t<@s.set var=\"i18n_attribute_name\">userprofile_ATTR<@s.property value=\"#attribute.name\" /></@s.set>\n\t<@s.set var=\"attribute_id\">userprofile_<@s.property value=\"#attribute.name\" />_<@s.property value=\"#elementStatus.count\" /></@s.set>\n\n\t<li class=\"control-group  <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@s.if test=\"#attribute.type == 'Composite'\">\n\t\t\t\t<@s.property value=\"#elementStatus.count\" /><span class=\"noscreen\">&#32;<@s.text name=\"label.compositeAttribute.element\" /></span>\n\t\t\t\t&#32;\n\t\t\t\t<@s.if test=\"#lang.default\">\n\t\t\t\t\t<#include \"userprofile_is_front_AllList_operationModule\" >\n\t\t\t\t</@s.if>\n\t\t\t</@s.if>\n\t\t\t<@s.else>\n\t\t\t\t<@s.property value=\"#elementStatus.count\" />\n\t\t\t\t&#32;\n\t\t\t\t<#include \"userprofile_is_front_AllList_operationModule\" >\n\t\t\t</@s.else>\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<@s.if test=\"#attribute.type == 'Boolean'\">\n\t\t\t\t<#include \"userprofile_is_front-BooleanAttribute\" >\n\t\t\t</@s.if>\n\t\t\t<@s.elseif test=\"#attribute.type == 'CheckBox'\">\n\t\t\t\t<#include \"userprofile_is_front-CheckboxAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Composite'\">\n\t\t\t\t<#include \"userprofile_is_front-CompositeAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Date'\">\n\t\t\t\t<#include \"userprofile_is_front-DateAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Enumerator'\">\n\t\t\t\t<#include \"userprofile_is_front-EnumeratorAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'EnumeratorMap'\">\n\t\t\t\t<#include \"userprofile_is_front-EnumeratorMapAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Hypertext'\">\n\t\t\t\t<#include \"userprofile_is_front-HypertextAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Longtext'\">\n\t\t\t\t<#include \"userprofile_is_front-LongtextAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Monotext'\">\n\t\t\t\t<#include \"userprofile_is_front-MonotextAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Number'\">\n\t\t\t\t<#include \"userprofile_is_front-NumberAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'ThreeState'\">\n\t\t\t\t<#include \"userprofile_is_front-ThreeStateAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.elseif test=\"#attribute.type == 'Text'\">\n\t\t\t\t<#include \"userprofile_is_front-MonotextAttribute\" >\n\t\t\t</@s.elseif>\n\t\t\t<@s.else>\n\t\t\t\t<#include \"userprofile_is_front-MonotextAttribute\" >\n\t\t\t</@s.else>\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</li>\n</@s.iterator>\n\n<@s.set var=\"attributeTracer\" value=\"#masterListAttributeTracer\" />\n<@s.set var=\"attribute\" value=\"#masterListAttribute\" />\n<@s.set var=\"elementIndex\" value=\"\" />\n<@s.if test=\"#attribute.attributes.size() != 0\">\n</ul>\n</@s.if>\n<@s.if test=\"#lang.default\">\n\t<div class=\"control-group\">\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-AllList-addElementButton\" >\n\t\t</div>\n\t</div>\n</@s.if>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-MonolistAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-MonotextAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n<@wpsf.textfield useTabindexAutoIncrement=true id="%{attribute_id}"\n\tname="%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#attribute.getTextForLang(#lang.code)}"\n\tmaxlength="254" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-MonotextAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-NumberAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign s=JspTaglibs["/struts-tags"]>\n<#assign wp=JspTaglibs["/aps-core"]>\n<#assign wpsf=JspTaglibs["/apsadmin-form"]>\n\n<@s.if test="#attribute.failedNumberString == null">\n\t<@s.set var="numberAttributeValue" value="#attribute.value"></@s.set>\n</@s.if>\n<@s.else>\n\t<@s.set var="numberAttributeValue" value="#attribute.failedNumberString"></@s.set>\n</@s.else>\n<@wpsf.textfield\n\t\tuseTabindexAutoIncrement=true\n\t\tid="%{#attribute_id}"\n\t\tname="%{#attributeTracer.getFormFieldName(#attribute)}"\n\t\tvalue="%{#numberAttributeValue}"\n\t\tmaxlength="254" />',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-NumberAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_front-ThreeStateAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n<label class=\"radio inline\" for=\"<@s.property value=\"%{#attribute_id + '-none'}\" />\">\n\t<@wpsf.radio\n\t\tuseTabindexAutoIncrement=true\n\t\tname=\"%{#attributeTracer.getFormFieldName(#attribute)}\"\n\t\tid=\"%{#attribute_id + '-none'}\"\n\t\tvalue=\"\"\n\t\tchecked=\"%{#attribute.booleanValue == null}\"\n\t\tcssClass=\"radio\" />\n\t\t<@wp.i18n key=\"userprofile_BOTH_YES_AND_NO\" />\n</label>\n&#32;\n<label class=\"radio inline\" for=\"<@s.property value=\"%{#attribute_id + '-true'}\" />\">\n\t<@wpsf.radio\n\t\tuseTabindexAutoIncrement=true\n\t\tname=\"%{#attributeTracer.getFormFieldName(#attribute)}\"\n\t\tid=\"%{#attribute_id + '-true'}\"\n\t\tvalue=\"true\"\n\t\tchecked=\"%{#attribute.booleanValue != null && #attribute.booleanValue == true}\"\n\t\tcssClass=\"radio\" />\n\t\t<@wp.i18n key=\"userprofile_YES\" />\n</label>\n&#32;\n<label class=\"radio inline\" for=\"<@s.property value=\"%{#attribute_id + '-false'}\" />\">\n\t<@wpsf.radio\n\t\tuseTabindexAutoIncrement=true\n\t\tname=\"%{#attributeTracer.getFormFieldName(#attribute)}\"\n\t\tid=\"%{#attribute_id + '-false'}\"\n\t\tvalue=\"false\"\n\t\tchecked=\"%{#attribute.booleanValue != null && #attribute.booleanValue == false}\"\n\t\tcssClass=\"radio\" />\n\t\t<@wp.i18n key=\"userprofile_NO\" />\n</label>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_front-ThreeStateAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_IteratorAttribute',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: "<#assign s=JspTaglibs[\"/struts-tags\"]>\n<#assign wp=JspTaglibs[\"/aps-core\"]>\n<#assign wpsa=JspTaglibs[\"/apsadmin-core\"]>\n<#assign wpsf=JspTaglibs[\"/apsadmin-form\"]>\n<#assign i18n_attribute_name ><@s.property value=\"#i18n_attribute_name\" /></#assign>\n<@s.if test=\"#attribute.type == 'Boolean'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-BooleanAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.if>\n<@s.elseif test=\"#attribute.type == 'CheckBox'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-CheckboxAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Composite'\">\n\t<div class=\"well well-small\">\n\t\t<fieldset class=\" <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t\t<legend class=\"margin-medium-top\">\n\t\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t\t</legend>\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t\t<#include \"userprofile_is_front-CompositeAttribute\" >\n\t\t</fieldset>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Date'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-DateAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Enumerator'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-EnumeratorAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'EnumeratorMap'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-EnumeratorMapAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Hypertext'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-HypertextAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'List'\">\n\t<div class=\"well well-small\">\n\t\t<fieldset class=\" <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t\t<legend class=\"margin-medium-top\">\n\t\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t\t</legend>\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t\t<#include \"userprofile_is_front-MonolistAttribute\" >\n\t\t</fieldset>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Longtext'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-LongtextAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Monolist'\">\n\t<div class=\"well well-small\">\n\t\t<fieldset class=\" <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t\t<legend class=\"margin-medium-top\"><@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t\t</legend>\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t\t<#include \"userprofile_is_front-MonolistAttribute\" >\n\t\t</fieldset>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Monotext'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-MonotextAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Number'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-NumberAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'Text'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-MonotextAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.elseif test=\"#attribute.type == 'ThreeState'\">\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"#attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-ThreeStateAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.elseif>\n<@s.else> <#-- for all other types, insert a simple label and a input[type=\"text\"] -->\n\t<div class=\"control-group <@s.property value=\"%{' attribute-type-'+#attribute.type+' '}\" />\">\n\t\t<label class=\"control-label\" for=\"<@s.property value=\"attribute_id\" />\">\n\t\t\t<@wp.i18n key=\"i18n_attribute_name}\" />\n\t\t\t<#include \"userprofile_is_front_AttributeInfo\" >\n\t\t</label>\n\t\t<div class=\"controls\">\n\t\t\t<#include \"userprofile_is_front-MonotextAttribute\" >\n\t\t\t<#include \"userprofile_is_front_attributeInfo-help-block\" >\n\t\t</div>\n\t</div>\n</@s.else>",
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_IteratorAttribute',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_passwordChanged',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<#assign s=JspTaglibs["/struts-tags"]>\n\n<h1><@wp.i18n key="userprofile_EDITPASSWORD_TITLE" /></h1>\n<p class="alert alert-success"><@wp.i18n key="userprofile_PASSWORD_UPDATED" /></p>\n<@s.if test="!#session.currentUser.credentialsNonExpired">\n\t<p class="alert alert-info">\n\t\t<a href="<@s.url namespace="/do" action="logout" />" ><@wp.i18n key="userprofile_PLEASE_LOGIN_AGAIN" /></a>\n\t</p>\n</@s.if>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_passwordChanged',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-    {
-      code: 'userprofile_is_profileChangeConfirmation',
-      locked: true,
-      widgetType: {
-        code: null,
-        title: null,
-      },
-      pluginCode: null,
-      widgetTypeCode: '',
-      guiCode: '<#assign wp=JspTaglibs["/aps-core"]>\n<h1><@wp.i18n key="userprofile_EDITPROFILE_TITLE" /></h1>\n<p><@wp.i18n key="userprofile_PROFILE_UPDATED" /></p>',
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }, {
+    code: 'userprofile_is_profileChangeConfirmation',
+    locked: true,
+    widgetType: {
+      code: null,
+      title: null,
     },
-  ],
+    pluginCode: null,
+    widgetTypeCode: '',
+    guiCode: 'mockGuiCode',
+  }],
 };

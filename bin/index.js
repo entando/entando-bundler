@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+const axios = require('axios');
+const https = require('https');
 
 const { generateFromNpm, generateFromGit, generateFromEnv, generateInteractively } = require('../lib/actions');
 const version = require('../package.json').version;
@@ -44,8 +46,19 @@ program
   .requiredOption('--description <description>', 'The description of the Bundle')
   .action(generateFromEnv);
 
-if (process.argv.length > 2) {
-  program.parse(process.argv);
-} else {
+program
+  .option('--no-tls-verify', 'Disable TLS certificates validation')
+  .on('option:no-tls-verify', function () {
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+    axios.defaults.httpsAgent = httpsAgent;
+  });
+
+program.parse(process.argv);
+
+const commandNames = program.commands.map(c => c.name());
+
+if (process.argv.length < 3 || !commandNames.includes(process.argv[2])) {
   generateInteractively();
 }

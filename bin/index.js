@@ -42,6 +42,7 @@ program
   .option('--env <env>', 'The location for the env.json file containing the description of the environment to export', 'env.json')
   .option('--location <location>', 'The location for where to store the generated Bundle', './')
   .option('--exclude-microservices', 'Whether to include microservices in the export')
+  .option('--force', 'Force exporting all components')
   .requiredOption('--code <code>', 'The code for the Bundle')
   .requiredOption('--description <description>', 'The description of the Bundle')
   .action(generateFromEnv);

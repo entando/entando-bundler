@@ -28,7 +28,7 @@ Create an `env.json` file with the configurations for the environment to extract
 ```
 {
     "coreBaseApi": "http://quickstart-sales-demo.lab.entando.org/entando-de-app",
-    "k8ssvcApi": "http://quickstart-eci-sales-demo.lab.entando.org/k8s",
+    "componentManagerApi": "http://quickstart-eci-sales-demo.lab.entando.org/digital-exchange",
     "clientId": "entando-bundler",
     "clientSecret": "<insert_secret_here>"
 }

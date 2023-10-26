@@ -77,6 +77,25 @@
         "--dry-run"
       ],
       "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Extract Bundle from env",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": [
+        "from-env",
+        "--env",
+        "env.json",
+        "--force",
+        "--code",
+        "sample-code",
+        "--description",
+        "test bundle",
+        "--location",
+        "sample-bundle"
+      ],
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

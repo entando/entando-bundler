@@ -35,7 +35,7 @@ Create an `env.json` file with the configurations for the environment to extract
 ```
 
 Note:
-the clientId "entando-bundler" should be manually added to the keycloak of the source environment.
+the clientId "entando-bundler" should be manually added to the keycloak of the source environment, as explained [here](https://developer.entando.com/next/tutorials/create/pb/export-bundle-from-application.html#set-up-the-keycloak-client)
 
 ### Interactive command:
 ```
